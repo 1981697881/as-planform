@@ -20,17 +20,17 @@
     </el-form>
   </div>
 </template>
-
 <script>
 
-import { mapGetters } from 'vuex'
-import { getByUserAndPrId } from '@/api/system/index'
-export default {
+  import {mapGetters} from 'vuex'
+  import {updateReport} from '@/api/studios/index'
+
+  export default {
   data() {
     return {
       btnList: [],
       search: {
-        name: ""
+        name: ''
       }
     };
   },
@@ -71,11 +71,36 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$emit('del', {filmId :this.clickData.filmId})
+          this.$emit('del', { filmId: this.clickData.filmId })
         }).catch(() => {
           this.$message({
             type: 'info',
             message: '已取消删除'
+          });
+        });
+      } else {
+        this.$message({
+          message: '无选中行',
+          type: 'warning'
+        })
+      }
+    },
+    handle() {
+      if (this.clickData.filmId) {
+        this.$confirm('是否处理(' + this.clickData.filmName + ')?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          updateReport({ id: this.clickData.filmId }).then(res => {
+            if (res.flag) {
+              this.$emit('uploadList')
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消处理'
           });
         });
       } else {

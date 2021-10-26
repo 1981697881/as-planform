@@ -1,11 +1,9 @@
 import request from '@/utils/request'
-import {
-  getToken
-} from '@/utils/auth'
+import {getToken} from '@/utils/auth'
 
-// 影厅管理-获取列表
-export function getHallList(params, data) {
-  const url = '/locationHall/hallList/' + params.pageNum + '/' + params.pageSize
+// 检修管理-获取列表
+export function getRepairList(params, data) {
+  const url = '/repair/list/' + params.pageNum + '/' + params.pageSize
   return request({
     url: url,
     headers: {
@@ -16,7 +14,45 @@ export function getHallList(params, data) {
     data: data
   })
 }
-
+// 检修管理-分配工程师
+export function appointEngineer(params) {
+  const url = '/repair/appointEngineer '
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('cinerx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: params
+  })
+}
+// 上报管理-获取列表
+export function getReportList(params, data) {
+  const url = '/report/list/' + params.pageNum + '/' + params.pageSize
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('cinerx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: data
+  })
+}
+// 上报管理-处理
+export function updateReport(params) {
+  const url = '/report/updateReport'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('cinerx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: params
+  })
+}
 // 影厅管理-新增
 export function addHall(params) {
   const url = '/locationHall/addHall'

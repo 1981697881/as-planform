@@ -16,16 +16,16 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { getMovieList, deleteMovie} from "@/api/basic/index";
-import List from "@/components/List";
+  import {mapGetters} from 'vuex'
+  import {deleteMovie, getRepairList} from '@/api/studios/index'
+  import List from '@/components/List'
 
-export default {
+  export default {
   components: {
     List
   },
   computed: {
-    ...mapGetters(["node"])
+    ...mapGetters(['node'])
   },
   data() {
     return {
@@ -68,7 +68,7 @@ export default {
     Delivery(val) {
       deleteMovie(val).then(res => {
         if(res.flag){
-          this.$store.dispatch("list/setClickData", '');
+          this.$store.dispatch('list/setClickData', '');
           this.$emit('uploadList')
         }
       });
@@ -84,14 +84,14 @@ export default {
     },
     // 监听单击某一行
     rowClick(obj) {
-      this.$store.dispatch("list/setClickData", obj.row)
+      this.$store.dispatch('list/setClickData', obj.row)
     },
     fetchData(val, data = {
       pageNum: this.list.current || 1,
       pageSize: this.list.size || 50
     }) {
       this.loading = true;
-      getMovieList(data, val).then(res => {
+      getRepairList(data, val).then(res => {
         this.loading = false
         this.list = res.data
       })

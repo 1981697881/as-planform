@@ -51,8 +51,8 @@
   </div>
 </template>
 <script>
-  import { shareBill, getSemiList, isOutbreed } from '@/api/studios/index'
-  import { getMcjSemiSchedulingType, getMcjSemiFinishedProducts} from '@/api/studios/index'
+  import {appointEngineer, getMcjSemiFinishedProducts, getMcjSemiSchedulingType} from '@/api/studios/index'
+
   export default {
     props: {
       listInfo: {
@@ -136,15 +136,6 @@
       }
     },
     methods: {
-      deleteRow(index, rows) {
-        rows.splice(index, 1);
-        let list = this.list
-        let num = 0
-        list.forEach((item, index) =>{
-          num += Number(item.allocatedNum)
-        })
-        this.form.allocatedNum = num
-      },
       // 切换类别
       selectChange(val) {
         this.form.plId = null
@@ -154,104 +145,14 @@
       saveData(form) {
         let me = this
         this.$refs[form].validate((valid) => {
-          //判断必填项
+          // 判断必填项
           if (valid) {
-            let data = {}
-            let lData = []
-            let lData2 = []
-            let num = 0
-            let list = this.list
-            let result = []
-            list.forEach(function(item, index) {
-              let obj = {}
-              let obj2 = {}
-              obj2.taskId = item.taskId
-              obj2.allocatedNum = item.allocatedNum
-              obj2.plId = me.form.plId
-              obj2.productionDate = me.form.productionDate
-              lData2.push(obj2)
-              obj.allocatedNum = item.allocatedNum
-              obj.gid = item.gid
-              obj.isOutbreed = me.form.isOutbreed
-              obj.plId = me.form.plId
-              obj.productionDate = me.form.productionDate
-              obj.remark = item.remark
-              obj.taskId = item.taskId
-              num += Number(item.allocatedNum)
-              if(result.indexOf(item.gid) == -1){
-                result.push(item.gid)
+            appointEngineer(this.form).then(reso => {
+              if(reso.flag){
+                me.$emit('hideDialog', false)
+                me.$emit('uploadList')
               }
-              lData.push(obj)
             })
-            /* data.taskId = me.form.taskId
-             data.extendPojo = lData*/
-            if(me.list.length > 1 ){
-              if(num <= me.form.allocatedNum){
-                if(result.length == 1){
-                  isOutbreed(lData2).then(res => {
-                    if (res.flag) {
-                      shareBill(lData).then(reso => {
-                        if(reso.flag){
-                          me.$emit('hideSpell', false)
-                          me.$emit('uploadList')
-                        }
-                      })
-                    } else {
-                      this.$confirm(res.msg + ',是否超出常量生产?', '提示', {
-                        confirmButtonText: '超产',
-                        cancelButtonText: '不超产',
-                        distinguishCancelAndClose: true,
-                        type: 'warning'
-                      }).then(() => {
-                        let isDate = res.data
-                        isDate.forEach((it, ind) =>{
-                          lData.forEach((item, index) =>{
-                            if(it == item.taskId){
-                              item.isOutbreed = '1'
-                            }
-                          })
-                        })
-                        shareBill(lData).then(reso => {
-                          if(reso.flag){
-                            me.$emit('hideSpell', false)
-                            me.$emit('uploadList')
-                          }
-                        })
-                      }).catch(action => {
-                        if(action == 'cancel') {
-                          lData.forEach((item, index) => {
-                            item.isOutbreed = '0'
-                          })
-                          shareBill(lData).then(reso => {
-                            if (reso.flag) {
-                              me.$emit('hideSpell', false)
-                              me.$emit('uploadList')
-                            }
-                          })
-                        }
-                      })
-                    }
-                  })
-                }else{
-                  me.$message({
-                    type: 'error',
-                    message: '物料信息需要一致!'
-                  });
-                }
-              } else {
-                this.$message({
-                  type: 'error',
-                  message: '拼单数量不能大于原单数量!'
-                });
-              }
-            } else {
-              this.$message({
-                type: 'error',
-                message: '拼单数量不能小于零并且大于一!'
-              });
-            }
-          } else {
-            return false;
           }
         })
       },

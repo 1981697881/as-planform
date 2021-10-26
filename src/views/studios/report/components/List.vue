@@ -16,16 +16,16 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { getMovieList, deleteMovie} from "@/api/basic/index";
-import List from "@/components/List";
+  import {mapGetters} from 'vuex'
+  import {deleteMovie, getReportList} from '@/api/studios/index'
+  import List from '@/components/List'
 
-export default {
+  export default {
   components: {
     List
   },
   computed: {
-    ...mapGetters(["node"])
+    ...mapGetters(['node'])
   },
   data() {
     return {
@@ -108,8 +108,8 @@ export default {
       pageNum: this.list.current || 1,
       pageSize: this.list.size || 50
     }) {
-      this.loading = true;
-      getMovieList(data, val).then(res => {
+      this.loading = true
+      getReportList(data, val).then(res => {
         this.loading = false
         this.list = res.data
       })
@@ -118,7 +118,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 .list-main {
   height: calc(100vh - 250px);
 }
