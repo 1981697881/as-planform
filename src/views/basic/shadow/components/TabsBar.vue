@@ -2,9 +2,11 @@
   <div class="list-header">
     <el-form v-model="search" :size="'mini'" :label-width="'80px'">
       <el-row :gutter="10">
-        <el-col :span="4">
-          <el-form-item :label="'关键字'">
-            <el-input v-model="search.name" placeholder="名称"/>
+        <el-col :span="6">
+          <el-form-item :label="'所属系列'" prop="filmSortid">
+            <el-select v-model="search.parentId" class="width-full" placeholder="请选择">
+              <el-option :label="t.seriesName" :value="t.id" v-for="(t,i) in sArray" :key="i"></el-option>
+            </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="2">
@@ -23,20 +25,21 @@
 </template>
 
 <script>
+  import {seriesList} from '@/api/basic/index'
+  import {mapGetters} from 'vuex'
 
-import { mapGetters } from 'vuex'
-import { getByUserAndPrId } from '@/api/system/index'
-export default {
+  export default {
   data() {
     return {
       btnList: [],
+      sArray: [],
       search: {
-        name: ""
+        parentId: null
       }
     };
   },
   computed: {
-    ...mapGetters(['node','clickData'])
+    ...mapGetters(['node', 'clickData'])
   },
   mounted() {
     let path = this.$route.meta.id
@@ -44,22 +47,30 @@ export default {
       this.btnList = res.data
       this.$forceUpdate();
     });*/
+    this.getSeriesList();
   },
-  methods:{
+  methods: {
     // 查询条件过滤
     qFilter() {
       let obj = {}
-      this.search.cinemaName != null && this.search.cinemaName != '' ? obj.cinemaName = this.search.cinemaName : null
+      this.search.parentId != null && this.search.parentId != '' ? obj.parentId = this.search.parentId : null
       return obj
     },
-    onFun(method){
+    getSeriesList() {
+      seriesList({ parentId: 0 }).then(res => {
+        if (res.flag) {
+          this.sArray = res.data
+        }
+      })
+    },
+    onFun(method) {
       this[method]()
     },
     handlerAdd() {
       this.$emit('showDialog')
     },
     upload() {
-      this.search.name = ''
+      this.search.parentId = null
       this.$emit('uploadList')
     },
     query() {
@@ -72,7 +83,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$emit('del', {filmId :this.clickData.filmId})
+          this.$emit('del', {filmId: this.clickData.filmId})
         }).catch(() => {
           this.$message({
             type: 'info',

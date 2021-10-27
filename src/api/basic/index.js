@@ -1,9 +1,9 @@
 import request from '@/utils/request'
 import {getToken} from '@/utils/auth'
 
-// 影城-获取列表
-export function getLocationList(params, data) {
-  const url = '/location/locationList/' + params.pageNum + '/' + params.pageSize
+// 配件-获取列表
+export function getPartsList(params, data) {
+  const url = '/partsList/list/' + params.pageNum + '/' + params.pageSize
   return request({
     url: url,
     headers: {
@@ -17,6 +17,32 @@ export function getLocationList(params, data) {
 // 配件-新增
 export function addParts(params) {
   const url = '/partsList/addParts'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('cinerx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: params
+  })
+}
+// 配件-系列
+export function seriesList(params) {
+  const url = '/partsList/seriesList'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('cinerx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: params
+  })
+}
+// 产品信息
+export function productList(params) {
+  const url = '/productionMessage/productList'
   return request({
     url: url,
     headers: {

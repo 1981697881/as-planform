@@ -16,16 +16,16 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { getMovieList, deleteMovie} from "@/api/basic/index";
-import List from "@/components/List";
+  import {mapGetters} from 'vuex'
+  import {deleteMovie, getPartsList} from '@/api/basic/index'
+  import List from '@/components/List'
 
-export default {
+  export default {
   components: {
     List
   },
   computed: {
-    ...mapGetters(["node"])
+    ...mapGetters(['node'])
   },
   data() {
     return {
@@ -36,18 +36,17 @@ export default {
       type: null,
       checkDate: null,
       columns: [
-        { text: '所属系列', name: '' },
-        { text: '零件编码', name: '' },
-        { text: '零件名称', name: '' },
-        { text: '版本号', name: '' },
-        { text: '销售价格', name: '' },
-        { text: '出库价格', name: '' },
-        { text: '适用产品', name: '' },
-        { text: '备注说明', name: '' },
+        { text: '所属系列', name: 'seriesName' },
+        { text: '零件编码', name: 'partsCode' },
+        { text: '零件名称', name: 'partsName' },
+        { text: '版本号', name: 'partsEdition' },
+        { text: '销售价格', name: 'salePrice' },
+        { text: '出库价格', name: 'retrievalPrice' },
+        { text: '适用产品', name: 'applyProduct' },
+        { text: '备注说明', name: 'remark' }
       ]
-    };
+    }
   },
-
   methods: {
     // 监听每页显示几条
     handleSize(val) {
@@ -62,7 +61,7 @@ export default {
     Delivery(val) {
       deleteMovie(val).then(res => {
         if(res.flag){
-          this.$store.dispatch("list/setClickData", '');
+          this.$store.dispatch('list/setClickData', '');
           this.$emit('uploadList')
         }
       });
@@ -78,20 +77,20 @@ export default {
     },
     // 监听单击某一行
     rowClick(obj) {
-      this.$store.dispatch("list/setClickData", obj.row)
+      this.$store.dispatch('list/setClickData', obj.row)
     },
     fetchData(val, data = {
       pageNum: this.list.current || 1,
       pageSize: this.list.size || 50
     }) {
-      this.loading = true;
-      getMovieList(data, val).then(res => {
+      this.loading = true
+      getPartsList(data, val).then(res => {
         this.loading = false
         this.list = res.data
       })
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

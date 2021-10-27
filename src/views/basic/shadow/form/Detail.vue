@@ -3,58 +3,58 @@
     <el-form :model="form" :rules="rules" ref="form" label-width="100px" :size="'mini'">
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'零件编码'" prop="filmName">
-            <el-input v-model="form.filmName"></el-input>
+          <el-form-item :label="'零件编码'" prop="partsCode">
+            <el-input v-model="form.partsCode"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'所属系列'" prop="filmSortid">
-            <el-select v-model="form.filmSortid" class="width-full" placeholder="请选择">
-              <el-option :label="t[1]" :value="t[0]" v-for="(t,i) in levelFormat" :key="i"></el-option>
+          <el-form-item :label="'所属系列'" prop="parentId">
+            <el-select v-model="form.parentId" class="width-full" placeholder="请选择">
+              <el-option :label="t.seriesName" :value="t.id" v-for="(t,i) in sArray" :key="i"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'零件名称'" prop="filmName">
-            <el-input v-model="form.filmName"></el-input>
+          <el-form-item :label="'零件名称'" prop="partsName">
+            <el-input v-model="form.partsName"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'版本号'" prop="filmName">
-            <el-input v-model="form.filmName"></el-input>
+          <el-form-item :label="'版本号'" prop="partsEdition">
+            <el-input v-model="form.partsEdition"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'销售价格'" prop="filmName">
-            <el-input-number v-model="form.filmName" :min="1"></el-input-number>
+          <el-form-item :label="'销售价格'" prop="salePrice">
+            <el-input-number v-model="form.salePrice" :min="1"></el-input-number>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'出库价格'" prop="filmName">
-            <el-input-number v-model="form.filmName" :min="1"></el-input-number>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="24">
-          <el-form-item :label="'备注说明'" prop="filmIntro">
-            <el-input type="textarea" v-model="form.filmIntro"></el-input>
+          <el-form-item :label="'出库价格'" retrievalPrice="retrievalPrice">
+            <el-input-number v-model="form.retrievalPrice" :min="1"></el-input-number>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="24">
-          <el-form-item :label="'演职人员'" prop="orgAttr">
-            <div style="margin-top: 20px;margin-bottom: 10px">
+          <el-form-item :label="'备注说明'" prop="remark">
+            <el-input type="textarea" v-model="form.remark"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="24">
+          <el-form-item :label="'适用产品'">
+            <div>
               <el-button @click="setRow">添加</el-button>
               <el-button @click="delRow">删除</el-button>
               <el-switch
-                v-model="value1"
-                style="display: block"
+                v-model="form.value"
+                style="margin-top:10px;margin-bottom:10px;display: block"
                 active-color="#13ce66"
                 inactive-color="#ff4949"
                 active-text="适用所有"
@@ -93,10 +93,37 @@
       <el-form :model="postform" :rules="rules2" ref="postform" label-width="80px" :size="'mini'">
         <el-row :span="20" style="padding-top: 15px">
           <el-col :span="12">
-            <el-form-item :label="'名称'" prop="roleName">
+            <el-form-item :label="'编码'">
               <el-input v-model="postform.roleName"></el-input>
             </el-form-item>
           </el-col>
+          <el-col :span="2">
+            <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
+          </el-col>
+        </el-row>
+        <el-row :span="20" style="padding-top: 15px">
+          <el-table
+            class="list-main"
+            :data="productList"
+            border
+            size="mini"
+            :highlight-current-row="true"
+            @selection-change="handleSelectionChange"
+          >
+            <el-table-column
+              type="selection"
+              width="55">
+            </el-table-column>
+            <el-table-column
+              v-for="(t,i) in columns"
+              :key="i"
+              align="center"
+              :prop="t.name"
+              :label="t.text"
+              v-if="t.default!=undefined?t.default:true"
+              :width="t.width?t.width:''"
+            ></el-table-column>
+          </el-table>
         </el-row>
       </el-form>
       <div slot="footer" style="text-align:center;padding-top: 15px">
@@ -108,10 +135,9 @@
     </div>
   </div>
 </template>
-
 <script>
   import {getToken} from '@/utils/auth'
-  import {addParts} from '@/api/basic/index'
+  import {addParts, productList, seriesList} from '@/api/basic/index'
 
   export default {
   props: {
@@ -126,32 +152,31 @@
         'authorization': getToken('cinerx')
       },
       starName: null,
-      value1: true,
       keyWords: [],
       inputValue: '',
       visible: null,
       list: [],
       columns: [
-        {text: '产品编码', name: ''},
-        {text: '对应K3编码', name: ''},
-        {text: '产品名称', name: ''},
-        {text: '规格型号', name: ''},
+        {text: '产品编码', name: 'productCode'},
+        {text: '对应K3编码', name: 'productK3code'},
+        {text: '产品名称', name: 'productName'},
+        {text: '规格型号', name: 'productModel'},
       ],
-      userList: [],
+      productList: [],
       form: {
-        filmName: null,
-        filmIntro: null,
-        filmPhoto: null,
-        photoArrays: [],
-        herald: null,
-        filmSortid: null,
-        keyWords: [],
+        parentId: null,
+        partsCode: null,
+        partsEdition: null,
+        partsName: null,
+        remark: null,
+        retrievalPrice: null,
+        salePrice: null,
+        value: false
       },
       checkData: null,
       checkYzData: null,
       postform: {
         roleName: null, // 名称
-        roleType: null,
       },
       userform: {
         starSex: null,
@@ -159,12 +184,16 @@
         starProfile: null,
         starPhotoUrl: null,
       },
-      pArray: [],
+      sArray: [],
+      selection: [],
       rules: {
-        filmName: [
+        partsCode: [
           {required: true, message: '请输入', trigger: 'blur'}
         ],
-        filmIntro: [
+        partsEdition: [
+          {required: true, message: '请输入', trigger: 'blur'}
+        ],
+        partsName: [
           {required: true, message: '请输入', trigger: 'blur'}
         ],
       },
@@ -176,32 +205,42 @@
           {required: true, message: '请选择', trigger: 'change'}
         ],
       },
-      levelFormat: [['剧情', '剧情'], ['科幻', '科幻'], ['恐怖', '恐怖'], ['动作', '动作'], ['爱情', '爱情'], ['悬疑', '悬疑'], ['喜剧', '喜剧'], ['动画', '动画'], ['奇幻', '奇幻'], ['冒险', '冒险']],
     };
   },
   mounted() {
+    this.getSeriesList();
     if (this.listInfo) {
       this.form = this.listInfo
+      this.list = this.listInfo.productionApplies
     }
   },
   methods: {
+    query() {
+      productList({productCode: this.postform.roleName}).then(res => {
+        if (res.flag) {
+          this.productList = res.data
+        }
+      })
+    },
     // 演职人员选中
     yzClick(obj) {
       this.checkYzData = obj
     },
+    // 监听多选 参数-所有选中的值
+    handleSelectionChange(val) {
+      this.selection = val
+    },
     // 演职人员删除
     delRow() {
-      if (this.checkYzData.starId) {
-        this.$confirm('是否删除(' + this.checkYzData.starName + ')，删除后将无法恢复?', '提示', {
+      if (this.checkYzData.productName) {
+        this.$confirm('是否删除(' + this.checkYzData.productName + ')?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
           this.list.some((item, index) => {
-            if (this.checkYzData.starId == item.starId && this.checkYzData.roleType === item.roleType) {
-              this.list.splice(index, 1)
-              return true
-            }
+            this.list.splice(index, 1)
+            return true
           })
         }).catch(() => {
           this.$message({
@@ -218,35 +257,24 @@
     },
     // 演职人员确认
     confirm() {
-      let me = this
-      this.$refs['postform'].validate((valid) => {
-        // 判断必填项
-        if (valid) {
-          if (this.checkData != null) {
-            let list = me.list
-            let number = 0
-            for (let val of list) {
-              if (me.checkData.starId == val.starId && me.postform.roleType == val.roleType) {
-                number++
-              }
-            }
-            if (number == 0) {
-              me.visible = false
-              me.list.push({
-                roleName: me.postform.roleName,
-                starName: me.checkData.starName,
-                roleType: me.postform.roleType,
-                starId: me.checkData.starId,
-              })
-              me.checkData = null
-            } else {
-              this.$message.error('影讯内，不允许同职员同职务存在');
-            }
-          } else {
-            this.$message.error('无选中人员');
-          }
-        } else {
-          return false
+      let me = this;
+      if (this.selection.length > 0) {
+        this.selection.forEach((item) => {
+          me.list.push(item)
+        });
+        this.visible = null;
+        this.selection = [];
+      } else {
+        this.$message({
+          message: '无选中行',
+          type: 'warning'
+        })
+      }
+    },
+    getSeriesList() {
+      seriesList({parentId: 0}).then(res => {
+        if (res.flag) {
+          this.sArray = res.data
         }
       })
     },
@@ -264,7 +292,7 @@
         if (valid) {
           // 修改
           const param = this.form
-          param.filmRoleVOS = this.list
+          param.productionApplies = this.list
           addParts(param).then(res => {
             this.$emit('hideDialog', false)
             this.$emit('uploadList')
