@@ -12,7 +12,7 @@
         </el-col>
         <el-button-group style="float:right;padding-bottom: 10px">
           <!-- <el-button v-for="(t,i) in btnList" :key="i" v-if="t.category == 'default'" :size="'mini'" type="primary" :icon="t.cuicon" @click="onFun(t.path)">{{t.menuName}}</el-button>-->
-          <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="del">处理</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="handle">处理</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
         </el-button-group>
@@ -86,13 +86,14 @@
       }
     },
     handle() {
-      if (this.clickData.filmId) {
-        this.$confirm('是否处理(' + this.clickData.filmName + ')?', '提示', {
+      console.log(this.clickData)
+      if (this.clickData.id) {
+        this.$confirm('是否处理(' + this.clickData.productName + ')?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          updateReport({ id: this.clickData.filmId }).then(res => {
+          updateReport({ id: this.clickData.id,status: "1" }).then(res => {
             if (res.flag) {
               this.$emit('uploadList')
             }

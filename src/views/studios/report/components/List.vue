@@ -5,8 +5,8 @@
       :columns="columns"
       :loading="loading"
       :list="list"
+      show-summary
       index
-      type
       @handle-size="handleSize"
       @handle-current="handleCurrent"
       @dblclick="dblclick"
@@ -36,14 +36,12 @@
       type: null,
       checkDate: null,
       columns: [
-        { text: '所属系列', name: '' },
-        { text: '零件编码', name: '' },
-        { text: '零件名称', name: '' },
-        { text: '版本号', name: '' },
-        { text: '销售价格', name: '' },
-        { text: '出库价格', name: '' },
-        { text: '适用产品', name: '' },
-        { text: '备注说明', name: '' },
+        { text: '业务员', name: '' },
+        { text: '上报日期', name: 'createDate' },
+        { text: '产品条码', name: 'productModel' },
+        { text: '产品名称', name: 'productName' },
+        { text: '型号', name: 'productModel' },
+        { text: '处理状态', name: 'status' }
       ]
     };
   },
@@ -63,7 +61,7 @@
         const list = this.list.records
         const data = this.formatJson(filterVal, list);
         // 这里还是使用export_json_to_excel方法比较好，方便操作数据
-        excel.export_json_to_excel([tHeader],data,'数据')
+        excel.export_json_to_excel([tHeader],data,'上报数据')
       })
     },
     formatJson(filter, jsonDate){

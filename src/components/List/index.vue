@@ -211,7 +211,10 @@ export default {
         }else{
           const values = data.map(item=>Number(item[column.property]))
           const flag = values.every(item=>isNaN(item))
-          if(flag){
+          if(column.property == 'productName') {
+            sums[index] = values.length;
+          }
+         /* if(flag){
             return sums[index] = ""
           }else{
             if(column.property == 'num' ||  column.property == 'evenNum'|| column.property == 'adjNum'|| column.property == 'pastNum'|| column.property == 'nowNum') {
@@ -219,7 +222,7 @@ export default {
               sums[index] = Math.round(sums[index] * 100) / 100;
               sums[index] += ""
             }
-          }
+          }*/
         }
       })
       return sums
