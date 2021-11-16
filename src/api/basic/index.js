@@ -7,7 +7,7 @@ export function getPartsList(params, data) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -20,7 +20,7 @@ export function addParts(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'post',
@@ -33,7 +33,7 @@ export function seriesList(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'post',
@@ -46,7 +46,7 @@ export function productList(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'post',
@@ -54,18 +54,6 @@ export function productList(params) {
   })
 }
 
-// 影城-删除
-export function deleteLocation(params) {
-  return request({
-    url: '/location/deleteLocation',
-    headers: {
-      'authorization': getToken('cinerx'),
-      'Content-Type': 'application/json'
-    },
-    data: params,
-    method: 'post'
-  })
-}
 
 // 职员管理-获取列表
 export function getClerkList(params, query) {
@@ -73,7 +61,7 @@ export function getClerkList(params, query) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -86,7 +74,7 @@ export function addClerk(params) {
   return request({
     url: '/employee/add',
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -99,7 +87,7 @@ export function alterClerk(params) {
   return request({
     url: '/employee/update',
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'PUT',
@@ -112,7 +100,7 @@ export function clerkInfo(params) {
   return request({
     url: '/table/list' + params,
     headers: {
-      'authorization': getToken('cinerx')
+      'authorization': getToken('aspanrx')
     },
     method: 'get'
   })
@@ -123,7 +111,7 @@ export function clerkDepartment(params) {
   return request({
     url: '/table/list' + params,
     headers: {
-      'authorization': getToken('cinerx')
+      'authorization': getToken('aspanrx')
     },
     method: 'get',
     params
@@ -135,7 +123,7 @@ export function delClerk(params) {
   return request({
     url: '/employee/del/' + params,
     headers: {
-      'authorization': getToken('cinerx')
+      'authorization': getToken('aspanrx')
     },
     method: 'delete',
   })

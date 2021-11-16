@@ -1,7 +1,5 @@
 import request from '@/utils/request'
-import {
-  getToken
-} from '@/utils/auth'
+import {getToken} from '@/utils/auth'
 
 // 票务管理-获取列表
 export function getTicketList(params, data) {
@@ -9,7 +7,7 @@ export function getTicketList(params, data) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -21,7 +19,7 @@ export function getGoodsList(params, data) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -33,7 +31,7 @@ export function getRechargeList(params, data) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -45,7 +43,7 @@ export function getCoinList(params, data) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -57,7 +55,7 @@ export function detailById(params) {
   return request({
     url: '/marshallinDetail/detailByFId',
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     data: params,
@@ -69,7 +67,7 @@ export function lockSeats(params) {
   return request({
     url: '/engross/lockSeats',
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     data: params,
@@ -81,7 +79,7 @@ export function detailSeats(params) {
   return request({
     url: '/engross/detailSeats',
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     data: params,
@@ -92,7 +90,7 @@ export function scheduleSeats(params) {
   return request({
     url: '/scheduleSeat/scheduleSeats',
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     data: params,
@@ -103,7 +101,7 @@ export function querySchedules(params) {
   return request({
     url: '/schedule/schedules',
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     data: params,
@@ -115,7 +113,7 @@ export function fhLockSeats(params) {
   return request({
     url: '/FH/lockSeats',
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     data: params,
@@ -127,7 +125,7 @@ export function confirmOrder(params) {
   return request({
     url: '/FH/confirmOrder',
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     data: params,

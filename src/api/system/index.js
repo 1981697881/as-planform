@@ -1,7 +1,5 @@
 import request from '@/utils/request'
-import {
-  getToken
-} from '@/utils/auth'
+import {getToken} from '@/utils/auth'
 
 // 用户权限管理-获取用户组
 export function getUsersTree(params) {
@@ -9,7 +7,7 @@ export function getUsersTree(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx')
+      'authorization': getToken('aspanrx')
     },
     method: 'get'
   })
@@ -20,7 +18,7 @@ export function groupAdd(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'post',
@@ -33,7 +31,7 @@ export function groupAlter(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'post',
@@ -48,7 +46,7 @@ export function delGroup(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx')
+      'authorization': getToken('aspanrx')
     },
     method: 'delete'
   })
@@ -59,7 +57,7 @@ export function getUsersList(data) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST'
@@ -70,7 +68,7 @@ export function transactionLogList(data,params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     data:params,
@@ -82,7 +80,7 @@ export function getWeChatLogList(data,params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     data:params,
@@ -95,7 +93,7 @@ export function addUsers(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'post',
@@ -108,7 +106,7 @@ export function alterUsers(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -121,7 +119,7 @@ export function delUsers(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST'
@@ -132,7 +130,7 @@ export function disableUsers(params) {
   return request({
     url: '/table/list',
     headers: {
-      'authorization': getToken('cinerx')
+      'authorization': getToken('aspanrx')
     },
     method: 'get',
     params
@@ -143,7 +141,7 @@ export function enableUsers(params) {
   return request({
     url: '/table/list',
     headers: {
-      'authorization': getToken('cinerx')
+      'authorization': getToken('aspanrx')
     },
     method: 'get',
     params
@@ -155,7 +153,7 @@ export function getUsersInfo(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST'
@@ -166,7 +164,7 @@ export function getClerk(params) {
   return request({
     url: '/table/list',
     headers: {
-      'authorization': getToken('cinerx')
+      'authorization': getToken('aspanrx')
     },
     method: 'get',
     params
@@ -177,7 +175,7 @@ export function getMenuList(params) {
   return request({
     url: '/sys-menu/getSysMenuTree',
     headers: {
-      'authorization': getToken('cinerx')
+      'authorization': getToken('aspanrx')
     },
     method: 'get',
   })
@@ -188,7 +186,7 @@ export function getFindAbout(params, data) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -202,7 +200,7 @@ export function addAbout(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'post',

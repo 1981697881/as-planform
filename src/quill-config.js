@@ -1,6 +1,4 @@
-import {
-  getToken
-} from '@/utils/auth'
+import {getToken} from '@/utils/auth'
 /*富文本编辑图片上传配置*/
 const uploadConfig = {
   action:  `${window.location.origin}/web/file/imgUpload`,  // 必填参数 图片上传地址
@@ -56,7 +54,7 @@ const handlers = {
         // 图片上传
         var xhr = new XMLHttpRequest();
         xhr.open(uploadConfig.methods, uploadConfig.action, true);
-        xhr.setRequestHeader('authorization',getToken('cinerx'));
+        xhr.setRequestHeader('authorization',getToken('aspanrx'));
         // 上传数据成功，会触发
         xhr.onload = function (e) {
           if (xhr.status === 200) {

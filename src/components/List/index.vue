@@ -16,6 +16,8 @@
       :show-summary="showSummary"
       :summary-method="getSummaries"
       v-loading="loading"
+      row-key="id"
+      :tree-props="tree"
     >
       <el-table-column align="center" fixed v-if="type" :type="type?'selection':''"></el-table-column>
       <el-table-column v-if="index" prop="date" label="序号" type="index" align="center" sortable></el-table-column>
@@ -75,6 +77,10 @@ export default {
       // 列
       type: Array,
       default: null
+    }, tree: {
+      // 列
+      type: Object,
+      default: {}
     },
     index: {
       // 是否需要序号列

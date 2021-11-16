@@ -25,9 +25,9 @@
 
 <script>
 
-import { mapGetters } from 'vuex'
-import { getByUserAndPrId } from '@/api/system/index'
-export default {
+  import {mapGetters} from 'vuex'
+
+  export default {
   data() {
     return {
       btnList: [],
@@ -64,8 +64,8 @@ export default {
       this.$emit('queryBtn', this.qFilter())
     },
     del() {
-      if (this.clickData.filmId) {
-        this.$confirm('是否删除(' + this.clickData.filmName + ')，删除后将无法恢复?', '提示', {
+      if (this.clickData.repairOrder) {
+        this.$confirm('是否删除(' + this.clickData.repairOrder + ')，删除后将无法恢复?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -85,7 +85,7 @@ export default {
       }
     },
     handlerAlter() {
-      if (this.clickData.filmId) {
+      if (this.clickData.repairOrder) {
         this.$emit('showDialog', this.clickData)
       } else {
         this.$message({
@@ -94,7 +94,7 @@ export default {
         });
       }
     }, handlerChoice() {
-      if (this.clickData.filmId) {
+      if (this.clickData.repairOrder) {
         this.$emit('showChoice', this.clickData)
       } else {
         this.$message({
@@ -103,7 +103,7 @@ export default {
         });
       }
     }, handlerReceiving() {
-      if (this.clickData.filmId) {
+      if (this.clickData.repairOrder) {
         this.$emit('showReceiving', this.clickData)
       } else {
         this.$message({
@@ -112,7 +112,7 @@ export default {
         });
       }
     }, handlerDeliver() {
-      if (this.clickData.filmId) {
+      if (this.clickData.repairOrder) {
         this.$emit('showDeliver', this.clickData)
       } else {
         this.$message({

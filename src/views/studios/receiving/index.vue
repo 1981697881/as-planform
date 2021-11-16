@@ -2,9 +2,10 @@
   <div class="app-list">
     <div class="list-containerOther">
       <div>
-        <tabs-bar ref="tabs" @showDialog="handlerDialog" @showChoice="showChoice" @showReceiving="showReceiving" @showDeliver="showDeliver"  @queryBtn="query" @uploadList="upload"/>
+        <tabs-bar ref="tabs" @showDialog="handlerDialog" @showChoice="showChoice" @showReceiving="showReceiving"
+                  @showDeliver="showDeliver" @queryBtn="query" @uploadList="upload"/>
       </div>
-      <list ref="list" @uploadList="uploadPage" @showDialog="handlerDialog"  />
+      <list ref="list" @uploadList="uploadPage" @showDialog="handlerDialog"/>
     </div>
     <el-dialog
       :visible.sync="visible"
@@ -15,30 +16,33 @@
       destroy-on-close
     >
       <info @hideDialog="hideWindow" @uploadList="upload" :listInfo="listInfo"></info>
-    </el-dialog><el-dialog
+    </el-dialog>
+    <el-dialog
       :visible.sync="visible1"
       title="分配工程师"
       v-if="visible1"
       v-dialogDrag
-      :width="'40%'"
+      :width="'30%'"
       destroy-on-close
     >
       <choice @hideDialog="hideWindow" @uploadList="upload" :listInfo="listInfo"></choice>
-    </el-dialog><el-dialog
+    </el-dialog>
+    <el-dialog
       :visible.sync="visible2"
       title="发货"
       v-if="visible2"
       v-dialogDrag
-      :width="'40%'"
+      :width="'30%'"
       destroy-on-close
     >
       <deliver @hideDialog="hideWindow" @uploadList="upload" :listInfo="listInfo"></deliver>
-    </el-dialog><el-dialog
+    </el-dialog>
+    <el-dialog
       :visible.sync="visible3"
       title="确认收货"
       v-if="visible3"
       v-dialogDrag
-      :width="'40%'"
+      :width="'30%'"
       destroy-on-close
     >
       <receiving @hideDialog="hideWindow" @uploadList="upload" :listInfo="listInfo"></receiving>
@@ -47,9 +51,10 @@
 </template>
 
 <script>
-import { TabsBar,List } from "./components"
-import {choice, deliver, Info, receiving} from "./form"
-export default {
+  import {choice, deliver, Info, receiving} from './form'
+  import {List, TabsBar} from './components'
+
+  export default {
   components: {
     TabsBar,
     List,
@@ -69,46 +74,48 @@ export default {
       floorId: null
     }
   },
-    mounted() {
-      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
-    },
+  mounted() {
+    this.$refs.list.fetchData(this.$refs.tabs.qFilter())
+  },
   methods: {
-      hideWindow(val) {
-          this.visible = val
-          this.visible1 = val
-          this.visible2 = val
-          this.visible3 = val
-      },
-      handlerDialog(obj) {
-        this.listInfo = null
-        if(obj) {
-          const info = JSON.parse(JSON.stringify(obj))
-          this.listInfo = info
-        }
-          this.visible = true
-      },
+    hideWindow(val) {
+      this.visible = val
+      this.visible1 = val
+      this.visible2 = val
+      this.visible3 = val
+    },
+    handlerDialog(obj) {
+      this.listInfo = null
+      if (obj) {
+        const info = JSON.parse(JSON.stringify(obj))
+        this.listInfo = info
+      }
+      this.visible = true
+    },
     showChoice(obj) {
-        this.listInfo = null
-        if(obj) {
-          const info = JSON.parse(JSON.stringify(obj))
-          this.listInfo = info
-        }
-          this.visible1 = true
-      },showReceiving(obj) {
-        this.listInfo = null
-        if(obj) {
-          const info = JSON.parse(JSON.stringify(obj))
-          this.listInfo = info
-        }
-          this.visible2 = true
-      },showDeliver(obj) {
-        this.listInfo = null
-        if(obj) {
-          const info = JSON.parse(JSON.stringify(obj))
-          this.listInfo = info
-        }
-          this.visible3 = true
-      },
+      this.listInfo = null
+      if (obj) {
+        const info = JSON.parse(JSON.stringify(obj))
+        this.listInfo = info
+      }
+      this.visible1 = true
+    },
+    showReceiving(obj) {
+      this.listInfo = null
+      if (obj) {
+        const info = JSON.parse(JSON.stringify(obj))
+        this.listInfo = info
+      }
+      this.visible2 = true
+    },
+    showDeliver(obj) {
+      this.listInfo = null
+      if (obj) {
+        const info = JSON.parse(JSON.stringify(obj))
+        this.listInfo = info
+      }
+      this.visible3 = true
+    },
     // 更新列表
     upload() {
       this.$refs.list.uploadPr(this.$refs.tabs.qFilter())

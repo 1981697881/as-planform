@@ -13,7 +13,7 @@
         <el-button-group style="float:right;padding-bottom: 10px">
           <!-- <el-button v-for="(t,i) in btnList" :key="i" v-if="t.category == 'default'" :size="'mini'" type="primary" :icon="t.cuicon" @click="onFun(t.path)">{{t.menuName}}</el-button>-->
           <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handlerAlter">检修意见</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="del">维修完成</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-check" @click="check">维修完成</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
         </el-button-group>
       </el-row>
@@ -23,9 +23,9 @@
 
 <script>
 
-import { mapGetters } from 'vuex'
-import { getByUserAndPrId } from '@/api/system/index'
-export default {
+  import {mapGetters} from 'vuex'
+
+  export default {
   data() {
     return {
       btnList: [],
@@ -64,20 +64,9 @@ export default {
     query() {
       this.$emit('queryBtn', this.qFilter())
     },
-    del() {
-      if (this.clickData.filmId) {
-        this.$confirm('是否删除(' + this.clickData.filmName + ')，删除后将无法恢复?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.$emit('del', {filmId :this.clickData.filmId})
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });
-        });
+    check() {
+      if (this.clickData.repairOrder) {
+
       } else {
         this.$message({
           message: '无选中行',
@@ -86,7 +75,7 @@ export default {
       }
     },
     handlerAlter() {
-      if (this.clickData.filmId) {
+      if (this.clickData.repairOrder) {
         this.$emit('showDialog', this.clickData)
       } else {
         this.$message({

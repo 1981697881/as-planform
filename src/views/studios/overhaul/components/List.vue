@@ -7,6 +7,7 @@
       :list="list"
       index
       type
+      :tree="{children: 'repairDetailList',hasChildren: 'hasChildren'}"
       @handle-size="handleSize"
       @handle-current="handleCurrent"
       @dblclick="dblclick"
@@ -36,20 +37,20 @@
       type: null,
       checkDate: null,
       columns: [
-        { text: '维修单号', name: '' },
-        { text: '产品条码', name: '' },
-        { text: '产品名称', name: '' },
-        { text: '型号', name: '' },
-        { text: '购买日期', name: '' },
-        { text: '保修期至', name: '' },
-        { text: '故障说明', name: '' },
+        { text: '维修单号', name: 'repairOrder' },
+        { text: '产品条码', name: 'productCode' },
+        { text: '产品名称', name: 'productName' },
+        { text: '型号', name: 'productModel' },
+        { text: '购买日期', name: 'productBuyDate' },
+        { text: '保修期至', name: 'productGuarantee' },
+        { text: '故障说明', name: 'faultDescription' },
         { text: '维修说明', name: '' },
-        { text: '维修费用', name: '' },
-        { text: '付款状态', name: '' },
-        { text: '工程师', name: '' },
-        { text: '计划完成日期', name: '' },
+        { text: '维修费用', name: 'payPrice' },
+        { text: '付款状态', name: 'payStatus' },
+        { text: '工程师', name: 'engineerName' },
+        { text: '计划完成时间', name: '' },
         { text: '维修状态', name: '' },
-        { text: '物流信息', name: '' },
+        { text: '物流信息', name: '' }
       ]
     };
   },
@@ -93,6 +94,9 @@
       this.loading = true;
       getRepairList(data, val).then(res => {
         this.loading = false
+        res.data.records.forEach((item, index) => {
+          item.id = index + item.repairOrder
+        })
         this.list = res.data
       })
     }

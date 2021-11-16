@@ -1,7 +1,5 @@
 import request from '@/utils/request'
-import {
-  getToken
-} from '@/utils/auth'
+import {getToken} from '@/utils/auth'
 
 // 商品信息-获取列表
 export function getGoodsList(params, data) {
@@ -9,7 +7,7 @@ export function getGoodsList(params, data) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -22,7 +20,7 @@ export function addCommodity(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'post',
@@ -34,7 +32,7 @@ export function deleteCommodity(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'post',

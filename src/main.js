@@ -1,27 +1,20 @@
 import Vue from 'vue'
 
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
-
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 // import locale from 'element-ui/lib/locale/lang/en' // lang i18n
 import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
 
 import '@/styles/index.scss' // global css
-
 import App from './App'
 import store from './store'
 import router from './router'
-import {
-  MessageBox,
-  Message
-} from 'element-ui'
 import '@/icons' // icon
 import '@/permission' // permission control
-
 import Cookies from 'js-cookie'
-import {login,logout} from '@/api/user'
 import '@/utils/dialog'
+
 var VueTouch = require('vue-touch')
 Vue.use(VueTouch, { name: 'v-touch' })
 /**
@@ -50,8 +43,8 @@ new Vue({
       password: Cookies.get('cineps')
      }
     if(data.username && data.password){
-     var rs = Cookies.get('cinerx')
-      if(Cookies.get('cinerx') == "undefined"){
+     var rs = Cookies.get('aspanrx')
+      if(Cookies.get('aspanrx') == "undefined"){
         this.$router.push(`/login?redirect=${this.$route.fullPath}`)
         store.dispatch('user/resetToken')
       }else{

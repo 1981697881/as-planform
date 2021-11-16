@@ -1,7 +1,5 @@
 import request from '@/utils/request'
-import {
-  getToken
-} from '@/utils/auth'
+import {getToken} from '@/utils/auth'
 
 // 会员信息-获取列表
 export function getMemberList(params, data) {
@@ -9,7 +7,7 @@ export function getMemberList(params, data) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -21,7 +19,7 @@ export function getCdKeyList(params, data) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -33,7 +31,7 @@ export function getRechargeList(params, data) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',

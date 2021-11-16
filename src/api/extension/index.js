@@ -1,7 +1,5 @@
 import request from '@/utils/request'
-import {
-  getToken
-} from '@/utils/auth'
+import {getToken} from '@/utils/auth'
 
 // 广告管理-获取列表
 export function getPosterList(params, data) {
@@ -9,7 +7,7 @@ export function getPosterList(params, data) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -23,7 +21,7 @@ export function addPoster(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'post',
@@ -35,7 +33,7 @@ export function deletePoster(params) {
   return request({
     url: '/poster/deletePoster',
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     data: params,
@@ -48,7 +46,7 @@ export function getCouponList(params, data) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -61,7 +59,7 @@ export function getCouponIssueLists(params, data) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -74,7 +72,7 @@ export function bandCouponIssue(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'post',
@@ -88,7 +86,7 @@ export function addCoupon(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'post',
@@ -100,7 +98,7 @@ export function addCouponIssue(params) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'post',
@@ -112,7 +110,7 @@ export function deleteCoupon(params) {
   return request({
     url: '/coupon/deleteCoupon',
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     data: params,
@@ -123,7 +121,7 @@ export function addShareCdKey(params) {
   return request({
     url: '/memberCdkeyDetail/shareCdKey',
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     data: params,
@@ -136,7 +134,7 @@ export function getBatchList(params, data) {
   return request({
     url: url,
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
@@ -148,7 +146,7 @@ export function qrShareList(params) {
   return request({
     url: '/memberCdkeyDetail/qrShareList',
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     data: params,
@@ -159,7 +157,7 @@ export function handShareCdKey(params) {
   return request({
     url: '/memberCdkeyDetail/handShareCdKey',
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     data: params,
@@ -170,7 +168,7 @@ export function getShareList(params) {
   return request({
     url: '/memberCdkeyDetail/shareList',
     headers: {
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     data: params,

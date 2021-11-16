@@ -1,7 +1,5 @@
 import request from '@/utils/request'
-import {
-  getToken
-} from '@/utils/auth' // get token from cookie
+import {getToken} from '@/utils/auth' // get token from cookie
 export function login(data) {
   return request({
     headers: {
@@ -33,7 +31,7 @@ export function changePassword(data) {
   return request({
     headers: {
       'Content-Type': 'application/json',
-      'authorization': getToken('cinerx'),
+      'authorization': getToken('aspanrx'),
     },
     url: '/user/changePass',
     method: 'post',

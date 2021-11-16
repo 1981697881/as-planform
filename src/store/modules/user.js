@@ -1,9 +1,9 @@
-import { login, getInfo,changePassword, getPermissions} from '@/api/user'
-import { getToken, setToken, removeToken, setUserName, setPassword, setPer} from '@/utils/auth'
-import { resetRouter } from '@/router'
+import {changePassword, getInfo, getPermissions, login} from '@/api/user'
+import {getToken, removeToken, setPassword, setPer, setToken, setUserName} from '@/utils/auth'
+import {resetRouter} from '@/router'
 
 const state = {
-  token: getToken('cinerx'),
+  token: getToken('aspanrx'),
   name: '',
   url: 'https://cfzx.gzfzdev.com',
   avatar: '',
@@ -57,7 +57,7 @@ const actions = {
       changePassword(info).then(response => {
         commit('SET_TOKEN', '')
         //removeToken('plper')
-        removeToken('cinerx')
+        removeToken('aspanrx')
         removeToken('cineps')
         removeToken('cineun')
         resetRouter()
@@ -125,7 +125,7 @@ const actions = {
       commit('SET_TOKEN', '')
       commit('SET_PER', '')
       //removeToken('plper')
-      removeToken('cinerx')
+      removeToken('aspanrx')
       removeToken('cineps')
       removeToken('cineun')
       resetRouter()
@@ -146,7 +146,7 @@ const actions = {
   resetToken({ commit }) {
     return new Promise(resolve => {
       commit('SET_TOKEN', '')
-      removeToken('cinerx')
+      removeToken('aspanrx')
     /*  removeToken('cineps')
       removeToken('cineun')*/
       removeToken()

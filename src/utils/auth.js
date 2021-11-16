@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'cinerx'
+const TokenKey = 'aspanrx'
 
 export function getToken(TokenKey) {
   return Cookies.get(TokenKey)

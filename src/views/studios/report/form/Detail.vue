@@ -104,10 +104,8 @@
 </template>
 
 <script>
-  import {addMovie,addStar,deleteStar,getStarList} from "@/api/basic/index";
-  import {
-    getToken
-  } from '@/utils/auth'
+  import {addMovie} from "@/api/basic/index";
+  import {getToken} from '@/utils/auth'
 
   export default {
     props: {
@@ -119,7 +117,7 @@
     data() {
       return {
         headers: {
-          'authorization': getToken('cinerx'),
+          'authorization': getToken('aspanrx'),
         },
         starName: null,
         value1: true,

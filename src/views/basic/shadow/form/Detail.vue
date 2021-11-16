@@ -149,7 +149,7 @@
   data() {
     return {
       headers: {
-        'authorization': getToken('cinerx')
+        'authorization': getToken('aspanrx')
       },
       starName: null,
       keyWords: [],
