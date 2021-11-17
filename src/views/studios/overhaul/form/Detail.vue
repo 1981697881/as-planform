@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model="form" :rules="rules" ref="form" label-width="100px" :size="'mini'">
+    <el-form :model="form" ref="form" label-width="100px" :size="'mini'">
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'维修单号'">
@@ -11,53 +11,53 @@
       <block v-for="(item, index) in form.repairDetailList" :key="index">
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item :label="'工程师'" prop="productCode">
+            <el-form-item :label="'工程师'">
               <el-input v-model="item.productCode" disabled></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item :label="'产品条码'" prop="productCode">
+            <el-form-item :label="'产品条码'" >
               <el-input v-model="item.productCode" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item :label="'产品名称'" prop="productName">
+            <el-form-item :label="'产品名称'" >
               <el-input v-model="item.productName" disabled></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item :label="'型号'" prop="productModel">
+            <el-form-item :label="'型号'">
               <el-input v-model="item.productModel" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item :label="'维修项目'" prop="filmName">
-              <el-input v-model="item.filmName"></el-input>
+            <el-form-item :label="'维修项目'" :prop="'list.' + index + '.dutyId.'+i+'.dutyid'" :rules="{required: true, message: '请输入', trigger: 'blur'}">
+              <el-input v-model="item.repairOpinion"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item :label="'配件费用'" prop="partsMoney">
+            <el-form-item :label="'配件费用'" >
               <el-input-number v-model="item.partsMoney" :min="1"></el-input-number>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item :label="'工时费'" prop="workMoney">
+            <el-form-item :label="'工时费'" >
               <el-input-number v-model="item.workMoney" :min="1"></el-input-number>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="24">
-            <el-form-item :label="'配件清单'" prop="orgAttr">
+            <el-form-item :label="'配件清单'">
               <div style="margin-top: 20px;margin-bottom: 10px">
-                <el-button @click="setRow">添加</el-button>
-                <el-button @click="delRow">删除</el-button>
+                <el-button @click="setRow(item)">添加</el-button>
+                <el-button @click="delRow(item)">删除</el-button>
               </div>
               <el-table class="list-main" :data="item.repairDetailParts" border size="mini"
                         :highlight-current-row="true">
@@ -84,20 +84,20 @@
       destroy-on-close
       append-to-body
     >
-      <el-form :model="postform" :rules="rules2" ref="postform" label-width="120px" :size="'mini'">
+      <el-form :model="postform" ref="postform" label-width="120px" :size="'mini'">
         <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item label-width="0">
-              <el-input v-model="username" placeholder="名称"><el-button slot="append" icon="el-icon-search" @click="fetchFormat"></el-button></el-input>
+              <el-input v-model="username" placeholder=""><el-button slot="append" icon="el-icon-search" @click="fetchFormat"></el-button></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :span="20">
           <el-col :span="24">
             <el-table class="list-main" height="200px" :data="list" border size="mini" :highlight-current-row="true"
-                      @row-dblclick="dblclick">
+                      @row-click="yzClick">
               <el-table-column
-                v-for="(t,i) in columns"
+                v-for="(t,i) in partsColumns"
                 :key="i"
                 align="center"
                 :prop="t.name"
@@ -110,9 +110,9 @@
         </el-row>
         <el-row :span="20">
           <el-col :span="12">
-            <el-form-item :label="'是否保修期内'" prop="roleName">
+            <el-form-item :label="'是否保修期内'" >
               <el-switch
-                v-model="value"
+                v-model="postform.isWarranty"
                 active-color="#13ce66"
                 inactive-color="#ff4949">
               </el-switch>
@@ -150,40 +150,31 @@ export default {
       value: true,
       keyWords: [],
       inputValue: '',
+      username: '',
       visible: null,
       list: [],
       columns: [
-        {text: '产品编码', name: 'partsCode'},
-        {text: '对应K3编码', name: 'k3Code'},
-        {text: '产品名称', name: 'partsName'},
-        {text: '规格型号', name: ''},
+        {text: '配件名称', name: 'partsCode'},
+        {text: '费用', name: 'partsPrice'},
+        {text: '是否保修期内', name: 'partsName'},
+      ],
+      partsColumns: [
+        {text: '配件编码', name: 'partsCode'},
+        {text: '配件名称', name: 'partsName'},
+        {text: '销售价格', name: 'salePrice'},
       ],
       userList: [],
       form: {
         partsMoney: 1,
+        repairOpinion: null,
         workMoney: 1,
       },
       checkData: null,
-      checkYzData: null,
+      partData: null,
       postform: {
-        roleName: null, // 名称
-        roleType: null,
+        isWarranty: false, // 名称
       },
       pArray: [],
-      rules: {
-        filmName: [
-          {required: true, message: '请输入', trigger: 'blur'}
-        ],
-      },
-      rules2: {
-        roleName: [
-          {required: true, message: '请输入值', trigger: 'blur'},
-        ],
-        roleType: [
-          {required: true, message: '请选择', trigger: 'change'}
-        ],
-      },
-      levelFormat: [['剧情', '剧情'], ['科幻', '科幻'], ['恐怖', '恐怖'], ['动作', '动作'], ['爱情', '爱情'], ['悬疑', '悬疑'], ['喜剧', '喜剧'], ['动画', '动画'], ['奇幻', '奇幻'], ['冒险', '冒险']],
     };
   },
   mounted() {
@@ -192,24 +183,21 @@ export default {
     }
   },
   methods: {
-    dblclick(obj) {
-      this.visible = false;
-    },
-    //选中
+    // 选中
     yzClick(obj) {
-      this.checkYzData = obj
+      this.checkData = obj
     },
-    //删除
-    delRow() {
-      if (this.checkYzData.starId) {
-        this.$confirm('是否删除(' + this.checkYzData.starName + ')，删除后将无法恢复?', '提示', {
+    // 删除
+    delRow(item) {
+      if (this.checkData.id) {
+        this.$confirm('是否删除(' + this.checkData.partsName + ')?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.list.some((item, index) => {
-            if (this.checkYzData.starId == item.starId && this.checkYzData.roleType === item.roleType) {
-              this.list.splice(index, 1)
+          item.repairDetailParts.some((item, index) => {
+            if (this.checkData.id == item.id) {
+              item.repairDetailParts.splice(index, 1)
               return true
             }
           })
@@ -226,46 +214,54 @@ export default {
         })
       }
     },
-    //演职人员确认
+    // 确认
     confirm() {
       let me = this
       this.$refs['postform'].validate((valid) => {
         // 判断必填项
         if (valid) {
           if (this.checkData != null) {
-            let list = me.list
+            if(me.partData.repairDetailParts == null){
+              me.partData.repairDetailParts = []
+            }
+            let list = me.partData.repairDetailParts
             let number = 0
             for (let val of list) {
-              if (me.checkData.starId == val.starId && me.postform.roleType == val.roleType) {
+              if (me.checkData.id == val.id) {
                 number++
               }
             }
             if (number == 0) {
               me.visible = false
-              me.list.push({
-                roleName: me.postform.roleName,
-                starName: me.checkData.starName,
-                roleType: me.postform.roleType,
-                starId: me.checkData.starId,
+              list.push({
+                partsCode: me.checkData.partsCode,
+                id: me.checkData.id,
+                partsName: me.checkData.partsName,
+                k3Code: me.checkData.k3Code,
+                isWarranty: me.postform.isWarranty,
+                partsPrice: me.checkData.salePrice,
+                partsEdition: me.checkData.partsEdition,
               })
               me.checkData = null
+              me.partData = null
             } else {
-              this.$message.error('影讯内，不允许同职员同职务存在');
+              this.$message.error('配件列表已存在');
             }
           } else {
-            this.$message.error('无选中人员');
+            this.$message.error('无选中数据');
           }
         } else {
           return false
         }
       })
     },
-    //演职人员选择
-    setRow() {
+    // 演职人员选择
+    setRow(item) {
       this.postform = {
         roleName: null, // 名称
         roleType: null,
       }
+      this.partData = item
       this.visible = true
     },
     saveData(form) {
@@ -274,8 +270,7 @@ export default {
         if (valid) {
           //修改
           let param = this.form
-          param.filmRoleVOS = this.list
-          repairDetailUpdate(param).then(res => {
+          repairDetailUpdate(this.form).then(res => {
             this.$emit('hideDialog', false)
             this.$emit('uploadList')
           });

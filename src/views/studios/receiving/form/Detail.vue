@@ -12,43 +12,43 @@
         <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item :label="'工程师'" prop="productCode">
-              <el-input v-model="item.productCode"></el-input>
+              <el-input v-model="item.productCode" disabled></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item :label="'产品条码'" prop="productCode">
-              <el-input v-model="item.productCode"></el-input>
+              <el-input v-model="item.productCode" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item :label="'产品名称'" prop="productName">
-              <el-input v-model="item.productName"></el-input>
+              <el-input v-model="item.productName" disabled></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item :label="'型号'" prop="productModel">
-              <el-input v-model="item.productModel"></el-input>
+              <el-input v-model="item.productModel" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item :label="'维修项目'" prop="filmName">
-              <el-input v-model="item.filmName"></el-input>
+              <el-input v-model="item.filmName" disabled></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item :label="'配件费用'" prop="partsMoney">
-              <el-input-number v-model="item.partsMoney" :min="1"></el-input-number>
+              <el-input-number v-model="item.partsMoney" :min="1" disabled></el-input-number>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item :label="'工时费'" prop="workMoney">
-              <el-input-number v-model="item.workMoney" :min="1"></el-input-number>
+              <el-input-number v-model="item.workMoney" :min="1" disabled></el-input-number>
             </el-form-item>
           </el-col>
         </el-row>
@@ -117,13 +117,8 @@ export default {
       ],
       userList: [],
       form: {
-        filmName: null,
-        filmIntro: null,
-        filmPhoto: null,
-        photoArrays: [],
-        herald: null,
-        filmSortid: null,
-        keyWords: [],
+        freight: 0,
+        discountMoney: 0
       },
       checkData: null,
       checkYzData: null,
@@ -142,7 +137,6 @@ export default {
           {required: true, message: '请输入', trigger: 'blur'}
         ],
       },
-      levelFormat: [['剧情', '剧情'], ['科幻', '科幻'], ['恐怖', '恐怖'], ['动作', '动作'], ['爱情', '爱情'], ['悬疑', '悬疑'], ['喜剧', '喜剧'], ['动画', '动画'], ['奇幻', '奇幻'], ['冒险', '冒险']],
     };
   },
   mounted() {

@@ -91,7 +91,8 @@ export function receiving(params) {
     method: 'post',
     data: params
   })
-}// 检修管理-维修
+}
+// 检修管理-维修
 export function repairDetailUpdate(params) {
   const url = '/repairDetail/update'
   return request({
@@ -103,9 +104,23 @@ export function repairDetailUpdate(params) {
     method: 'post',
     data: params
   })
-}// 检修管理-维修费用
+}
+// 检修管理-维修费用
 export function determineLastPrice(params) {
   const url = '/repair/determineLastPrice'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: params
+  })
+}
+// 检修管理-维修完成
+export function completeRepair(params) {
+  const url = '/repair/completeRepair'
   return request({
     url: url,
     headers: {
