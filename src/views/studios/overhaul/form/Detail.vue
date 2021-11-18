@@ -8,7 +8,7 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <block v-for="(item, index) in form.repairDetailList" :key="index">
+      <block v-for="(item, index) in form.repairDetail" :key="index">
         <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item :label="'工程师'">
@@ -35,7 +35,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item :label="'维修项目'" :prop="'list.' + index + '.dutyId.'+i+'.dutyid'" :rules="{required: true, message: '请输入', trigger: 'blur'}">
+            <el-form-item :label="'维修项目'" :prop="'repairDetail.'+index+'.repairOpinion'" :rules="{required: true, message: '请输入', trigger: 'blur'}">
               <el-input v-model="item.repairOpinion"></el-input>
             </el-form-item>
           </el-col>
@@ -113,6 +113,8 @@
             <el-form-item :label="'是否保修期内'" >
               <el-switch
                 v-model="postform.isWarranty"
+                active-value="true"
+                inactive-value="false"
                 active-color="#13ce66"
                 inactive-color="#ff4949">
               </el-switch>
@@ -154,14 +156,14 @@ export default {
       visible: null,
       list: [],
       columns: [
-        {text: '配件名称', name: 'partsCode'},
-        {text: '费用', name: 'partsPrice'},
-        {text: '是否保修期内', name: 'partsName'},
+        { text: '配件名称', name: 'partsCode' },
+        { text: '费用', name: 'partsPrice' },
+        { text: '是否保修期内', name: 'isWarranty' }
       ],
       partsColumns: [
-        {text: '配件编码', name: 'partsCode'},
-        {text: '配件名称', name: 'partsName'},
-        {text: '销售价格', name: 'salePrice'},
+        { text: '配件编码', name: 'partsCode' },
+        { text: '配件名称', name: 'partsName' },
+        { text: '销售价格', name: 'salePrice' }
       ],
       userList: [],
       form: {
@@ -172,7 +174,7 @@ export default {
       checkData: null,
       partData: null,
       postform: {
-        isWarranty: false, // 名称
+        isWarranty: 'true'
       },
       pArray: [],
     };
@@ -180,6 +182,8 @@ export default {
   mounted() {
     if (this.listInfo) {
       this.form = this.listInfo
+      this.form.repairDetail = this.listInfo.repairDetailList
+      delete this.form.repairDetailList
     }
   },
   methods: {
@@ -220,6 +224,7 @@ export default {
       this.$refs['postform'].validate((valid) => {
         // 判断必填项
         if (valid) {
+          console.log(me.postform.isWarranty)
           if (this.checkData != null) {
             if(me.partData.repairDetailParts == null){
               me.partData.repairDetailParts = []
@@ -240,6 +245,7 @@ export default {
                 k3Code: me.checkData.k3Code,
                 isWarranty: me.postform.isWarranty,
                 partsPrice: me.checkData.salePrice,
+                productCode: me.partData.productCode,
                 partsEdition: me.checkData.partsEdition,
               })
               me.checkData = null
@@ -255,12 +261,8 @@ export default {
         }
       })
     },
-    // 演职人员选择
+    // 物料选择
     setRow(item) {
-      this.postform = {
-        roleName: null, // 名称
-        roleType: null,
-      }
       this.partData = item
       this.visible = true
     },
@@ -270,9 +272,11 @@ export default {
         if (valid) {
           //修改
           let param = this.form
-          repairDetailUpdate(this.form).then(res => {
-            this.$emit('hideDialog', false)
-            this.$emit('uploadList')
+          repairDetailUpdate(param).then(res => {
+            if(res.flag){
+              this.$emit('hideDialog', false)
+              this.$emit('uploadList')
+            }
           });
         } else {
           return false;

@@ -21,11 +21,10 @@
   </div>
 </template>
 
-<script>
+<script>import {mapGetters} from 'vuex'
+import {completeRepair} from "@/api/studios/index";
 
-  import {mapGetters} from 'vuex'
-
-  export default {
+export default {
   data() {
     return {
       btnList: [],
@@ -66,7 +65,11 @@
     },
     check() {
       if (this.clickData.repairOrder) {
-
+        completeRepair({repairOrder: this.clickData.repairOrder}).then(res => {
+          if (res.flag) {
+            this.query()
+          }
+        });
       } else {
         this.$message({
           message: '无选中行',

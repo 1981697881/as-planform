@@ -8,66 +8,67 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <block v-for="(item, index) in form.repairDetailList" :key="index">
+      <block v-for="(item, index) in form.repairDetail" :key="index">
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item :label="'工程师'" prop="productCode">
+            <el-form-item :label="'工程师'">
               <el-input v-model="item.productCode" disabled></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item :label="'产品条码'" prop="productCode">
+            <el-form-item :label="'产品条码'">
               <el-input v-model="item.productCode" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item :label="'产品名称'" prop="productName">
+            <el-form-item :label="'产品名称'">
               <el-input v-model="item.productName" disabled></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item :label="'型号'" prop="productModel">
+            <el-form-item :label="'型号'">
               <el-input v-model="item.productModel" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item :label="'维修项目'" prop="filmName">
-              <el-input v-model="item.filmName" disabled></el-input>
+            <el-form-item :label="'维修项目'">
+              <el-input v-model="item.repairOpinion" disabled></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item :label="'配件费用'" prop="partsMoney">
+            <el-form-item :label="'配件费用'">
               <el-input-number v-model="item.partsMoney" :min="1" disabled></el-input-number>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item :label="'工时费'" prop="workMoney">
+            <el-form-item :label="'工时费'">
               <el-input-number v-model="item.workMoney" :min="1" disabled></el-input-number>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item :label="'物流费用'" prop="freight">
+            <el-form-item :label="'物流费用'">
               <el-input-number v-model="item.freight" :min="1"></el-input-number>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item :label="'优惠后金额'" prop="discountMoney">
+            <el-form-item :label="'优惠后金额'">
               <el-input-number v-model="item.discountMoney" :min="1"></el-input-number>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="24">
-            <el-form-item :label="'配件清单'" prop="orgAttr">
-              <el-table class="list-main" :data="item.repairDetailParts" border size="mini" :highlight-current-row="true">
+            <el-form-item :label="'配件清单'">
+              <el-table class="list-main" :data="item.repairDetailParts" border size="mini"
+                        :highlight-current-row="true">
                 <el-table-column
                   v-for="(t,i) in columns"
                   :key="i"
@@ -90,7 +91,7 @@
 </template>
 
 <script>import {getToken} from '@/utils/auth'
-import {addMovie} from "@/api/basic/index";
+import {determineLastPrice} from "@/api/studios/index";
 
 export default {
   props: {
@@ -104,45 +105,30 @@ export default {
       headers: {
         'authorization': getToken('aspanrx'),
       },
-      starName: null,
       value1: true,
-      keyWords: [],
       inputValue: '',
       visible: null,
       list: [],
       columns: [
-        {text: '配件', name: ''},
-        {text: '费用', name: ''},
-        {text: '是否保修期', name: ''}
+        {text: '配件名称', name: 'partsCode'},
+        {text: '费用', name: 'partsPrice'},
+        {text: '是否保修期内', name: 'isWarranty'}
       ],
       userList: [],
       form: {
         freight: 0,
         discountMoney: 0
       },
-      checkData: null,
-      checkYzData: null,
-      userform: {
-        starSex: null,
-        starName: null, // 名称
-        starProfile: null,
-        starPhotoUrl: null,
-      },
       pArray: [],
       rules: {
-        filmName: [
-          {required: true, message: '请输入', trigger: 'blur'}
-        ],
-        filmIntro: [
-          {required: true, message: '请输入', trigger: 'blur'}
-        ],
       },
     };
   },
   mounted() {
     if (this.listInfo) {
-      console.log(this.listInfo)
       this.form = this.listInfo
+      this.form.repairDetail = this.listInfo.repairDetailList
+      delete this.form.repairDetailList
     }
   },
   methods: {
@@ -152,10 +138,11 @@ export default {
         if (valid) {
           //修改
           let param = this.form
-          param.filmRoleVOS = this.list
-          addMovie(param).then(res => {
-            this.$emit('hideDialog', false)
-            this.$emit('uploadList')
+          determineLastPrice(param).then(res => {
+            if (res.flag) {
+              this.$emit('hideDialog', false)
+              this.$emit('uploadList')
+            }
           });
         } else {
           return false;

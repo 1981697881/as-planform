@@ -44,12 +44,12 @@
         { text: '购买日期', name: 'productBuyDate' },
         { text: '保修期至', name: 'productGuarantee' },
         { text: '故障说明', name: 'faultDescription' },
-        { text: '维修说明', name: '' },
+        { text: '维修说明', name: 'repairOpinion' },
         { text: '维修费用', name: 'payPrice' },
-        { text: '付款状态', name: 'payStatus' },
+        { text: '付款状态', name: 'payStatus', formatt: 'checkPay' },
         { text: '工程师', name: 'engineerName' },
-        { text: '计划完成时间', name: '' },
-        { text: '维修状态', name: '' },
+        { text: '计划完成时间', name: 'planDate' },
+        { text: '维修状态', name: 'status', formatt: 'checkType' },
         { text: '物流信息', name: '' }
       ]
     };

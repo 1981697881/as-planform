@@ -94,6 +94,7 @@ export function receiving(params) {
 }
 // 检修管理-维修
 export function repairDetailUpdate(params) {
+  console.log(params)
   const url = '/repairDetail/update'
   return request({
     url: url,

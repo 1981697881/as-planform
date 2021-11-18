@@ -106,7 +106,7 @@
         const info = JSON.parse(JSON.stringify(obj))
         this.listInfo = info
       }
-      this.visible2 = true
+      this.visible3 = true
     },
     showDeliver(obj) {
       this.listInfo = null
@@ -114,7 +114,7 @@
         const info = JSON.parse(JSON.stringify(obj))
         this.listInfo = info
       }
-      this.visible3 = true
+      this.visible2 = true
     },
     // 更新列表
     upload() {

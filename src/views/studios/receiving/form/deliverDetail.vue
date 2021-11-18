@@ -10,17 +10,15 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="24">
-          <el-form-item :label="'收货时间'" prop="receivingDate">
-            <div class="block">
-              <el-date-picker
-                v-model="form.receivingDate"
-                type="date"
-                style="width: auto"
-                value-format="yyyy-MM-dd"
-                :picker-options="pickerOptionsStart"
-                placeholder="选择日期">
-              </el-date-picker>
-            </div>
+          <el-form-item :label="'物流公司'" prop="expressName">
+            <el-input v-model="form.expressName"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="24">
+          <el-form-item :label="'物流单号'" prop="expressOrder">
+            <el-input v-model="form.expressOrder"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -41,23 +39,19 @@ export default {
   },
   data() {
     return {
-      pickerOptionsStart: {
-        disabledDate: time => {
-          let beginDateVal = new Date()
-          beginDateVal = beginDateVal.setDate(beginDateVal.getDate() - 1)
-          beginDateVal = new Date(beginDateVal)
-          return time.getTime() <= beginDateVal;
-        }
-      },
       value: [],
       form: {
         repairOrder: null,
-        receivingDate: null,
+        expressName: null,
+        expressOrder: null
       },
       oldCode: null,
       rules: {
-        receivingDate: [
-          {required: true, message: '请选择', trigger: 'change'}
+        expressName: [
+          {required: true, message: '请输入', trigger: 'blur'}
+        ],
+        expressOrder: [
+          {required: true, message: '请输入', trigger: 'blur'}
         ],
       },
     };
@@ -93,3 +87,4 @@ export default {
 
 <style>
 </style>
+

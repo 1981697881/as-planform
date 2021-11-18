@@ -28,7 +28,7 @@
           :key="i"
           :fixed="t.fixed"
           :sortable="t.sort"
-          :formatter="t.formatt!=undefined?(t.formatt == 'checkType'? checkType: checkStatus) : null"
+          :formatter="t.formatt!=undefined?(t.formatt == 'checkType'? checkType: checkPay) : null"
           v-if="t.default!=undefined ?(t.default =='img'?false:t.default):true"
           :label="t.text"
           :width="t.width?t.width:(selfAdaption?'':'120px')"
@@ -152,28 +152,27 @@ export default {
     },
     checkType(row, column) {
       let stau = ''
-      if(row.type == 0) {
-        stau = '通用'
-      }else if(row.type ==1) {
-        stau = '影片'
-      }else if(row.type == 2) {
-        stau = '商品'
-      }
-      if(row.ctype == 0) {
-        stau = '通用'
-      }else if(row.ctype ==1) {
-        stau = '影片'
-      }else if(row.ctype == 2) {
-        stau = '商品'
+      if(row.status == 0) {
+        stau = '待寄回'
+      }else if(row.status ==1) {
+        stau = '待检修'
+      }else if(row.status ==2) {
+        stau = '待维修'
+      }else if(row.status == 3) {
+        stau = '待发货'
+      }else if(row.status == 4) {
+        stau = '待收货'
+      }else if(row.status == 5) {
+        stau = '完成'
       }
       return  stau
     },
-    checkStatus(row, column) {
+    checkPay(row, column) {
       let stau = ''
-      if(row.status == 0) {
-        stau = '关闭'
-      }else if(row.status ==1) {
-        stau = '开启'
+      if(row.payStatus == 0) {
+        stau = '未付款'
+      }else if(row.payStatus ==1) {
+        stau = '已付款'
       }
       return  stau
     },
