@@ -6,7 +6,6 @@
       :loading="loading"
       :list="list"
       index
-      type
       :tree="{children: 'repairDetailList',hasChildren: 'hasChildren'}"
       @handle-size="handleSize"
       @handle-current="handleCurrent"

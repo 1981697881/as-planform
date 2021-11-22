@@ -15,20 +15,6 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'所属影城'" prop="storeId">
-            <el-select v-model="form.storeId" class="width-full"  placeholder="请选择影城">
-              <el-option :label="t.storeName" :value="t.id" v-for="(t,i) in pArray" :key="i"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="'联系地址'" >
-            <el-input v-model="form.address"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="12">
           <el-form-item :label="'联系电话'" >
             <el-input v-model="form.tel"></el-input>
           </el-form-item>
@@ -36,6 +22,13 @@
         <el-col :span="12">
           <el-form-item :label="'描述'" >
             <el-input v-model="form.remark"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="24">
+          <el-form-item :label="'联系地址'" >
+            <el-input v-model="form.address"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -47,8 +40,9 @@
 </template>
 
 <script>
-import { addClerk, alterClerk, storesForm, clerkInfo,getFrameList } from "@/api/basic/index";
-export default {
+  import {addClerk, alterClerk, clerkInfo} from "@/api/basic/index";
+
+  export default {
   props: {
       listInfo: {
       type: Object,
@@ -62,13 +56,11 @@ export default {
         jobNum: null,
         address: null,
         tel: null,
-        storeId: null,
         remark: null,
         name: null,// 名称
       },
       disPl: true,
       pidS: [],
-      pArray: [],
       rArray: [],
       aArray: [],
       rules: {
@@ -78,14 +70,10 @@ export default {
         name: [
           {required: true, message: '请输入名稱', trigger: 'blur'},
         ],
-        storeId: [
-          {required: true, message: '请选择', trigger: 'change'},
-        ],
       },
     };
   },
   mounted() {
-    this.fetchFormat()
     if (this.listInfo) {
       this.form = this.listInfo
     }
@@ -118,15 +106,11 @@ export default {
       this.rArray = []
       this.fetchLine(val)
     },
-    fetchFormat() {
-      storesForm().then(res => {
-        this.pArray = res.data
-      });
-      },
+
     fetchData(val) {
       clerkInfo(val).then(res => {
-        this.form = res.data;
-      });
+        this.form = res.data
+      })
     }
   }
 };
