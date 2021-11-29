@@ -224,7 +224,6 @@ export default {
       this.$refs['postform'].validate((valid) => {
         // 判断必填项
         if (valid) {
-          console.log(me.postform.isWarranty)
           if (this.checkData != null) {
             if(me.partData.repairDetailParts == null){
               me.partData.repairDetailParts = []

@@ -1,11 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+/* Layout */
+import Layout from '@/layout'
 
 Vue.use(Router)
 
-/* Layout */
-import Layout from '@/layout'
-import notpage from '@/views/404'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -120,6 +119,24 @@ export const StaticRouterMap = [{
           title: '上报数据'
         },
       }]
+  },
+  {
+    path: '/extension',
+    component: Layout,
+    name: 'Extension',
+    meta: {
+      title: '推广管理',
+      icon: "component"
+    },
+    children: [{
+        path: 'advert',
+        component: () => import('@/views/extension/advert/index'),
+        name: 'Ddvert',
+        meta: {
+          title: '广告管理'
+        },
+      },
+    ]
   },
   {
     path: '/reportform',
