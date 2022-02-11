@@ -36,7 +36,7 @@
       type: null,
       checkDate: null,
       columns: [
-        { text: '业务员', name: '' },
+        { text: '业务员', name: 'uname' },
         { text: '上报日期', name: 'createDate' },
         { text: '产品条码', name: 'productModel' },
         { text: '产品名称', name: 'productName' },

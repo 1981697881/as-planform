@@ -69,13 +69,14 @@ export default {
   mounted() {
     if (this.listInfo) {
       this.form = this.listInfo
+      delete this.form.id
     }
   },
   methods: {
     saveData(form) {
       let me = this
       this.$refs[form].validate((valid) => {
-        //判断必填项
+        // 判断必填项
         if (valid) {
           receiving(this.form).then(res => {
             if (res.flag) {

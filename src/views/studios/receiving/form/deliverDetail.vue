@@ -33,7 +33,7 @@
 export default {
   props: {
     listInfo: {
-      type: Array,
+      type: Object,
       default: null
     },
   },
@@ -62,6 +62,7 @@ export default {
   mounted() {
     if (this.listInfo) {
       this.form = this.listInfo
+      delete this.form.id
     }
   },
   methods: {

@@ -66,6 +66,19 @@ export function getEngineerList(params, data) {
     data: data
   })
 }
+// 工程师获取
+export function getEngineerForm(data) {
+  const url = '/employeeShouhou/engineerForm'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: data
+  })
+}
 // 客服接单-发货
 export function deliver(params) {
   const url = '/logistics/deliver'

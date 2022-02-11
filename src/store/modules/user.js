@@ -5,7 +5,7 @@ import {resetRouter} from '@/router'
 const state = {
   token: getToken('aspanrx'),
   name: '',
-  url: 'https://cfzx.gzfzdev.com',
+  url: 'https://yb.gzfzdev.com',
   avatar: '',
   plper: '',
   username: '',

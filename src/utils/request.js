@@ -1,17 +1,10 @@
 import axios from 'axios'
-import qs from 'qs'
-import {
-  MessageBox,
-  Message
-} from 'element-ui'
+import {Message, MessageBox} from 'element-ui'
 import store from '@/store'
-import {
-  getToken
-} from '@/utils/auth'
 import querystring from 'querystring'
 // create an axios instance
 const service = axios.create({
-  baseURL: (process.env.NODE_ENV === 'production'?'https://cfzx.gzfzdev.com':'') + process.env.VUE_APP_BASE_API, // url = base url + request url
+  baseURL: (process.env.NODE_ENV === 'production'?'https://yb.gzfzdev.com':'') + process.env.VUE_APP_BASE_API, // url = base url + request url
   withCredentials: true, // send cookies when cross-domain requests
   timeout: 900000 // request timeout
 })

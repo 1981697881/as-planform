@@ -26,7 +26,7 @@
         <el-col :span="12">
           <el-form-item :label="'工程师'" prop="engineerId">
             <el-select v-model="form.engineerId" class="width-full" placeholder="" @change="selectChange">
-              <el-option :label="t.engineerName" :value="t.id" v-for="(t,i) in pArray" :key="i"></el-option>
+              <el-option :label="t.employeeName" :value="t.id" v-for="(t,i) in pArray" :key="i"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
@@ -54,12 +54,12 @@
     </div>
   </div>
 </template>
-<script>import {appointEngineer, getEngineerList} from '@/api/studios/index'
+<script>import {appointEngineer, getEngineerForm} from '@/api/studios/index'
 
 export default {
   props: {
     listInfo: {
-      type: Array,
+      type: Object,
       default: null
     },
   },
@@ -83,9 +83,7 @@ export default {
         contactNumber: null
       },
       oldCode: null,
-      pArray: [{
-        tpName: '测试', tpId: '1'
-      }],
+      pArray: [],
       rules: {
         engineerId: [
           {required: true, message: '请选择工程师', trigger: 'change'},
@@ -131,12 +129,9 @@ export default {
       })
     },
     fetchFormat() {
-      getEngineerList({
-        pageNum: 1,
-        pageSize: 500
-      },{}).then(res => {
+      getEngineerForm({}).then(res => {
         if (res.flag) {
-          this.pArray = res.data.records
+          this.pArray = res.data
         }
       })
     },
