@@ -143,7 +143,7 @@ export default {
   },
   data() {
     return {
-      fileUrl: this.$store.state.user.url+'/movie/uploadFiles/image/',
+      fileUrl: this.$store.state.user.url+'/uploadFiles/image/',
     };
   },
   methods: {

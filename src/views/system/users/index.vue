@@ -1,7 +1,7 @@
 <template>
   <div class="app-list">
-    <Tree ref="tree" class="list-tree" />
-    <div class="list-container">
+    <!--<Tree ref="tree" class="list-tree" />-->
+    <div class="list-containerOther">
       <div>
         <tabs-bar ref="tabs" @showDialog="handlerDialog" @delList="delList" @delGroup="delGroup" @uploadAll="uploadAll" @queryBtn="query" @showGroupDialog="groupDialog"  />
       </div>
@@ -33,9 +33,10 @@
 </template>
 
 <script>
-import { Tree, TabsBar, List } from "./components";
-import { Info, Group } from "./form";
-export default {
+  import {List, TabsBar, Tree} from "./components";
+  import {Group, Info} from "./form";
+
+  export default {
   components: {
     Tree,
     TabsBar,

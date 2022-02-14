@@ -1,6 +1,5 @@
 <template>
   <div class="app-list">
-    <!--<Tree class="list-tree" @handler-node="handlerNode" />-->
     <div class="list-containerOther">
       <div>
         <tabs-bar ref="tabs" @showDialog="handlerDialog" @delList="delivery" @uploadList="upload" @queryBtn="query"/>
@@ -37,7 +36,6 @@
       visible: null,
       oid: null,
       listInfo: null,
-      treeId: null, // null
       floorId: null
     };
   },

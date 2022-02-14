@@ -97,7 +97,7 @@
   data() {
     return {
       headers: {
-        'authorization': getToken('cinerx'),
+        'authorization': getToken('aspanrx'),
       },
       form: {
         posterStartdatetime: null,
@@ -158,12 +158,12 @@
     };
   },
   mounted() {
-    this.fileUrl  = `${window.location.origin}/web/file/imgUpload`
+    this.fileUrl  = `${window.location.origin}/yingbao/file/imgUpload`
     if (this.listInfo) {
       this.form = this.listInfo
       if(this.listInfo.posterPhoto != null){
         this.fileList.push({
-          url: this.$store.state.user.url+'/movie/uploadFiles/image/' + this.listInfo.posterPhoto
+          url: this.$store.state.user.url+'/uploadFiles/image/' + this.listInfo.posterPhoto
         })
         this.value =[this.listInfo.posterStartdatetime,this.listInfo.posterEnddatetime]
         this.hideUpload = true
@@ -212,9 +212,9 @@
     //删除图片
     handleRemove(file, fileList) {
       let array = this.fileList;
-      let img =file.url.split(this.$store.state.user.url+'/movie/uploadFiles/image/')[1]
+      let img =file.url.split(this.$store.state.user.url+'/uploadFiles/image/')[1]
       array.forEach((item,index)=>{
-        if (item.url.split(this.$store.state.user.url+'/movie/uploadFiles/image/')[1] == img) {
+        if (item.url.split(this.$store.state.user.url+'/uploadFiles/image/')[1] == img) {
           array.splice(index, 1);
         }
       })
