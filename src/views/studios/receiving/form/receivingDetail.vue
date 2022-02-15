@@ -5,7 +5,7 @@
       <el-row :gutter="20">
         <el-col :span="24">
           <el-form-item :label="'维修单号'">
-            <el-input v-model="form.repairOrder"></el-input>
+            <el-input v-model="form.repairOrder" readOnly></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -36,7 +36,7 @@
 export default {
   props: {
     listInfo: {
-      type: Array,
+      type: Object,
       default: null
     },
   },
@@ -80,7 +80,7 @@ export default {
         if (valid) {
           receiving(this.form).then(res => {
             if (res.flag) {
-              me.$emit('hideSpell', false)
+              me.$emit('hideDialog', false)
               me.$emit('uploadList')
             }
           })

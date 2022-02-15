@@ -4,7 +4,7 @@
       <el-row :gutter="20">
         <el-col :span="24">
           <el-form-item :label="'维修单号'">
-            <el-input v-model="form.repairOrder"></el-input>
+            <el-input v-model="form.repairOrder" readOnly></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -62,6 +62,8 @@ export default {
   mounted() {
     if (this.listInfo) {
       this.form = this.listInfo
+      this.form.expressName= this.listInfo.logistics.expressName
+      this.form.expressOrder = this.listInfo.logistics.expressOrder
       delete this.form.id
     }
   },
@@ -73,7 +75,7 @@ export default {
         if (valid) {
           deliver(this.form).then(res => {
             if (res.flag) {
-              me.$emit('hideSpell', false)
+              me.$emit('hideDialog', false)
               me.$emit('uploadList')
             }
           })
