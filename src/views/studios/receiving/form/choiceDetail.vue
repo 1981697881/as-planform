@@ -8,7 +8,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'计划日期'" prop="planDate">
+          <el-form-item :label="'维修日期'" prop="planDate">
             <div class="block">
               <el-date-picker
                 v-model="form.planDate"
@@ -31,7 +31,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'跟单员'" prop="merchandiser">
+          <el-form-item :label="'跟单员'">
             <el-input v-model="form.merchandiser"></el-input>
           </el-form-item>
         </el-col>

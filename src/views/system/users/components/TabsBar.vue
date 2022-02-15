@@ -11,7 +11,7 @@
             <el-dropdown-item command="2">用户</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>-->
-        <!--   <el-dropdown @command="handlerBtn" trigger="click">
+      <el-dropdown @command="handlerBtn" trigger="click">
            <el-button :size="'mini'" type="primary">
              新增<i class="el-icon-arrow-down el-icon--right"></i>
            </el-button>
@@ -38,14 +38,14 @@
              <el-dropdown-item command="2">用户</el-dropdown-item>
            </el-dropdown-menu>
          </el-dropdown>
-       <el-button style="float: right" :size="'mini'" type="primary" >权限管理</el-button>
+        <!--    <el-button style="float: right" :size="'mini'" type="primary" >权限管理</el-button>
          <el-button style="float: right" :size="'mini'" type="primary" >权限浏览</el-button>-->
         <!--<el-button :size="'mini'" type="primary" icon="el-icon-error" @click="disable" >禁用</el-button>
         <el-button :size="'mini'" type="primary" icon="el-icon-success" @click="enable" >启用</el-button>
-        <el-button style="float: right" :size="'mini'" type="primary" >保存权限</el-button>-->
+        <el-button style="float: right" :size="'mini'" type="primary" >保存权限</el-button>
         <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handlerAdd">新增</el-button>
         <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handlerAlter">修改</el-button>
-        <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="Delivery">删除</el-button>
+        <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="Delivery">删除</el-button>-->
         <el-button v-for="(t,i) in btnList" :key="i" v-if="t.category == 'default'" :size="'mini'" type="primary" :icon="t.cuicon" @click="onFun(t.path)">{{t.menuName}}</el-button>
         <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
       </el-button-group>
@@ -92,15 +92,15 @@
       this.$emit('showDialog')
     },
     handlerAlter(command) {
-      if (this.clickData.uid) {
+      /*if (this.clickData.uid) {
         this.$emit('showDialog', {uid: this.clickData.uid})
       } else {
         this.$message({
           message: '无选中行',
           type: 'warning'
         });
-      }
-      /*if(command=='1') {
+      }*/
+      if(command=='1') {
         if (this.clickData.gpId) {
           this.$emit('showGroupDialog', this.clickData)
         } else {
@@ -119,7 +119,7 @@
             type: 'warning'
           });
         }
-      }*/
+      }
     },
     upload() {
       this.$emit('uploadAll')
