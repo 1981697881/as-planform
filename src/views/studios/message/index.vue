@@ -8,7 +8,7 @@
     </div>
     <el-dialog
       :visible.sync="visible"
-      title="电影信息"
+      title="基本信息"
       v-if="visible"
       v-dialogDrag
       :width="'70%'"
@@ -20,10 +20,10 @@
 </template>
 
 <script>
-import { TabsBar,List } from "./components"
-import { Info } from "./form"
-import { delFrame } from "@/api/basic/index";
-export default {
+  import {List, TabsBar} from "./components"
+  import {Info} from "./form"
+
+  export default {
   components: {
     TabsBar,
     List,

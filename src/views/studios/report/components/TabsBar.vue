@@ -20,12 +20,10 @@
     </el-form>
   </div>
 </template>
-<script>
+<script>import {mapGetters} from 'vuex'
+import {updateReport} from '@/api/studios/index'
 
-  import {mapGetters} from 'vuex'
-  import {updateReport} from '@/api/studios/index'
-
-  export default {
+export default {
   data() {
     return {
       btnList: [],
@@ -35,7 +33,7 @@
     };
   },
   computed: {
-    ...mapGetters(['node','clickData'])
+    ...mapGetters(['node', 'clickData'])
   },
   mounted() {
     let path = this.$route.meta.id
@@ -44,14 +42,14 @@
       this.$forceUpdate();
     });*/
   },
-  methods:{
+  methods: {
     // 查询条件过滤
     qFilter() {
       let obj = {}
-      this.search.cinemaName != null && this.search.cinemaName != '' ? obj.cinemaName = this.search.cinemaName : null
+      this.search.name != null && this.search.name != '' ? obj.keyword = this.search.name : null
       return obj
     },
-    onFun(method){
+    onFun(method) {
       this[method]()
     },
     handlerAdd() {
@@ -71,7 +69,7 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$emit('del', { filmId: this.clickData.filmId })
+          this.$emit('del', {filmId: this.clickData.filmId})
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -93,7 +91,7 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          updateReport({ id: this.clickData.id,status: "1" }).then(res => {
+          updateReport({id: this.clickData.id, status: "1"}).then(res => {
             if (res.flag) {
               this.$emit('uploadList')
             }

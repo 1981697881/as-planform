@@ -22,16 +22,16 @@
 </template>
 
 <script>import {mapGetters} from 'vuex'
-import {completeRepair} from "@/api/studios/index";
+import {completeRepair} from '@/api/studios/index'
 
 export default {
   data() {
     return {
       btnList: [],
       search: {
-        name: ""
+        name: ''
       }
-    };
+    }
   },
   computed: {
     ...mapGetters(['node','clickData'])
@@ -47,7 +47,7 @@ export default {
     // 查询条件过滤
     qFilter() {
       let obj = {}
-      this.search.cinemaName != null && this.search.cinemaName != '' ? obj.cinemaName = this.search.cinemaName : null
+      this.search.name != null && this.search.name != '' ? obj.repairOrder = this.search.name : null
       return obj
     },
     onFun(method){

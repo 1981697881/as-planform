@@ -15,12 +15,11 @@
   </div>
 </template>
 
-<script>
-  import {mapGetters} from 'vuex'
-  import {deleteMovie, getPartsList} from '@/api/basic/index'
-  import List from '@/components/List'
+<script>import {mapGetters} from 'vuex'
+import {deleteMovie, getPartsList} from '@/api/basic/index'
+import List from '@/components/List'
 
-  export default {
+export default {
   components: {
     List
   },
@@ -36,14 +35,14 @@
       type: null,
       checkDate: null,
       columns: [
-        { text: '所属系列', name: 'seriesName' },
-        { text: '零件编码', name: 'partsCode' },
-        { text: '零件名称', name: 'partsName' },
-        { text: '版本号', name: 'partsEdition' },
-        { text: '销售价格', name: 'salePrice' },
-        { text: '出库价格', name: 'retrievalPrice' },
-        { text: '适用产品', name: 'applyProduct' },
-        { text: '备注说明', name: 'remark' }
+        {text: '所属系列', name: 'seriesName'},
+        {text: '零件编码', name: 'partsCode'},
+        {text: '零件名称', name: 'partsName'},
+        {text: '版本号', name: 'partsEdition'},
+        {text: '销售价格', name: 'salePrice'},
+        {text: '出库价格', name: 'retrievalPrice'},
+        {text: '适用产品', name: 'applyProduct'},
+        {text: '备注说明', name: 'remark'}
       ]
     }
   },
@@ -60,7 +59,7 @@
     },
     Delivery(val) {
       deleteMovie(val).then(res => {
-        if(res.flag){
+        if (res.flag) {
           this.$store.dispatch('list/setClickData', '');
           this.$emit('uploadList')
         }
@@ -94,7 +93,7 @@
 </script>
 
 <style lang="scss" scoped>
-.list-main {
-  height: calc(100vh - 250px);
-}
+  .list-main {
+    height: calc(100vh - 250px);
+  }
 </style>
