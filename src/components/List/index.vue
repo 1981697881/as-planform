@@ -28,7 +28,7 @@
           :key="i"
           :fixed="t.fixed"
           :sortable="t.sort"
-          :formatter="t.formatt!=undefined?(t.formatt == 'checkType'? checkType: checkPay) : null"
+          :formatter="t.formatt!=undefined?(row, column) => methods[t.formatt](row,column) : null"
           v-if="t.default!=undefined ?(t.default =='img'?false:t.default):true"
           :label="t.text"
           :width="t.width?t.width:(selfAdaption?'':'120px')"
@@ -80,7 +80,7 @@ export default {
     }, tree: {
       // 列
       type: Object,
-      default: {}
+      default: ()=>{}
     },
     index: {
       // 是否需要序号列
@@ -133,16 +133,17 @@ export default {
     // 是否自定义高度 默认100%
     height:{
       type: String,
-      default: "100%"
+      default: '100%'
     },
     // 自定义按钮
     operationName:{
       type: String,
-      default: "+"
+      default: '+'
     }
   },
   data() {
     return {
+      methods: this.$options.methods,
       fileUrl: this.$store.state.user.url+'/uploadFiles/image/',
     };
   },
@@ -150,7 +151,7 @@ export default {
     sortChange(row) {
       return this.$emit('sortChange', { row });
     },
-    checkType(row, column) {
+    checkType(row,column) {
       let stau = ''
       if(row.status == 0) {
         stau = '待寄回'
@@ -165,16 +166,32 @@ export default {
       }else if(row.status == 5) {
         stau = '完成'
       }
-      return  stau
+      return stau
     },
-    checkPay(row, column) {
+    checkPay(row,column) {
       let stau = ''
       if(row.payStatus == 0) {
         stau = '未付款'
       }else if(row.payStatus ==1) {
         stau = '已付款'
       }
-      return  stau
+      return stau
+    },checkInternalOrNot(row,column) {
+      let stau = ''
+      if(row.internalOrNot == 0) {
+        stau = '内部员工'
+      }else if(row.internalOrNot ==1) {
+        stau = '非内部员工'
+      }
+      return stau
+    },checkStatus(row,column) {
+      let stau = ''
+      if(row.status == 0) {
+        stau = '启用'
+      }else if(row.status ==1) {
+        stau = '禁用'
+      }
+      return stau
     },
     tableRowClassName({row, rowIndex}) {
       if(row.isClash){

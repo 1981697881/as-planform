@@ -8,6 +8,7 @@ const map = {
   '/basic': () => import('@/layout'),
   'shadow': () => import('@/views/basic/shadow'),
   'clerk': () => import('@/views/basic/clerk'),
+  'salesman': () => import('@/views/basic/salesman'),
 
   'receiving': () => import('@/views/studios/receiving'),
   'overhaul': () => import('@/views/studios/overhaul'),

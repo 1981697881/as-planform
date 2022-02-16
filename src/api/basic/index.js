@@ -128,3 +128,53 @@ export function delClerk(params) {
     method: 'delete',
   })
 }
+// 业务员管理-获取列表
+export function getEmployeeList(params, query) {
+  const url = '/employeeShouhou/employeeList/' + params.pageNum + '/' + params.pageSize
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: query
+  })
+}
+
+// 业务员管理-新增
+export function addEmployee(params) {
+  return request({
+    url: '/employeeShouhou/add',
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: params
+  })
+}
+
+// 业务员管理-删除
+export function deleteEmployee(params) {
+  return request({
+    url: '/employeeShouhou/delete',
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: params
+  })
+}// 业务员管理-禁用或启用
+export function updateEmployee(params) {
+  return request({
+    url: '/employeeShouhou/updateEmployee',
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: params
+  })
+}

@@ -15,12 +15,11 @@
   </div>
 </template>
 
-<script>
-  import {mapGetters} from 'vuex'
-  import {deleteMovie, getRepairList} from '@/api/studios/index'
-  import List from '@/components/List'
+<script>import {mapGetters} from 'vuex'
+import {deleteMovie, getRepairList} from '@/api/studios/index'
+import List from '@/components/List'
 
-  export default {
+export default {
   components: {
     List
   },
@@ -36,20 +35,20 @@
       type: null,
       checkDate: null,
       columns: [
-        { text: '维修单号', name: 'repairOrder' },
-        { text: '产品条码', name: 'productCode' },
-        { text: '产品名称', name: 'productName' },
-        { text: '型号', name: 'productModel' },
-        { text: '购买日期', name: 'productBuyDate' },
-        { text: '保修期至', name: 'productGuarantee' },
-        { text: '故障说明', name: 'faultDescription' },
-        { text: '维修说明', name: 'repairOpinion' },
-        { text: '维修费用', name: 'payPrice' },
-        { text: '付款状态', name: 'payStatus', formatt: 'checkPay' },
-        { text: '工程师', name: 'engineerName' },
-        { text: '计划完成时间', name: 'planDate' },
-        { text: '维修状态', name: 'status', formatt: 'checkType' },
-        { text: '物流信息', name: '' }
+        {text: '维修单号', name: 'repairOrder'},
+        {text: '产品条码', name: 'productCode'},
+        {text: '产品名称', name: 'productName'},
+        {text: '型号', name: 'productModel'},
+        {text: '购买日期', name: 'productBuyDate'},
+        {text: '保修期至', name: 'productGuarantee'},
+        {text: '故障说明', name: 'faultDescription'},
+        {text: '维修说明', name: 'repairOpinion'},
+        {text: '维修费用', name: 'payPrice'},
+        {text: '付款状态', name: 'payStatus', formatt: 'checkPay'},
+        {text: '工程师', name: 'engineerName'},
+        {text: '计划完成时间', name: 'planDate'},
+        {text: '维修状态', name: 'status', formatt: 'checkType'},
+        {text: '物流信息', name: ''}
       ]
     };
   },
@@ -67,7 +66,7 @@
     },
     Delivery(val) {
       deleteMovie(val).then(res => {
-        if(res.flag){
+        if (res.flag) {
           this.$store.dispatch('list/setClickData', '');
           this.$emit('uploadList')
         }
@@ -104,7 +103,7 @@
 </script>
 
 <style lang="scss" scoped>
-.list-main {
-  height: calc(100vh - 250px);
-}
+  .list-main {
+    height: calc(100vh - 250px);
+  }
 </style>

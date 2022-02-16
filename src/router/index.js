@@ -51,122 +51,121 @@ export const StaticRouterMap = [{
       affix: true
     }
   }]
-},
-  {
-    path: '/basic',
-    component: Layout,
-    name: 'Basic',
+}, {
+  path: '/basic',
+  component: Layout,
+  name: 'Basic',
+  meta: {
+    title: '基础资料',
+    icon: 'component'
+  },
+  children: [{
+    path: 'shadow',
+    component: () => import('@/views/basic/shadow/index'),
+    name: 'Shadow',
     meta: {
-      title: '基础资料',
-      icon: 'component'
+      title: '配件清单'
     },
-    children: [{
-      path: 'shadow',
-      component: () => import('@/views/basic/shadow/index'),
-      name: 'Shadow',
+  }, {
+    path: 'clerk',
+    component: () => import('@/views/basic/clerk/index'),
+    name: 'Clerk',
+    meta: {
+      title: '职员管理'
+    },
+  }, {
+    path: 'salesman',
+    component: () => import('@/views/basic/salesman/index'),
+    name: 'Salesman',
+    meta: {
+      title: '业务员管理'
+    },
+  },
+  ]
+}, {
+  path: '/studios',
+  component: Layout,
+  name: 'Studios',
+  meta: {
+    title: '售后管理',
+    icon: 'component'
+  },
+  children: [
+    {
+      path: 'receiving',
+      component: () => import('@/views/studios/receiving/index'),
+      name: 'Receiving',
       meta: {
-        title: '配件清单'
+        title: '客服接单'
       },
     },
-      {
-        path: 'clerk',
-        component: () => import('@/views/basic/clerk/index'),
-        name: 'Clerk',
-        meta: {
-          title: '职员管理'
-        },
-      },
-    ]
-  },
-  {
-    path: '/studios',
-    component: Layout,
-    name: 'Studios',
-    meta: {
-      title: '售后管理',
-      icon: "component"
-    },
-    children: [
-      {
-        path: 'receiving',
-        component: () => import('@/views/studios/receiving/index'),
-        name: 'Receiving',
-        meta: {
-          title: '客服接单'
-        },
-      },
-      {
-        path: 'overhaul',
-        component: () => import('@/views/studios/overhaul/index'),
-        name: 'Overhaul',
-        meta: {
-          title: '检修管理'
-        },
-      },
-      {
-        path: 'message',
-        component: () => import('@/views/studios/message/index'),
-        name: 'Message',
-        meta: {
-          title: '客服留言'
-        },
-      },
-      {
-        path: 'report',
-        component: () => import('@/views/studios/report/index'),
-        name: 'Report',
-        meta: {
-          title: '上报数据'
-        },
-      }]
-  },
-  {
-    path: '/extension',
-    component: Layout,
-    name: 'Extension',
-    meta: {
-      title: '推广管理',
-      icon: "component"
-    },
-    children: [{
-        path: 'advert',
-        component: () => import('@/views/extension/advert/index'),
-        name: 'Ddvert',
-        meta: {
-          title: '广告管理'
-        },
-      },
-    ]
-  },
-  {
-    path: '/reportform',
-    component: Layout,
-    name: 'Reportform',
-    meta: {
-      title: '报表管理',
-      icon: "component"
-    },
-    children: [
-
-    ]
-  },
-  {
-    path: '/system',
-    component: Layout,
-    name: 'System',
-    meta: {
-      title: '系统设置',
-      icon: "component"
-    },
-    children: [{
-      path: 'users',
-      component: () => import('@/views/system/users/index'),
-      name: 'Users',
+    {
+      path: 'overhaul',
+      component: () => import('@/views/studios/overhaul/index'),
+      name: 'Overhaul',
       meta: {
-        title: '用户管理'
+        title: '检修管理'
+      },
+    },
+    {
+      path: 'message',
+      component: () => import('@/views/studios/message/index'),
+      name: 'Message',
+      meta: {
+        title: '客服留言'
+      },
+    },
+    {
+      path: 'report',
+      component: () => import('@/views/studios/report/index'),
+      name: 'Report',
+      meta: {
+        title: '上报数据'
       },
     }]
+}, {
+  path: '/extension',
+  component: Layout,
+  name: 'Extension',
+  meta: {
+    title: '推广管理',
+    icon: 'component'
   },
+  children: [{
+    path: 'advert',
+    component: () => import('@/views/extension/advert/index'),
+    name: 'Ddvert',
+    meta: {
+      title: '广告管理'
+    },
+  },
+  ]
+}, {
+  path: '/reportform',
+  component: Layout,
+  name: 'Reportform',
+  meta: {
+    title: '报表管理',
+    icon: 'component'
+  },
+  children: []
+}, {
+  path: '/system',
+  component: Layout,
+  name: 'System',
+  meta: {
+    title: '系统设置',
+    icon: 'component'
+  },
+  children: [{
+    path: 'users',
+    component: () => import('@/views/system/users/index'),
+    name: 'Users',
+    meta: {
+      title: '用户管理'
+    },
+  }]
+},
   /* {
     path: 'external-link',
     component: Layout,
