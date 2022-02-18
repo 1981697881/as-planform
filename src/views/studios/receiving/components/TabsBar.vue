@@ -15,6 +15,7 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handlerAlter">维修费用</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-plus" @click="handlerChoice">分配工程师</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="handlerDeliver">发货</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-finished" @click="handlerPay">确认支付</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="handlerReceiving">确认收货</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
         </el-button-group>
@@ -23,11 +24,10 @@
   </div>
 </template>
 
-<script>
+<script>import {mapGetters} from 'vuex'
+import {confirmRepair} from '@/api/studios/index'
 
-  import {mapGetters} from 'vuex'
-
-  export default {
+export default {
   data() {
     return {
       btnList: [],
@@ -37,7 +37,7 @@
     };
   },
   computed: {
-    ...mapGetters(['node','clickData'])
+    ...mapGetters(['node', 'clickData'])
   },
   mounted() {
     let path = this.$route.meta.id
@@ -46,14 +46,14 @@
       this.$forceUpdate();
     });*/
   },
-  methods:{
+  methods: {
     // 查询条件过滤
     qFilter() {
       let obj = {}
       this.search.name != null && this.search.name != '' ? obj.repairOrder = this.search.name : null
       return obj
     },
-    onFun(method){
+    onFun(method) {
       this[method]()
     },
     upload() {
@@ -70,7 +70,7 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$emit('del', {filmId :this.clickData.filmId})
+          this.$emit('del', {filmId: this.clickData.filmId})
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -84,7 +84,20 @@
         })
       }
     },
-    handlerAlter() {
+    handlerPay() {
+      if (this.clickData.repairOrder) {
+        confirmRepair({repairOrder: this.clickData.repairOrder}).then(res => {
+          if(res.flag) {
+            this.$emit('uploadList')
+          }
+        });
+      } else {
+        this.$message({
+          message: '无选中行',
+          type: 'warning'
+        });
+      }
+    }, handlerAlter() {
       if (this.clickData.repairOrder) {
         this.$emit('showDialog', this.clickData)
       } else {

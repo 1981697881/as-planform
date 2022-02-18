@@ -22,14 +22,13 @@
     </el-form>
   </div>
 </template>
-<script>
-  import {mapGetters} from 'vuex'
-  import {updateEmployee} from '@/api/basic/index'
+<script>import {mapGetters} from 'vuex'
+import {updateEmployee} from '@/api/basic/index'
 
-  export default {
+export default {
   components: {},
   computed: {
-    ...mapGetters(['node','clickData','selections'])
+    ...mapGetters(['node', 'clickData', 'selections'])
   },
   data() {
     return {
@@ -40,14 +39,14 @@
     };
   },
   mounted() {
-   /* let path = this.$route.meta.id
-    getByUserAndPrId(path).then(res => {
-      this.btnList = res.data
-      this.$forceUpdate();
-    });*/
+    /* let path = this.$route.meta.id
+     getByUserAndPrId(path).then(res => {
+       this.btnList = res.data
+       this.$forceUpdate();
+     });*/
   },
   methods: {
-    onFun(method){
+    onFun(method) {
       this[method]()
     },
     Delivery() {
@@ -85,10 +84,11 @@
     },
     disable() {
       if (this.clickData.id) {
-        this.clickData.disable = true
+        this.clickData.status = (this.clickData.status == '0' ? this.clickData.status = '1' : this.clickData.status = '0')
         updateEmployee(this.clickData).then(res => {
-          if(res.flag) {
-            this.$emit('uploadPage')
+          if (res.flag) {
+            console.log(12333)
+            this.$emit('uploadList')
           }
         });
       } else {
@@ -111,7 +111,7 @@
       this.search.name != null && this.search.name != '' ? obj.name = this.search.name : null
       return obj
     },
-    handleAdd(){
+    handleAdd() {
       this.$emit('showDialog')
     }
   }

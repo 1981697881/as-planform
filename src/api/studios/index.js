@@ -145,3 +145,16 @@ export function completeRepair(params) {
     data: params
   })
 }
+// 检修管理-支付完成
+export function confirmRepair(params) {
+  const url = '/repair/confirm'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: params
+  })
+}

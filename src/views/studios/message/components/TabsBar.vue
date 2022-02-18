@@ -1,5 +1,5 @@
 <template>
-  <div class="list-header">
+  <div class='list-header'>
     <el-form v-model="search" :size="'mini'" :label-width="'80px'">
       <el-row :gutter="10">
         <el-col :span="4">
@@ -22,16 +22,16 @@
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
-import { getByUserAndPrId } from '@/api/system/index'
-export default {
+  import {mapGetters} from 'vuex'
+
+  export default {
   data() {
     return {
       btnList: [],
       search: {
-        name: ""
+        name: ''
       }
-    };
+    }
   },
   computed: {
     ...mapGetters(['node','clickData'])
@@ -70,7 +70,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$emit('del', {filmId :this.clickData.filmId})
+          this.$emit('del', { filmId :this.clickData.filmId })
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -95,8 +95,7 @@ export default {
       }
     },
   }
-};
+}
 </script>
-
 <style>
 </style>

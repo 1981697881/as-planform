@@ -3,9 +3,9 @@
     <!--<Tree class="list-tree" @handler-node="handlerNode" />-->
     <div class="list-containerOther">
       <div>
-        <tabs-bar ref="tabs" @showDialog="handlerDialog" @delList="delivery"  @queryBtn="query" @uploadList="upload"/>
+        <tabs-bar ref="tabs" @showDialog="handlerDialog" @delList="delivery" @queryBtn="query" @uploadList="upload"/>
       </div>
-      <list ref="list"  @showDialog="handlerDialog" @uploadList="uploadPage"/>
+      <list ref="list" @showDialog="handlerDialog" @uploadList="uploadPage"/>
     </div>
 
     <el-dialog
@@ -20,12 +20,10 @@
     </el-dialog>
   </div>
 </template>
+<script>import {List, TabsBar} from './components'
+import {Info} from './form'
 
-<script>
-  import {List, TabsBar} from "./components";
-  import {Info} from "./form";
-
-  export default {
+export default {
   components: {
     TabsBar,
     List,
@@ -42,7 +40,7 @@
   },
   methods: {
     delivery(obj) {
-      if(obj) {
+      if (obj) {
         this.$refs.list.Delivery(obj)
       }
     },
@@ -55,7 +53,7 @@
     },
     handlerDialog(obj) {
       this.listInfo = null
-      if(obj) {
+      if (obj) {
         const info = JSON.parse(JSON.stringify(obj))
         this.listInfo = info
       }
@@ -70,7 +68,7 @@
       this.$refs.list.fetchData(this.$refs.tabs.qFilter())
     },
     // 更新列表
-    upload(){
+    upload() {
       this.$refs.list.uploadPr(this.$refs.tabs.qFilter())
     }
   }

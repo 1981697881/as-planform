@@ -148,7 +148,7 @@ export default {
   mounted() {
     this.factchGroup()
     this.fetchFormat()
-   /* this.fetchMenu()*/
+    this.fetchMenu()
   },
   methods: {
     changeCheck(val) {

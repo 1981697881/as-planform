@@ -16,11 +16,11 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import { getMovieList, deleteMovie } from '@/api/basic/index';
-import List from '@/components/List';
+  import {mapGetters} from 'vuex';
+  import {deleteMovie, getMovieList} from '@/api/basic/index';
+  import List from '@/components/List';
 
-export default {
+  export default {
   components: {
     List
   },
@@ -36,9 +36,9 @@ export default {
       type: null,
       checkDate: null,
       columns: [
-        { text: '留言时间', name: '' },
         { text: '联系人', name: '' },
         { text: '电话', name: '' },
+        { text: '最近时间', name: '' },
         { text: '留言内容', name: '' },
       ]
     }
