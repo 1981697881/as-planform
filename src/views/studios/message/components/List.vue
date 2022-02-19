@@ -6,7 +6,6 @@
       :loading="loading"
       :list="list"
       index
-      type
       @handle-size="handleSize"
       @handle-current="handleCurrent"
       @dblclick="dblclick"
@@ -15,12 +14,11 @@
   </div>
 </template>
 
-<script>
-  import {mapGetters} from 'vuex';
-  import {deleteMovie, getMovieList} from '@/api/basic/index';
-  import List from '@/components/List';
+<script>import {mapGetters} from 'vuex';
+import {getCustomerList} from '@/api/studios/index';
+import List from '@/components/List';
 
-  export default {
+export default {
   components: {
     List
   },
@@ -36,10 +34,8 @@
       type: null,
       checkDate: null,
       columns: [
-        { text: '联系人', name: '' },
-        { text: '电话', name: '' },
-        { text: '最近时间', name: '' },
-        { text: '留言内容', name: '' },
+        {text: '联系人', name: 'weChatName'},
+        {text: '最近联系时间', name: ''}
       ]
     }
   },
@@ -56,12 +52,7 @@
       this.$emit('uploadList')
     },
     Delivery(val) {
-      deleteMovie(val).then(res => {
-        if(res.flag){
-          this.$store.dispatch('list/setClickData', '');
-          this.$emit('uploadList')
-        }
-      });
+
     },
     uploadPr(val) {
       this.fetchData(val, {
@@ -81,7 +72,7 @@
       pageSize: this.list.size || 50
     }) {
       this.loading = true;
-      getMovieList(data, val).then(res => {
+      getCustomerList(data, val).then(res => {
         this.loading = false
         this.list = res.data
       })
@@ -91,7 +82,7 @@
 </script>
 
 <style lang="scss" scoped>
-.list-main {
-  height: calc(100vh - 250px);
-}
+  .list-main {
+    height: calc(100vh - 250px);
+  }
 </style>

@@ -158,3 +158,28 @@ export function confirmRepair(params) {
     data: params
   })
 }
+// 客服管理-获取列表
+export function getCustomerList(params, data) {
+  const url = '/customerMessage/customerList/' + params.pageNum + '/' + params.pageSize
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: data
+  })
+}// 客户聊天记录-获取列表
+export function getCustomerMessageList(params, data) {
+  const url = '/customerMessage/list/' + params.pageNum + '/' + params.pageSize
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: data
+  })
+}
