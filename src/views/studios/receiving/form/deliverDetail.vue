@@ -62,8 +62,10 @@ export default {
   mounted() {
     if (this.listInfo) {
       this.form = this.listInfo
-      this.form.expressName= this.listInfo.logistics.expressName
-      this.form.expressOrder = this.listInfo.logistics.expressOrder
+      if(this.listInfo.logistics != null){
+        this.form.expressName= this.listInfo.logistics.expressName
+        this.form.expressOrder = this.listInfo.logistics.expressOrder
+      }
       delete this.form.id
     }
   },
@@ -73,6 +75,7 @@ export default {
       this.$refs[form].validate((valid) => {
         //判断必填项
         if (valid) {
+          console.log(this.form)
           deliver(this.form).then(res => {
             if (res.flag) {
               me.$emit('hideDialog', false)

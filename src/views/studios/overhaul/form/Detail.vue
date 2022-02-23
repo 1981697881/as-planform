@@ -8,14 +8,14 @@
           </el-form-item>
         </el-col>
       </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-form-item :label="'工程师'">
+            <el-input v-model="form.engineerName" disabled></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
       <block v-for="(item, index) in form.repairDetail" :key="index">
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item :label="'工程师'">
-              <el-input v-model="item.productCode" disabled></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
         <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item :label="'产品条码'" >
@@ -59,8 +59,7 @@
                 <el-button @click="setRow(item)">添加</el-button>
                 <el-button @click="delRow(item)">删除</el-button>
               </div>
-              <el-table class="list-main" :data="item.repairDetailParts" border size="mini"
-                        :highlight-current-row="true">
+              <el-table class="list-main" :data="item.repairDetailParts" border size="mini" :highlight-current-row="true" @row-click="pjClick">
                 <el-table-column
                   v-for="(t,i) in columns"
                   :key="i"
@@ -94,8 +93,7 @@
         </el-row>
         <el-row :span="20">
           <el-col :span="24">
-            <el-table class="list-main" height="200px" :data="list" border size="mini" :highlight-current-row="true"
-                      @row-click="yzClick">
+            <el-table class="list-main" height="200px" :data="list" border size="mini" :highlight-current-row="true" @row-click="yzClick">
               <el-table-column
                 v-for="(t,i) in partsColumns"
                 :key="i"
@@ -169,9 +167,11 @@ export default {
       form: {
         partsMoney: 1,
         repairOpinion: null,
+        engineerName: null,
         workMoney: 1,
       },
       checkData: null,
+      checkPartData: null,
       partData: null,
       postform: {
         isWarranty: 'true'
@@ -190,18 +190,20 @@ export default {
     // 选中
     yzClick(obj) {
       this.checkData = obj
+    },pjClick(obj) {
+      this.checkPartData = obj
     },
     // 删除
-    delRow(item) {
-      if (this.checkData.id) {
-        this.$confirm('是否删除(' + this.checkData.partsName + ')?', '提示', {
+    delRow(val) {
+      if (this.checkPartData.id) {
+        this.$confirm('是否删除(' + this.checkPartData.partsName + ')?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          item.repairDetailParts.some((item, index) => {
-            if (this.checkData.id == item.id) {
-              item.repairDetailParts.splice(index, 1)
+          val.repairDetailParts.some((item, index) => {
+            if (this.checkPartData.id == item.id) {
+              val.repairDetailParts.splice(index, 1)
               return true
             }
           })

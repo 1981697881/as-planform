@@ -4,7 +4,7 @@
       <div>
         <tabs-bar ref="tabs" @showDialog="handlerDialog" @del="delivery" @queryBtn="query" @uploadList="upload"/>
       </div>
-      <list ref="list" @uploadList="uploadPage" @showDialog="handlerDialog"  />
+      <list ref="list" @uploadList="uploadPage" @showDialog="handlerDialog"/>
     </div>
     <el-dialog
       :visible.sync="visible"
@@ -19,10 +19,9 @@
   </div>
 </template>
 
-<script>
-import { TabsBar,List } from "./components"
-import { Info } from "./form"
-import { delFrame } from "@/api/basic/index";
+<script>import {List, TabsBar} from './components'
+import {Info} from './form'
+
 export default {
   components: {
     TabsBar,
@@ -37,26 +36,26 @@ export default {
       floorId: null
     }
   },
-    mounted() {
-      this.$refs.list.fetchData(this.$refs.tabs.qFilter())
-    },
+  mounted() {
+    this.$refs.list.fetchData(this.$refs.tabs.qFilter())
+  },
   methods: {
     delivery(obj) {
-      if(obj) {
+      if (obj) {
         this.$refs.list.Delivery(obj)
       }
     },
-      hideWindow(val) {
-          this.visible = val
-      },
-      handlerDialog(obj) {
-        this.listInfo = null
-        if(obj) {
-          const info = JSON.parse(JSON.stringify(obj))
-          this.listInfo = info
-        }
-          this.visible = true
-      },
+    hideWindow(val) {
+      this.visible = val
+    },
+    handlerDialog(obj) {
+      this.listInfo = null
+      if (obj) {
+        const info = JSON.parse(JSON.stringify(obj))
+        this.listInfo = info
+      }
+      this.visible = true
+    },
     // 更新列表
     upload() {
       this.$refs.list.uploadPr(this.$refs.tabs.qFilter())

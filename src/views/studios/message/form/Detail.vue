@@ -36,11 +36,12 @@ export default {
       inputValue: '',
       list: {},
       columns: [
-        { text: '对话人员', name: 'toUserName' },
+        { text: '客服', name: 'toUserName' },
+        { text: '客户', name: 'weChatName' },
         { text: '时间', name: 'createTime' },
         { text: '内容', name: 'content' }
-      ],
-    };
+      ]
+    }
   },
   mounted() {
     if (this.listInfo) {
