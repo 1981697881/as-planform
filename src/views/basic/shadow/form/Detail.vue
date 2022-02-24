@@ -135,11 +135,10 @@
     </div>
   </div>
 </template>
-<script>
-  import {getToken} from '@/utils/auth'
-  import {addParts, productList, seriesList} from '@/api/basic/index'
+<script>import {getToken} from '@/utils/auth'
+import {addParts, productList, seriesList} from '@/api/basic/index'
 
-  export default {
+export default {
   props: {
     listInfo: {
       type: Object,

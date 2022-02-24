@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">as-planform</h3><!--（测试）-->
+        <h3 class="title">鹰堡售后系统</h3><!--（测试）-->
       </div>
 
       <el-form-item prop="username">
@@ -48,9 +48,9 @@
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
+  import {validUsername} from '@/utils/validate'
 
-export default {
+  export default {
   name: 'Login',
   data() {
     const validateUsername = (rule, value, callback) => {

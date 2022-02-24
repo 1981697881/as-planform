@@ -14,9 +14,9 @@
   </div>
 </template>
 
-<script>import {mapGetters} from 'vuex';
-import {getCustomerList} from '@/api/studios/index';
-import List from '@/components/List';
+<script>import {mapGetters} from 'vuex'
+import {deletePartsList, getSeriesPageList} from '@/api/basic/index'
+import List from '@/components/List'
 
 export default {
   components: {
@@ -34,12 +34,10 @@ export default {
       type: null,
       checkDate: null,
       columns: [
-        {text: '联系人', name: 'weChatName'},
-        {text: '最近联系时间', name: 'createDate'}
+        {text: '系列名称', name: 'seriesName'},
       ]
     }
   },
-
   methods: {
     // 监听每页显示几条
     handleSize(val) {
@@ -52,7 +50,12 @@ export default {
       this.$emit('uploadList')
     },
     Delivery(val) {
-
+      deletePartsList(val).then(res => {
+        if (res.flag) {
+          this.$store.dispatch('list/setClickData', '');
+          this.$emit('uploadList')
+        }
+      });
     },
     uploadPr(val) {
       this.fetchData(val, {
@@ -71,14 +74,14 @@ export default {
       pageNum: this.list.current || 1,
       pageSize: this.list.size || 50
     }) {
-      this.loading = true;
-      getCustomerList(data, val).then(res => {
+      this.loading = true
+      getSeriesPageList(data, val).then(res => {
         this.loading = false
         this.list = res.data
       })
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

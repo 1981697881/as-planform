@@ -38,7 +38,8 @@ export default {
       columns: [
         { text: '客服', name: 'toUserName' },
         { text: '客户', name: 'weChatName' },
-        { text: '时间', name: 'createTime' },
+        { text: '时间', name: 'createDate' },
+        { text: '图片', name: 'picUrl', default: 'image' },
         { text: '内容', name: 'content' }
       ]
     }

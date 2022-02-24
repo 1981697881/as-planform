@@ -29,7 +29,7 @@
           :fixed="t.fixed"
           :sortable="t.sort"
           :formatter="t.formatt!=undefined?(row, column) => methods[t.formatt](row,column) : null"
-          v-if="t.default!=undefined ?(t.default =='img'?false:t.default):true"
+          v-if="t.default!=undefined ?(t.default =='img' || t.default =='image'?false:t.default):true"
           :label="t.text"
           :width="t.width?t.width:(selfAdaption?'':'120px')"
           show-overflow-tooltip
@@ -43,8 +43,25 @@
           show-overflow-tooltip
           align="center"
         >
-          <template width="90" slot-scope="scope">
+          <template width="90"  slot-scope="scope">
             <img style="width:80px;height:80px;border:none;" :src=" fileUrl+scope.row.posterPhoto">
+          </template>
+        </el-table-column>
+        <el-table-column
+          :key="i"
+          v-else-if="t.default == 'image'?true:false"
+          :label="t.text"
+          :width="t.width?t.width:(selfAdaption?'':'120px')"
+          show-overflow-tooltip
+          align="center"
+        >
+          <template width="90" v-if="scope.row.picUrl != null"  slot-scope="scope">
+            <el-image
+              style="width: 80px; height: 80px"
+              :src="scope.row.picUrl"
+              :preview-src-list="[scope.row.picUrl]">
+            </el-image>
+            <!--<img style="width:80px;height:80px;border:none;" :src="scope.row.picUrl">-->
           </template>
         </el-table-column>
       </template>

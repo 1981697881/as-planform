@@ -6,7 +6,6 @@
       :loading="loading"
       :list="list"
       index
-      type
       @handle-size="handleSize"
       @handle-current="handleCurrent"
       @dblclick="dblclick"
@@ -16,7 +15,7 @@
 </template>
 
 <script>import {mapGetters} from 'vuex'
-import {deleteMovie, getPartsList} from '@/api/basic/index'
+import {deletePartsList, getPartsList} from '@/api/basic/index'
 import List from '@/components/List'
 
 export default {
@@ -58,7 +57,7 @@ export default {
       this.$emit('uploadList')
     },
     Delivery(val) {
-      deleteMovie(val).then(res => {
+      deletePartsList(val).then(res => {
         if (res.flag) {
           this.$store.dispatch('list/setClickData', '');
           this.$emit('uploadList')

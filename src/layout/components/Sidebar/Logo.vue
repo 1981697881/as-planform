@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      title: 'as-planform', // （测试）
+      title: '鹰堡售后系统', // （测试）
       logo: require('@/assets/logo/logo.png')
     }
   }

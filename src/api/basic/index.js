@@ -14,6 +14,19 @@ export function getPartsList(params, data) {
     data: data
   })
 }
+// 配件系列-获取列表
+export function getSeriesPageList(params, data) {
+  const url = '/partsList/seriesPageList/' + params.pageNum + '/' + params.pageSize
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: data
+  })
+}
 // 配件-新增
 export function addParts(params) {
   const url = '/partsList/addParts'
@@ -40,6 +53,18 @@ export function seriesList(params) {
     data: params
   })
 }
+// 配件-删除
+export function deletePartsList(params) {
+  return request({
+    url: '/partsList/delete',
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: params
+  })
+}
 // 产品信息
 export function productList(params) {
   const url = '/productionMessage/productList'
@@ -53,8 +78,6 @@ export function productList(params) {
     data: params
   })
 }
-
-
 // 职员管理-获取列表
 export function getClerkList(params, query) {
   const url = '/Admin/employee/list/' + params.pageNum + '/' + params.pageSize
