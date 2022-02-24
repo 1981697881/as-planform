@@ -2,6 +2,19 @@ import request from '@/utils/request'
 import {getToken} from '@/utils/auth'
 
 // 检修管理-获取列表
+export function getOverhaulListt(params, data) {
+  const url = '/repair/overhaulList/' + params.pageNum + '/' + params.pageSize
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: data
+  })
+}
+// 客服接单-获取列表
 export function getRepairList(params, data) {
   const url = '/repair/list/' + params.pageNum + '/' + params.pageSize
   return request({

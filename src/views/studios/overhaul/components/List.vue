@@ -16,7 +16,7 @@
 </template>
 
 <script>import {mapGetters} from 'vuex'
-import {deleteMovie, getRepairList} from '@/api/studios/index'
+import {deleteMovie, getOverhaulListt} from '@/api/studios/index'
 import List from '@/components/List'
 
 export default {
@@ -90,7 +90,7 @@ export default {
       pageSize: this.list.size || 50
     }) {
       this.loading = true;
-      getRepairList(data, val).then(res => {
+      getOverhaulListt(data, val).then(res => {
         this.loading = false
         res.data.records.forEach((item, index) => {
           item.id = index + item.repairOrder
