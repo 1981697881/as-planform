@@ -10,6 +10,8 @@ const map = {
   'clerk': () => import('@/views/basic/clerk'),
   'salesman': () => import('@/views/basic/salesman'),
   'series': () => import('@/views/basic/series'),
+  'project': () => import('@/views/basic/project'),
+  'Transportation': () => import('@/views/basic/Transportation'),
 
   'advert': () => import('@/views/extension/advert'),
   'receiving': () => import('@/views/studios/receiving'),

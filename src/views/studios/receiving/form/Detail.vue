@@ -48,19 +48,19 @@
           </el-col>
           <el-col :span="12">
             <el-form-item :label="'工时费'">
-              <el-input-number v-model="item.workMoney" :min="1" disabled></el-input-number>
+              <el-input-number v-model="item.workMoney" :min="0" disabled></el-input-number>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item :label="'物流费用'">
-              <el-input-number v-model="item.freight" :min="1"></el-input-number>
+              <el-input-number v-model="item.freight" :min="0"></el-input-number>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item :label="'优惠后金额'">
-              <el-input-number v-model="item.discountMoney" :min="1"></el-input-number>
+              <el-input-number v-model="item.discountMoney" :min="0"></el-input-number>
             </el-form-item>
           </el-col>
         </el-row>

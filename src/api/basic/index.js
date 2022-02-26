@@ -201,3 +201,81 @@ export function updateEmployee(params) {
     data: params
   })
 }
+// 维修项目-获取列表
+export function getRepairProjectList(params, query) {
+  const url = '/repairProject/list/' + params.pageNum + '/' + params.pageSize
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: query
+  })
+}
+
+// 维修项目-新增
+export function addRepairProject(params) {
+  return request({
+    url: '/repairProject/add',
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: params
+  })
+}
+
+// 维修项目-删除
+export function deleteRepairProject(params) {
+  return request({
+    url: '/repairProject/delete',
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: params
+  })
+}
+// 物流公司-获取列表
+export function getLogisricsCompanyList(params, query) {
+  const url = '/logisricsCompany/list/' + params.pageNum + '/' + params.pageSize
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: query
+  })
+}
+
+// 物流公司-新增
+export function addLogisricsCompany(params) {
+  return request({
+    url: '/logisricsCompany/add',
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: params
+  })
+}
+
+// 物流公司-删除
+export function deleteLogisricsCompany(params) {
+  return request({
+    url: '/logisricsCompany/delete',
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: params
+  })
+}

@@ -6,7 +6,6 @@
       :loading="loading"
       :list="list"
       index
-      type
       @handle-size="handleSize"
       @handle-current="handleCurrent"
       @dblclick="dblclick"
@@ -17,7 +16,7 @@
 </template>
 
 <script>import {mapGetters} from 'vuex'
-import {deleteEmployee, getEmployeeList} from '@/api/basic/index'
+import {deleteRepairProject, getRepairProjectList} from '@/api/basic/index'
 import List from '@/components/List'
 
 export default {
@@ -32,12 +31,8 @@ export default {
       loading: false,
       list: {},
       columns: [
-        {text: '业务员内码', name: 'employeeInternalCode'},
-        {text: '业务员编码', name: 'employeeCode'},
-        {text: '业务员名称', name: 'employeeName'},
-        {text: '密码', name: 'employeePassword'},
-        {text: '是否内部员工', name: 'internalOrNot',formatt: 'checkInternalOrNot'},
-        {text: '状态', name: 'status',formatt: 'checkStatus'},
+        {text: '名称', name: 'repairOpinion'},
+        {text: '描述', name: 'remark'}
       ]
     };
   },
@@ -56,7 +51,7 @@ export default {
       this.$emit('showDialog', obj.row)
     },
     Delivery(val) {
-      deleteEmployee(val).then(res => {
+      deleteRepairProject(val).then(res => {
         if (res.flag) {
           this.$store.dispatch('list/setClickData', '');
           this.$emit('uploadList')
@@ -78,7 +73,7 @@ export default {
       pageSize: this.list.size || 50
     }) {
       this.loading = true;
-      getEmployeeList(data, val).then(res => {
+      getRepairProjectList(data, val).then(res => {
         this.loading = false;
         this.list = res.data;
       });

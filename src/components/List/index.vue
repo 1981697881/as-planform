@@ -175,12 +175,14 @@ export default {
       }else if(row.status ==1) {
         stau = '待检修'
       }else if(row.status ==2) {
+        stau = '待确认'
+      }else if(row.status ==3) {
         stau = '待维修'
-      }else if(row.status == 3) {
-        stau = '待发货'
       }else if(row.status == 4) {
-        stau = '待收货'
+        stau = '待发货'
       }else if(row.status == 5) {
+        stau = '待收货'
+      }else if(row.status == 6) {
         stau = '完成'
       }
       return stau
