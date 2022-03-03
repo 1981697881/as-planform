@@ -279,3 +279,16 @@ export function deleteLogisricsCompany(params) {
     data: params
   })
 }
+// 机身码查询-获取列表
+export function getFuselageList(params, query) {
+  const url = '/fuselage/list/' + params.pageNum + '/' + params.pageSize
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: query
+  })
+}

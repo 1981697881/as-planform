@@ -50,17 +50,16 @@
   </div>
 </template>
 
-<script>
-  import {choice, deliver, Info, receiving} from './form'
-  import {List, TabsBar} from './components'
+<script>import {Choice, Deliver, Info, Receiving} from './form'
+import {List, TabsBar} from './components'
 
-  export default {
+export default {
   components: {
     TabsBar,
     List,
-    choice,
-    deliver,
-    receiving,
+    Choice,
+    Deliver,
+    Receiving,
     Info
   },
   data() {

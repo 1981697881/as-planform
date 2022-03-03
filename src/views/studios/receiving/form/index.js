@@ -1,4 +1,4 @@
 export { default as Info } from './Detail'
-export { default as choice } from './choiceDetail'
-export { default as deliver } from './deliverDetail'
-export { default as receiving } from './receivingDetail'
+export { default as Choice } from './choiceDetail'
+export { default as Deliver } from './deliverDetail'
+export { default as Receiving } from './receivingDetail'

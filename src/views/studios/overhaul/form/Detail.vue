@@ -15,7 +15,7 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <block v-for="(item, index) in form.repairDetail" :key="index">
+      <div v-for="(item, index) in form.repairDetail" :key="index">
         <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item :label="'产品条码'" >
@@ -35,8 +35,10 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item :label="'维修项目'" :prop="'repairDetail.'+index+'.repairOpinion'" :rules="{required: true, message: '请输入', trigger: 'blur'}">
-              <el-input v-model="item.repairOpinion"></el-input>
+            <el-form-item :label="'维修项目'" :prop="'repairDetail.'+index+'.repairOpinion'" :rules="{required: true, message: '请选中', trigger: 'change'}">
+              <el-select v-model="item.repairOpinion" class="width-full" placeholder="请选择">
+                <el-option :label="t.repairOpinion" :value="t.repairOpinion" v-for="(t,i) in sArray" :key="i"></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
@@ -73,7 +75,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-      </block>
+      </div>
     </el-form>
     <el-dialog
       :visible.sync="visible"
@@ -130,8 +132,8 @@
   </div>
 </template>
 
-<script>import {getPartsList} from '@/api/basic/index';
-import {repairDetailUpdate} from '@/api/studios/index';
+<script>import {getPartsList, getRepairProjectList} from '@/api/basic/index'
+import {repairDetailUpdate} from '@/api/studios/index'
 import {getToken} from '@/utils/auth'
 
 export default {
@@ -164,6 +166,7 @@ export default {
         { text: '销售价格', name: 'salePrice' }
       ],
       userList: [],
+      sArray: [],
       form: {
         partsMoney: 1,
         repairOpinion: null,
@@ -180,6 +183,8 @@ export default {
     };
   },
   mounted() {
+    this.fetchFormat();
+    this.fetchFormatT();
     if (this.listInfo) {
       this.form = this.listInfo
       this.form.repairDetail = this.listInfo.repairDetailList
@@ -187,6 +192,15 @@ export default {
     }
   },
   methods: {
+    fetchFormatT() {
+      const data = {
+        pageNum: 1,
+        pageSize: 200
+      };
+      getRepairProjectList(data, {}).then(res => {
+        this.sArray = res.data.records
+      });
+    },
     // 选中
     yzClick(obj) {
       this.checkData = obj
