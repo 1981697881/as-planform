@@ -10,7 +10,7 @@
       @row-click="rowClick"
       :row-class-name="tableRowClassName"
       :row-style="formatRow ? rowClass : null"
-       @selection-change="handleSelectionChange"
+      @selection-change="handleSelectionChange"
       :height="height"
       @sort-change="sortChange"
       :show-summary="showSummary"
@@ -43,7 +43,7 @@
           show-overflow-tooltip
           align="center"
         >
-          <template width="90"  slot-scope="scope">
+          <template width="90" slot-scope="scope">
             <img style="width:80px;height:80px;border:none;" :src=" fileUrl+scope.row.posterPhoto">
           </template>
         </el-table-column>
@@ -55,7 +55,7 @@
           show-overflow-tooltip
           align="center"
         >
-          <template width="90" v-if="scope.row.picUrl != null"  slot-scope="scope">
+          <template width="90" v-if="scope.row.picUrl != null" slot-scope="scope">
             <el-image
               style="width: 80px; height: 80px"
               :src="scope.row.picUrl"
@@ -82,8 +82,7 @@
   </div>
 </template>
 
-<script>
-export default {
+<script>export default {
   props: {
     list: {
       // 请求返回的json数据
@@ -97,7 +96,8 @@ export default {
     }, tree: {
       // 列
       type: Object,
-      default: ()=>{}
+      default: () => {
+      }
     },
     index: {
       // 是否需要序号列
@@ -148,12 +148,12 @@ export default {
       default: true
     },
     // 是否自定义高度 默认100%
-    height:{
+    height: {
       type: String,
       default: '100%'
     },
     // 自定义按钮
-    operationName:{
+    operationName: {
       type: String,
       default: '+'
     }
@@ -161,120 +161,126 @@ export default {
   data() {
     return {
       methods: this.$options.methods,
-      fileUrl: this.$store.state.user.url+'/uploadFiles/image/',
+      fileUrl: this.$store.state.user.url + '/uploadFiles/image/',
     };
   },
   methods: {
     sortChange(row) {
-      return this.$emit('sortChange', { row });
+      return this.$emit('sortChange', {row});
     },
-    checkType(row,column) {
+    checkType(row, column) {
       let stau = ''
-      if(row.status == 0) {
+      if (row.status == 0) {
         stau = '待寄回'
-      }else if(row.status ==1) {
+      } else if (row.status == 1) {
         stau = '待检修'
-      }else if(row.status ==2) {
+      } else if (row.status == 2) {
         stau = '待确认'
-      }else if(row.status ==3) {
+      } else if (row.status == 3) {
         stau = '待维修'
-      }else if(row.status == 4) {
+      } else if (row.status == 4) {
         stau = '待发货'
-      }else if(row.status == 5) {
+      } else if (row.status == 5) {
         stau = '待收货'
-      }else if(row.status == 6) {
+      } else if (row.status == 6) {
         stau = '完成'
       }
       return stau
     },
-    checkPay(row,column) {
+    checkPay(row, column) {
       let stau = ''
-      if(row.payStatus == 0) {
+      if (row.payStatus == 0) {
         stau = '未付款'
-      }else if(row.payStatus ==1) {
+      } else if (row.payStatus == 1) {
         stau = '已付款'
       }
       return stau
-    },checkInternalOrNot(row,column) {
+    }, checkInternalOrNot(row, column) {
       let stau = ''
-      if(row.internalOrNot == 0) {
+      if (row.internalOrNot == 0) {
         stau = '内部员工'
-      }else if(row.internalOrNot ==1) {
+      } else if (row.internalOrNot == 1) {
         stau = '非内部员工'
       }
       return stau
-    },checkStatus(row,column) {
+    }, checkStatus(row, column) {
       let stau = ''
-      if(row.status == 0) {
+      if (row.status == 0) {
         stau = '启用'
-      }else if(row.status ==1) {
+      } else if (row.status == 1) {
         stau = '禁用'
       }
       return stau
     },
     tableRowClassName({row, rowIndex}) {
-      if(row.isClash){
-        if (row.alertStatus == 3) {
-          return 'suspended-row1';
-        } else if (row.alertStatus == 1) {
-          return 'suspended-row2';
-        }else if (row.alertStatus == 4) {
-          return 'suspended-row3';
-        }else {
-          return 'suspended-row0';
-        }
-      } else {
-        if (row.alertStatus == 3) {
-          return 'urgent-row';
-        } else if (row.alertStatus == 1) {
-          return 'delay-row';
-        }else if (row.alertStatus == 4) {
-          return 'conflict-row';
-        }else{
-          return '';
+      if (row.judgeStatus) {
+        var oDate1 = new Date();
+        var oDate2 = new Date(row.editDate);
+        var dateTime = oDate2.setDate(oDate2.getDate() + 2);
+        dateTime = new Date(dateTime);
+        if (row.status == 3) {
+          if (row.payStatus == 0) {
+            if (oDate1.getTime() > oDate2.getTime() && oDate1.getTime() > dateTime.getTime()) {
+              return 'suspended-row1';
+            } else if (oDate1.getTime() > oDate2.getTime() && oDate1.getTime() > dateTime.getTime()) {
+              return 'suspended-row2';
+            }
+          } else {
+            if (oDate1.getTime() > oDate2.getTime() && oDate1.getTime() > dateTime.getTime()) {
+              return 'suspended-row1';
+            } else if (oDate1.getTime() > oDate2.getTime() && oDate1.getTime() > dateTime.getTime()) {
+              return 'suspended-row2';
+            }
+          }
+        } else if (row.status == 4) {
+          if (oDate1.getTime() > oDate2.getTime() && oDate1.getTime() > dateTime.getTime()) {
+            return 'suspended-row1';
+          } else if (oDate1.getTime() > oDate2.getTime() && oDate1.getTime() > dateTime.getTime()) {
+            return 'suspended-row2';
+          }
         }
       }
     },
     rowClass(row, index) {
-      if(row.row.evenNum >= row.row.qty){
-        return { 'background-color': '#FFDAB9' }
+      if (row.row.evenNum >= row.row.qty) {
+        return {'background-color': '#FFDAB9'}
       }
     },
     // 监听多选 参数-所有选中的值
-    handleSelectionChange(val){
-      this.$store.dispatch('list/setSelections',val)
+    handleSelectionChange(val) {
+      this.$store.dispatch('list/setSelections', val)
     },
-    getSummaries({columns,data}) {
+    getSummaries({columns, data}) {
       const sums = [];
-      columns.forEach((column,index) => {
-        if(index == 0){
+      columns.forEach((column, index) => {
+        if (index == 0) {
           sums[index] = '合计'
-        }else{
-          const values = data.map(item=>Number(item[column.property]))
-          const flag = values.every(item=>isNaN(item))
-          if(column.property == 'productName') {
+        } else {
+          const values = data.map(item => Number(item[column.property]))
+          const flag = values.every(item => isNaN(item))
+          if (column.property == 'productName') {
             sums[index] = values.length;
           }
-         /* if(flag){
-            return sums[index] = ""
-          }else{
-            if(column.property == 'num' ||  column.property == 'evenNum'|| column.property == 'adjNum'|| column.property == 'pastNum'|| column.property == 'nowNum') {
-              sums[index] = values.reduce((total, item) => total + item);
-              sums[index] = Math.round(sums[index] * 100) / 100;
-              sums[index] += ""
-            }
-          }*/
+          /* if(flag){
+             return sums[index] = ""
+           }else{
+             if(column.property == 'num' ||  column.property == 'evenNum'|| column.property == 'adjNum'|| column.property == 'pastNum'|| column.property == 'nowNum') {
+               sums[index] = values.reduce((total, item) => total + item);
+               sums[index] = Math.round(sums[index] * 100) / 100;
+               sums[index] += ""
+             }
+           }*/
         }
       })
       return sums
     },
     // 表格单击操作
     rowClick(row, column, el) {
-      return this.$emit('row-click', { row, column, el });
+      return this.$emit('row-click', {row, column, el});
     },
     // 表格双击操作
     dblclick(row, column, el) {
-      return this.$emit('dblclick', { row, column, el });
+      return this.$emit('dblclick', {row, column, el});
     },
     // 监听每页显示数量
     handleSize(size) {
@@ -304,25 +310,20 @@ export default {
   .urgent-row {
     color: red;
   }
+
   .delay-row {
     color: orange;
   }
+
   .conflict-row {
     color: blue;
   }
-  .suspended-row0 {
-    background-color: #CD69C9 !important;
-  }
+
   .suspended-row1 {
-    background-color: #CD69C9 !important;
     color: red;
   }
+
   .suspended-row2 {
-    background-color: #CD69C9 !important;
-    color: orange;
-  }
-  .suspended-row3 {
-    background-color: #CD69C9 !important;
     color: blue;
   }
 </style>
