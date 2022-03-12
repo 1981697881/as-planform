@@ -216,26 +216,26 @@
       if (row.judgeStatus) {
         var oDate1 = new Date();
         var oDate2 = new Date(row.editDate);
-        var dateTime = oDate2.setDate(oDate2.getDate() + 2);
-        dateTime = new Date(dateTime);
+        var dimDate = parseInt((oDate1.getTime() - oDate2.getTime()) / 3600 / 1000 / 24);
         if (row.status == 3) {
           if (row.payStatus == 0) {
-            if (oDate1.getTime() > oDate2.getTime() && oDate1.getTime() > dateTime.getTime()) {
+            console.log(dimDate)
+            if (oDate1.getTime() > oDate2.getTime() && dimDate >= 2) {
               return 'suspended-row1';
-            } else if (oDate1.getTime() > oDate2.getTime() && oDate1.getTime() > dateTime.getTime()) {
+            } else if (oDate1.getTime() > oDate2.getTime() && dimDate >= 1 && dimDate < 2) {
               return 'suspended-row2';
             }
           } else {
-            if (oDate1.getTime() > oDate2.getTime() && oDate1.getTime() > dateTime.getTime()) {
+            if (oDate1.getTime() > oDate2.getTime() && dimDate > 2) {
               return 'suspended-row1';
-            } else if (oDate1.getTime() > oDate2.getTime() && oDate1.getTime() > dateTime.getTime()) {
+            } else if (oDate1.getTime() > oDate2.getTime() && dimDate >= 1 && dimDate < 2) {
               return 'suspended-row2';
             }
           }
         } else if (row.status == 4) {
-          if (oDate1.getTime() > oDate2.getTime() && oDate1.getTime() > dateTime.getTime()) {
+          if (oDate1.getTime() > oDate2.getTime() && dimDate > 2) {
             return 'suspended-row1';
-          } else if (oDate1.getTime() > oDate2.getTime() && oDate1.getTime() > dateTime.getTime()) {
+          } else if (oDate1.getTime() > oDate2.getTime() && dimDate >= 1 && dimDate < 2) {
             return 'suspended-row2';
           }
         }

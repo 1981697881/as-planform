@@ -45,12 +45,12 @@
         <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item :label="'配件费用'" >
-              <el-input-number v-model="item.partsMoney" :min="1"></el-input-number>
+              <el-input-number v-model="item.partsMoney" :min="0"></el-input-number>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item :label="'工时费'" >
-              <el-input-number v-model="item.workMoney" :min="1"></el-input-number>
+              <el-input-number v-model="item.workMoney" :min="0"></el-input-number>
             </el-form-item>
           </el-col>
         </el-row>
