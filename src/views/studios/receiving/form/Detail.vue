@@ -59,7 +59,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item :label="'优惠后金额'">
+            <el-form-item :label="'实收金额'">
               <el-input-number v-model="item.discountMoney" :min="0"></el-input-number>
             </el-form-item>
           </el-col>

@@ -7,20 +7,12 @@
             <el-input v-model="search.name" placeholder="名称"/>
           </el-form-item>
         </el-col>
-        <el-col :span="4">
-          <el-form-item :label="'工程师'" prop="eid">
-            <el-select v-model="search.engineerId" filterable class="width-full" placeholder="请选择工程师">
-              <el-option :label="t.name" :value="t.eid" v-for="(t,i) in levelFormat" :key="i"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
         <el-button-group style="float:right;padding-bottom: 10px">
           <!-- <el-button v-for="(t,i) in btnList" :key="i" v-if="t.category == 'default'" :size="'mini'" type="primary" :icon="t.cuicon" @click="onFun(t.path)">{{t.menuName}}</el-button>-->
-          <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handlerAlter">检修意见</el-button>
-          <el-button :size="'mini'" type="primary" icon="el-icon-check" @click="check">维修完成</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-edit" @click="handlerAlter">修改</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
         </el-button-group>
       </el-row>
@@ -29,67 +21,60 @@
 </template>
 
 <script>import {mapGetters} from 'vuex'
-import {completeRepair} from '@/api/studios/index'
-import {getClerkList} from '@/api/basic/index'
 
 export default {
   data() {
     return {
       btnList: [],
-      levelFormat: [],
+      sArray: [],
       search: {
-        name: '',
-        engineerId: null,
+        parentId: null
       }
-    }
+    };
   },
   computed: {
-    ...mapGetters(['node','clickData'])
+    ...mapGetters(['node', 'clickData'])
   },
   mounted() {
     let path = this.$route.meta.id
-    this.fetchFormat();
     /*getByUserAndPrId(path).then(res => {
       this.btnList = res.data
       this.$forceUpdate();
     });*/
   },
-  methods:{
+  methods: {
     // 查询条件过滤
     qFilter() {
       let obj = {}
-      this.search.name != null && this.search.name != '' ? obj.repairOrder = this.search.name : null
-      this.search.engineerId != null && this.search.engineerId != '' ? obj.engineerId = this.search.engineerId : null
+      this.search.parentId != null && this.search.parentId != '' ? obj.parentId = this.search.name : null
       return obj
     },
-    fetchFormat() {
-      const data = {
-        pageNum: 1,
-        pageSize: 1500
-      };
-      getClerkList(data, {disable: false}).then(res => {
-        this.levelFormat = res.data.records
-      });
-    },
-    onFun(method){
+    onFun(method) {
       this[method]()
     },
     handlerAdd() {
       this.$emit('showDialog')
     },
     upload() {
-      this.search.name = ''
+      this.search.name = null
       this.$emit('uploadList')
     },
     query() {
       this.$emit('queryBtn', this.qFilter())
     },
-    check() {
-      if (this.clickData.repairOrder) {
-        completeRepair({repairOrder: this.clickData.repairOrder}).then(res => {
-          if (res.flag) {
-            this.query()
-          }
+    del() {
+      if (this.clickData.id) {
+        this.$confirm('是否删除(' + this.clickData.productName + ')，删除后将无法恢复?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$emit('del', {id: this.clickData.id})
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
         });
       } else {
         this.$message({
@@ -99,7 +84,7 @@ export default {
       }
     },
     handlerAlter() {
-      if (this.clickData.repairOrder) {
+      if (this.clickData.id) {
         this.$emit('showDialog', this.clickData)
       } else {
         this.$message({

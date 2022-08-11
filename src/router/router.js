@@ -6,6 +6,7 @@ const map = {
   Layout: () => import('@/layout'),
   error: () => import('@/views/404'),
   '/basic': () => import('@/layout'),
+  'product': () => import('@/views/basic/product'),
   'shadow': () => import('@/views/basic/shadow'),
   'clerk': () => import('@/views/basic/clerk'),
   'salesman': () => import('@/views/basic/salesman'),

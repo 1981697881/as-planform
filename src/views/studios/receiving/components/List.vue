@@ -40,6 +40,7 @@
         { text: '产品条码', name: 'productCode' },
         { text: '产品名称', name: 'productName' },
         { text: '型号', name: 'productModel' },
+        {text: '快递单号', name: 'courierNumber'},
         { text: '购买日期', name: 'productBuyDate' },
         { text: '保修期至', name: 'productGuarantee' },
         { text: '故障说明', name: 'faultDescription' },
@@ -53,7 +54,6 @@
       ]
     };
   },
-
   methods: {
     // 监听每页显示几条
     handleSize(val) {

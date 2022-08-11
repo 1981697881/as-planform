@@ -104,6 +104,7 @@
         <el-row :span="20" style="padding-top: 15px">
           <el-table
             class="list-main"
+            height="200px"
             :data="productList"
             border
             size="mini"
@@ -327,5 +328,8 @@ export default {
 <style lang="scss">
   .hide .el-upload--picture-card {
     display: none;
+  }
+  .list-main {
+    height: calc(100vh /4);
   }
 </style>

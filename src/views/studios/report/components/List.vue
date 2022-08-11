@@ -41,7 +41,7 @@
         { text: '产品条码', name: 'productModel' },
         { text: '产品名称', name: 'productName' },
         { text: '型号', name: 'productModel' },
-        { text: '处理状态', name: 'status' }
+        { text: '处理状态', name: 'status',formatt: 'checkHandleStatus' }
       ]
     };
   },

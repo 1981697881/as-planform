@@ -6,7 +6,6 @@
       :loading="loading"
       :list="list"
       index
-      :tree="{children: 'repairDetailList',hasChildren: 'hasChildren'}"
       @handle-size="handleSize"
       @handle-current="handleCurrent"
       @dblclick="dblclick"
@@ -16,7 +15,7 @@
 </template>
 
 <script>import {mapGetters} from 'vuex'
-import {deleteMovie, getOverhaulListt} from '@/api/studios/index'
+import {deletePartsList, getBarcodeList} from '@/api/basic/index'
 import List from '@/components/List'
 
 export default {
@@ -35,25 +34,14 @@ export default {
       type: null,
       checkDate: null,
       columns: [
-        {text: '维修单号', name: 'repairOrder'},
-        {text: '产品条码', name: 'productCode'},
-        {text: '产品名称', name: 'productName'},
-        {text: '型号', name: 'productModel'},
-        {text: '购买日期', name: 'productBuyDate'},
-        {text: '快递单号', name: 'courierNumber'},
-        {text: '保修期至', name: 'productGuarantee'},
-        {text: '故障说明', name: 'faultDescription'},
-        {text: '维修说明', name: 'repairOpinion'},
-        {text: '维修费用', name: 'payPrice'},
-        {text: '付款状态', name: 'payStatus', formatt: 'checkPay'},
-        {text: '工程师', name: 'engineerName'},
-        {text: '计划完成时间', name: 'planDate'},
-        {text: '维修状态', name: 'status', formatt: 'checkType'},
-        {text: '物流信息', name: ''}
+        {text: '产品条码', name: 'productBarcode'},
+        {text: '产品内码', name: 'productInnercode'},
+        {text: '入库时间', name: 'productInputDate'},
+        {text: '出库时间', name: 'productOutputDate'},
+        {text: '装箱码', name: 'productPackcode'}
       ]
-    };
+    }
   },
-
   methods: {
     // 监听每页显示几条
     handleSize(val) {
@@ -66,7 +54,7 @@ export default {
       this.$emit('uploadList')
     },
     Delivery(val) {
-      deleteMovie(val).then(res => {
+      deletePartsList(val).then(res => {
         if (res.flag) {
           this.$store.dispatch('list/setClickData', '');
           this.$emit('uploadList')
@@ -90,17 +78,14 @@ export default {
       pageNum: this.list.current || 1,
       pageSize: this.list.size || 50
     }) {
-      this.loading = true;
-      getOverhaulListt(data, val).then(res => {
+      this.loading = true
+      getBarcodeList(data, val).then(res => {
         this.loading = false
-        res.data.records.forEach((item, index) => {
-          item.id = index + item.repairOrder
-        })
         this.list = res.data
       })
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

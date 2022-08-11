@@ -61,17 +61,14 @@
                 <el-button @click="setRow(item)">添加</el-button>
                 <el-button @click="delRow(item)">删除</el-button>
               </div>
-              <el-table class="list-main" :data="item.repairDetailParts" border size="mini" :highlight-current-row="true" @row-click="pjClick">
-                <el-table-column
-                  v-for="(t,i) in columns"
-                  :key="i"
-                  align="center"
-                  :prop="t.name"
-                  :label="t.text"
-                  v-if="t.default!=undefined?t.default:true"
-                  :width="t.width?t.width:''"
-                ></el-table-column>
-              </el-table>
+              <list
+                class="list-main box-shadow"
+                :columns="columns"
+                :loading="loading"
+                :list="{records:item.repairDetailParts}"
+                index
+                @row-click="pjClick"
+              />
             </el-form-item>
           </el-col>
         </el-row>
@@ -81,15 +78,36 @@
       :visible.sync="visible"
       title="配件信息"
       v-if="visible"
-      :width="'50%'"
+      :width="'30%'"
       destroy-on-close
       append-to-body
     >
-      <el-form :model="postform" ref="postform" label-width="120px" :size="'mini'">
+      <el-form :model="postform" :rules="rules" ref="postform" label-width="120px" :size="'mini'">
         <el-row :gutter="20">
+          <el-col :span="24">
+            <el-form-item :label="'配件'" prop="partsCode">
+              <el-select
+                v-model="postform.partsCode"
+                filterable
+                remote
+                reserve-keyword
+                placeholder="请输入关键词"
+                :remote-method="remoteMethod"
+                :loading="loading">
+                <el-option
+                  v-for="(item, index) in list"
+                  :key="index"
+                  :label="item.partsName+'('+item.partsCode+')'"
+                  :value="item.partsCode">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <!--<el-row :gutter="20">
           <el-col :span="12">
             <el-form-item label-width="0">
-              <el-input v-model="username" placeholder=""><el-button slot="append" icon="el-icon-search" @click="fetchFormat"></el-button></el-input>
+              <el-input v-model="partsName" placeholder=""><el-button slot="append" icon="el-icon-search" @click="fetchFormat"></el-button></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -107,9 +125,9 @@
               ></el-table-column>
             </el-table>
           </el-col>
-        </el-row>
+        </el-row>-->
         <el-row :span="20">
-          <el-col :span="12">
+          <el-col :span="24">
             <el-form-item :label="'是否保修期内'" >
               <el-switch
                 v-model="postform.isWarranty"
@@ -135,8 +153,12 @@
 <script>import {getPartsList, getRepairProjectList} from '@/api/basic/index'
 import {repairDetailUpdate} from '@/api/studios/index'
 import {getToken} from '@/utils/auth'
+import List from '@/components/List'
 
 export default {
+  components: {
+    List
+  },
   props: {
     listInfo: {
       type: Object,
@@ -152,13 +174,16 @@ export default {
       value: true,
       keyWords: [],
       inputValue: '',
-      username: '',
+      loading: false,
+      partsName: '',
+
       visible: null,
       list: [],
       columns: [
-        { text: '配件名称', name: 'partsCode' },
+        { text: '配件名称', name: 'partsName' },
+        { text: '配件编码', name: 'partsCode' },
         { text: '费用', name: 'partsPrice' },
-        { text: '是否保修期内', name: 'isWarranty' }
+        { text: '是否保修期内', name: 'isWarranty',formatt: 'checkWarranty' }
       ],
       partsColumns: [
         { text: '配件编码', name: 'partsCode' },
@@ -177,14 +202,20 @@ export default {
       checkPartData: null,
       partData: null,
       postform: {
-        isWarranty: 'true'
+        isWarranty: 'true',
+        partsCode: null
       },
       pArray: [],
+      rules: {
+        partsCode: [
+          {required: true, message: '请选择配件', trigger: 'change'}
+        ],
+      },
     };
   },
   mounted() {
-    this.fetchFormat();
     this.fetchFormatT();
+    this.fetchFormat();
     if (this.listInfo) {
       this.form = this.listInfo
       this.form.repairDetail = this.listInfo.repairDetailList
@@ -192,6 +223,23 @@ export default {
     }
   },
   methods: {
+    remoteMethod(query) {
+      if (query !== '') {
+        console.log(query)
+        this.loading = true;
+        this.partsName = query;
+        this.fetchFormat();
+        /* setTimeout(() => {
+           this.loading = false;
+           this.options = this.list.filter(item => {
+             return item.partsName.toLowerCase()
+               .indexOf(query.toLowerCase()) > -1;
+           });
+         }, 200);*/
+      } else {
+        this.list = [];
+      }
+    },
     fetchFormatT() {
       const data = {
         pageNum: 1,
@@ -240,7 +288,40 @@ export default {
       this.$refs['postform'].validate((valid) => {
         // 判断必填项
         if (valid) {
-          if (this.checkData != null) {
+          if(me.partData.repairDetailParts == null){
+            me.partData.repairDetailParts = []
+          }
+          let list = me.partData.repairDetailParts
+          let number = 0
+          let selectVal = {};
+          me.list.forEach((item,index) =>{
+            if (item.partsCode == me.postform.partsCode) {
+              selectVal = item;
+            }
+          })
+          for (let val of list) {
+            if (selectVal.id == val.id) {
+              number++
+            }
+          }
+          if (number == 0) {
+            console.log(selectVal)
+            me.visible = false
+            list.push({
+              partsCode: selectVal.partsCode,
+              id: selectVal.id,
+              partsName: selectVal.partsName,
+              k3Code: selectVal.k3Code,
+              isWarranty: me.postform.isWarranty,
+              partsPrice: selectVal.salePrice,
+              productCode: me.partData.productCode,
+              partsEdition: selectVal.partsEdition,
+            })
+            me.partData = null
+          } else {
+            this.$message.error('配件列表已存在');
+          }
+          /*if (this.checkData != null) {
             if(me.partData.repairDetailParts == null){
               me.partData.repairDetailParts = []
             }
@@ -270,7 +351,7 @@ export default {
             }
           } else {
             this.$message.error('无选中数据');
-          }
+          }*/
         } else {
           return false
         }
@@ -279,6 +360,8 @@ export default {
     // 物料选择
     setRow(item) {
       this.partData = item
+      this.postform.isWarranty = 'true'
+      this.postform.partsCode = null
       this.visible = true
     },
     saveData(form) {
@@ -303,7 +386,8 @@ export default {
         pageNum: 1,
         pageSize: 50,
       };
-      getPartsList(data, {username: this.username}).then(res => {
+      getPartsList(data, {partsName: this.partsName}).then(res => {
+        this.loading = false;
         this.list = res.data.records
       });
     },
@@ -315,7 +399,6 @@ export default {
   .el-tag + .el-tag {
     margin-left: 10px;
   }
-
   .button-new-tag {
     margin-left: 10px;
     height: 32px;
@@ -323,7 +406,6 @@ export default {
     padding-top: 0;
     padding-bottom: 0;
   }
-
   .input-new-tag {
     width: 90px;
     margin-left: 10px;
@@ -333,5 +415,8 @@ export default {
 <style lang="scss">
   .hide .el-upload--picture-card {
     display: none;
+  }
+  .list-main {
+    height: calc(100vh /4);
   }
 </style>

@@ -187,12 +187,31 @@
       }
       return stau
     },
+
     checkPay(row, column) {
       let stau = ''
       if (row.payStatus == 0) {
         stau = '未付款'
       } else if (row.payStatus == 1) {
         stau = '已付款'
+      }
+      return stau
+    },
+    checkHandleStatus(row, column) {
+      let stau = ''
+      if (row.status == 0) {
+        stau = '未处理'
+      } else if (row.status == 1) {
+        stau = '已处理'
+      }
+      return stau
+    },checkWarranty(row, column) {
+      let stau = ''
+      console.log(row)
+      if (row.isWarranty == "true") {
+        stau = '是'
+      } else if (row.isWarranty == "false") {
+        stau = '否'
       }
       return stau
     }, checkInternalOrNot(row, column) {

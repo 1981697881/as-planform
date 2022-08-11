@@ -91,7 +91,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          updateReport({id: this.clickData.id, status: "1"}).then(res => {
+          updateReport({id: this.clickData.id, status: "1",uid: this.clickData.uid,productBarcode: this.clickData.productBarcode,productName: this.clickData.productName}).then(res => {
             if (res.flag) {
               this.$emit('uploadList')
             }

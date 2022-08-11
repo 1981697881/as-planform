@@ -291,4 +291,28 @@ export function getFuselageList(params, query) {
     method: 'POST',
     data: query
   })
+}// 产品信息-获取列表
+export function getBarcodeList(params, query) {
+  const url = '/barcode/list/' + params.pageNum + '/' + params.pageSize
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: query
+  })
+}
+// 产品信息-增加产品条码
+export function addProductBarcode(params) {
+  return request({
+    url: '/inputData/addProductBarcode',
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: params
+  })
 }
