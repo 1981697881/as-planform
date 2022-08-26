@@ -253,10 +253,11 @@ export default {
     yzClick(obj) {
       this.checkData = obj
     },pjClick(obj) {
-      this.checkPartData = obj
+      this.checkPartData = obj.row
     },
     // 删除
     delRow(val) {
+      console.log(this.checkPartData.id)
       if (this.checkPartData.id) {
         this.$confirm('是否删除(' + this.checkPartData.partsName + ')?', '提示', {
           confirmButtonText: '确定',
