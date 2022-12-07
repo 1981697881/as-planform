@@ -40,7 +40,7 @@
         { text: '产品条码', name: 'productCode' },
         { text: '产品名称', name: 'productName' },
         { text: '型号', name: 'productModel' },
-        {text: '快递单号', name: 'courierNumber'},
+        {text: '寄件单号', name: 'courierNumber'},
         { text: '购买日期', name: 'productBuyDate' },
         { text: '保修期至', name: 'productGuarantee' },
         { text: '故障说明', name: 'faultDescription' },
@@ -50,7 +50,8 @@
         { text: '工程师', name: 'engineerName' },
         { text: '计划完成时间', name: 'planDate' },
         { text: '维修状态', name: 'status', formatt: 'checkType'},
-        { text: '物流信息', name: '' }
+        { text: '发货物流', name: 'logistics.expressName' },
+        { text: '发货单号', name: 'logistics.expressOrder' }
       ]
     };
   },

@@ -30,12 +30,12 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'销售价格'" prop="salePrice">
-            <el-input-number v-model="form.salePrice" :min="1"></el-input-number>
+            <el-input-number v-model="form.salePrice" :min="0"></el-input-number>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item :label="'出库价格'" retrievalPrice="retrievalPrice">
-            <el-input-number v-model="form.retrievalPrice" :min="1"></el-input-number>
+            <el-input-number v-model="form.retrievalPrice" :min="0"></el-input-number>
           </el-form-item>
         </el-col>
       </el-row>

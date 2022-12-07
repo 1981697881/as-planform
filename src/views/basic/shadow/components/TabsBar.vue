@@ -9,6 +9,11 @@
             </el-select>
           </el-form-item>
         </el-col>
+        <el-col :span="4">
+          <el-form-item :label="'关键字'">
+            <el-input v-model="search.partsName" placeholder="名称/编码"/>
+          </el-form-item>
+        </el-col>
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
@@ -34,7 +39,8 @@
       btnList: [],
       sArray: [],
       search: {
-        parentId: null
+        parentId: null,
+        partsName: ''
       }
     };
   },
@@ -54,6 +60,7 @@
     qFilter() {
       let obj = {}
       this.search.parentId != null && this.search.parentId != '' ? obj.parentId = this.search.parentId : null
+      this.search.partsName != null && this.search.partsName != '' ? obj.partsName = this.search.partsName : null
       return obj
     },
     getSeriesList() {
@@ -71,6 +78,7 @@
     },
     upload() {
       this.search.parentId = null
+      this.search.partsName = ''
       this.$emit('uploadList')
     },
     query() {

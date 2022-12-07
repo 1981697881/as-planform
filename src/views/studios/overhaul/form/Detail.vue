@@ -18,12 +18,12 @@
       <div v-for="(item, index) in form.repairDetail" :key="index">
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item :label="'产品条码'" >
+            <el-form-item :label="'产品条码'">
               <el-input v-model="item.productCode" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item :label="'产品名称'" >
+            <el-form-item :label="'产品名称'">
               <el-input v-model="item.productName" disabled></el-input>
             </el-form-item>
           </el-col>
@@ -35,21 +35,31 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item :label="'维修项目'" :prop="'repairDetail.'+index+'.repairOpinion'" :rules="{required: true, message: '请选中', trigger: 'change'}">
-              <el-select v-model="item.repairOpinion" class="width-full" placeholder="请选择">
-                <el-option :label="t.repairOpinion" :value="t.repairOpinion" v-for="(t,i) in sArray" :key="i"></el-option>
+            <el-form-item :label="'维修项目'" :prop="'repairDetail.'+index+'.repairOpinionArrays'"
+                          :rules="{required: true, message: '请选中', trigger: 'change'}">
+              <el-select
+                        v-model="item.repairOpinionArrays"
+                         filterable
+                         remote
+                        multiple
+                         placeholder="请输入关键词"
+                         :remote-method="remoteMethod2"
+                         :loading="loading"
+                         class="width-full">
+                <el-option :label="t.repairOpinion" :value="t.repairOpinion" v-for="(t,i) in sArray"
+                           :key="i"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item :label="'配件费用'" >
+            <el-form-item :label="'配件费用'">
               <el-input-number v-model="item.partsMoney" :min="0"></el-input-number>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item :label="'工时费'" >
+            <el-form-item :label="'工时费'">
               <el-input-number v-model="item.workMoney" :min="0"></el-input-number>
             </el-form-item>
           </el-col>
@@ -128,7 +138,7 @@
         </el-row>-->
         <el-row :span="20">
           <el-col :span="24">
-            <el-form-item :label="'是否保修期内'" >
+            <el-form-item :label="'是否保修期内'">
               <el-switch
                 v-model="postform.isWarranty"
                 active-value="true"
@@ -180,15 +190,15 @@ export default {
       visible: null,
       list: [],
       columns: [
-        { text: '配件名称', name: 'partsName' },
-        { text: '配件编码', name: 'partsCode' },
-        { text: '费用', name: 'partsPrice' },
-        { text: '是否保修期内', name: 'isWarranty',formatt: 'checkWarranty' }
+        {text: '配件名称', name: 'partsName'},
+        {text: '配件编码', name: 'partsCode'},
+        {text: '费用', name: 'partsPrice'},
+        {text: '是否保修期内', name: 'isWarranty', formatt: 'checkWarranty'}
       ],
       partsColumns: [
-        { text: '配件编码', name: 'partsCode' },
-        { text: '配件名称', name: 'partsName' },
-        { text: '销售价格', name: 'salePrice' }
+        {text: '配件编码', name: 'partsCode'},
+        {text: '配件名称', name: 'partsName'},
+        {text: '销售价格', name: 'salePrice'}
       ],
       userList: [],
       sArray: [],
@@ -240,19 +250,28 @@ export default {
         this.list = [];
       }
     },
-    fetchFormatT() {
+    remoteMethod2(query) {
+      if (query !== '') {
+        this.loading = true;
+        this.fetchFormatT({repairOpinion: query});
+      } else {
+        this.sArray = [];
+      }
+    },
+    fetchFormatT(val ={}) {
       const data = {
         pageNum: 1,
         pageSize: 200
       };
-      getRepairProjectList(data, {}).then(res => {
+      getRepairProjectList(data, val).then(res => {
+        this.loading = false;
         this.sArray = res.data.records
       });
     },
     // 选中
     yzClick(obj) {
       this.checkData = obj
-    },pjClick(obj) {
+    }, pjClick(obj) {
       this.checkPartData = obj.row
     },
     // 删除
@@ -289,13 +308,13 @@ export default {
       this.$refs['postform'].validate((valid) => {
         // 判断必填项
         if (valid) {
-          if(me.partData.repairDetailParts == null){
+          if (me.partData.repairDetailParts == null) {
             me.partData.repairDetailParts = []
           }
           let list = me.partData.repairDetailParts
           let number = 0
           let selectVal = {};
-          me.list.forEach((item,index) =>{
+          me.list.forEach((item, index) => {
             if (item.partsCode == me.postform.partsCode) {
               selectVal = item;
             }
@@ -371,8 +390,9 @@ export default {
         if (valid) {
           //修改
           let param = this.form
+          console.log(this.form)
           repairDetailUpdate(param).then(res => {
-            if(res.flag){
+            if (res.flag) {
               this.$emit('hideDialog', false)
               this.$emit('uploadList')
             }
@@ -400,6 +420,7 @@ export default {
   .el-tag + .el-tag {
     margin-left: 10px;
   }
+
   .button-new-tag {
     margin-left: 10px;
     height: 32px;
@@ -407,6 +428,7 @@ export default {
     padding-top: 0;
     padding-bottom: 0;
   }
+
   .input-new-tag {
     width: 90px;
     margin-left: 10px;
@@ -417,7 +439,8 @@ export default {
   .hide .el-upload--picture-card {
     display: none;
   }
+
   .list-main {
-    height: calc(100vh /4);
+    height: calc(100vh / 4);
   }
 </style>

@@ -38,7 +38,7 @@
       columns: [
         { text: '业务员', name: 'uname' },
         { text: '上报日期', name: 'createDate' },
-        { text: '产品条码', name: 'productModel' },
+        { text: '产品条码', name: 'productBarcode' },
         { text: '产品名称', name: 'productName' },
         { text: '型号', name: 'productModel' },
         { text: '处理状态', name: 'status',formatt: 'checkHandleStatus' }
