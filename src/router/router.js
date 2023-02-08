@@ -14,6 +14,7 @@ const map = {
   'project': () => import('@/views/basic/project'),
   'Transportation': () => import('@/views/basic/Transportation'),
   'fuselageCode': () => import('@/views/basic/fuselageCode'),
+  'engineer': () => import('@/views/basic/engineer'),
 
   'advert': () => import('@/views/extension/advert'),
   'receiving': () => import('@/views/studios/receiving'),

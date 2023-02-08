@@ -40,7 +40,6 @@ module.exports = {
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       [process.env.VUE_APP_BASE_API]: {
         //target: `http://test.gzfzdev.com:10008`, // 修改后台接口地址
-        //target: `https://cfzx.gzfzdev.com/web`,
         target: `https://yb.gzfzdev.com/yingbao`,
         changeOrigin: true, // 必须加上跨域
         ws: false,

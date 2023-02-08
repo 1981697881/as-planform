@@ -316,3 +316,92 @@ export function addProductBarcode(params) {
     data: params
   })
 }
+// 工程师管理-获取列表
+export function getEngineerList(params, query) {
+  const url = '/engineer/list/' + params.pageNum + '/' + params.pageSize
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: query
+  })
+}
+
+// 工程师管理-新增
+export function addEngineer(params) {
+  return request({
+    url: '/engineer/addEngineer',
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: params
+  })
+}
+
+// 工程师管理-删除
+export function deleteEngineer(params) {
+  return request({
+    url: '/engineer/deleteEngineer',
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: params
+  })
+}
+// 工程师管理-下拉
+export function engineerForm(params) {
+  return request({
+    url: '/engineer/engineerForm' + params,
+    headers: {
+      'authorization': getToken('aspanrx')
+    },
+    method: 'get',
+    params
+  })
+}
+// 故障分类-获取列表
+export function getFaultList(params, query) {
+  const url = '/fault/faultList/' + params.pageNum + '/' + params.pageSize
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: query
+  })
+}
+
+// 故障分类-新增
+export function addFault(params) {
+  return request({
+    url: '/fault/addFault',
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: params
+  })
+}
+
+// 故障分类-删除
+export function deleteFault(params) {
+  return request({
+    url: '/fault/deleteFault',
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: params
+  })
+}

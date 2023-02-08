@@ -51,9 +51,11 @@
         { text: '计划完成时间', name: 'planDate' },
         { text: '维修状态', name: 'status', formatt: 'checkType'},
         { text: '发货物流', name: 'logistics.expressName' },
-        { text: '发货单号', name: 'logistics.expressOrder' }
+        { text: '发货单号', name: 'logistics.expressOrder' },
+        { text: '创建时间', name: 'createDate' },
+        { text: '修改时间', name: 'editDate' }
       ]
-    };
+    }
   },
   methods: {
     // 监听每页显示几条

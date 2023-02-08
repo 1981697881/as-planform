@@ -7,12 +7,36 @@
             <el-input v-model="form.repairOrder" disabled></el-input>
           </el-form-item>
         </el-col>
+        <el-col :span="12">
+          <el-form-item :label="'费用类型'">
+            <el-select  style="width: 100%" v-model="form.repairPaymentType" placeholder="请选择">
+              <el-option
+                v-for="(item,index) in options1"
+                :key="index"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
       </el-row>
       <block v-for="(item, index) in form.repairDetail" :key="index">
         <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item :label="'工程师'">
-              <el-input v-model="item.productCode" disabled></el-input>
+              <el-input v-model="form.engineerName" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item :label="'故障分类'">
+              <el-select style="width: 100%" v-model="item.letters" disabled placeholder="请选择">
+                <el-option
+                  v-for="(item,index) in options2"
+                  :key="index"
+                  :label="item.fault"
+                  :value="item.letters">
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
@@ -92,6 +116,7 @@
 
 <script>import {getToken} from '@/utils/auth'
 import {determineLastPrice} from "@/api/studios/index";
+import {getFaultList} from "@/api/basic/index";
 
 export default {
   props: {
@@ -114,17 +139,30 @@ export default {
         {text: '费用', name: 'partsPrice'},
         {text: '是否保修期内', name: 'isWarranty'}
       ],
+      options1: [{
+        value: '现付',
+        label: '现付'
+      }, {
+        value: '月结',
+        label: '月结'
+      }],
+      options2: [],
       userList: [],
       form: {
         freight: 0,
-        discountMoney: 0
+        discountMoney: 0,
+        repairPaymentType: null
       },
       pArray: [],
       rules: {
+        repairPaymentType: [
+          {required: true, message: '请选择', trigger: 'change'}
+        ],
       },
     };
   },
   mounted() {
+    this.fetchData()
     if (this.listInfo) {
       this.form = this.listInfo
       this.form.repairDetail = this.listInfo.repairDetailList
@@ -132,6 +170,14 @@ export default {
     }
   },
   methods: {
+    fetchData(val={}, data = {
+      pageNum: 1,
+      pageSize: 50
+    }) {
+      getFaultList(data, val).then(res => {
+        this.options2 = res.data.records
+      })
+    },
     saveData(form) {
       this.$refs[form].validate((valid) => {
         //判断必填项

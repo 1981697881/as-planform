@@ -7,15 +7,39 @@
             <el-input v-model="form.repairOrder" disabled></el-input>
           </el-form-item>
         </el-col>
-      </el-row>
-      <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item :label="'工程师'">
-            <el-input v-model="form.engineerName" disabled></el-input>
+          <el-form-item :label="'维修费用'">
+            <el-select style="width: 100%" disabled v-model="form.repairPaymentType" placeholder="请选择">
+              <el-option
+                v-for="(item,index) in options1"
+                :key="index"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
           </el-form-item>
         </el-col>
       </el-row>
       <div v-for="(item, index) in form.repairDetail" :key="index">
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-form-item :label="'工程师'">
+              <el-input v-model="form.engineerName" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item :label="'故障分类'">
+              <el-select style="width: 100%" v-model="item.letters" placeholder="请选择">
+                <el-option
+                  v-for="(item,index) in options2"
+                  :key="index"
+                  :label="item.fault"
+                  :value="item.letters">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item :label="'产品条码'">
@@ -38,14 +62,14 @@
             <el-form-item :label="'维修项目'" :prop="'repairDetail.'+index+'.repairOpinionArrays'"
                           :rules="{required: true, message: '请选中', trigger: 'change'}">
               <el-select
-                        v-model="item.repairOpinionArrays"
-                         filterable
-                         remote
-                        multiple
-                         placeholder="请输入关键词"
-                         :remote-method="remoteMethod2"
-                         :loading="loading"
-                         class="width-full">
+                v-model="item.repairOpinionArrays"
+                filterable
+                remote
+                multiple
+                placeholder="请输入关键词"
+                :remote-method="remoteMethod2"
+                :loading="loading"
+                class="width-full">
                 <el-option :label="t.repairOpinion" :value="t.repairOpinion" v-for="(t,i) in sArray"
                            :key="i"></el-option>
               </el-select>
@@ -61,6 +85,33 @@
           <el-col :span="12">
             <el-form-item :label="'工时费'">
               <el-input-number v-model="item.workMoney" :min="0"></el-input-number>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="24" style="text-align: center">
+            <el-form-item :label="'故障图片'">
+              <el-upload
+                :action="fileUrl"
+                list-type="picture-card"
+                accept="image/jpeg,image/jpg,image/png,image/gif"
+                :headers="headers"
+                :data="imgData"
+                :limit="1"
+                name="imgS"
+                :on-success="(res, file, fileList)=>{uploadSuccess(res,file, fileList, item)}"
+                :on-error="uploadError"
+                :class="{hide:item.hideUpload}"
+                :on-preview="handlePictureCardPreview"
+                :on-change="(file, fileList)=>{handleRemove(file,fileList, item)}"
+                :file-list="item.fileList"
+                ref="upload"
+                :on-remove="(file, fileList)=>{handleRemove(file,fileList, item)}">
+                <i class="el-icon-plus"></i>
+              </el-upload>
+              <el-dialog :visible.sync="dialogVisible" append-to-body size="tiny">
+                <img width="100%" :src="dialogImageUrl" alt="">
+              </el-dialog>
             </el-form-item>
           </el-col>
         </el-row>
@@ -159,8 +210,7 @@
     </div>
   </div>
 </template>
-
-<script>import {getPartsList, getRepairProjectList} from '@/api/basic/index'
+<script>import {getFaultList, getPartsList, getRepairProjectList} from '@/api/basic/index'
 import {repairDetailUpdate} from '@/api/studios/index'
 import {getToken} from '@/utils/auth'
 import List from '@/components/List'
@@ -186,9 +236,24 @@ export default {
       inputValue: '',
       loading: false,
       partsName: '',
-
       visible: null,
       list: [],
+      fileUrl: '',
+      imgData: {},
+      images: [],
+      hideUpload: false,
+      dialogImageUrl: '',
+      dialogVisible: false,
+      fileList: [],
+      options1: [{
+        value: '现付',
+        label: '现付'
+      }, {
+        value: '月结',
+        label: '月结'
+      }],
+      options2: [],
+      limitCount: 3,
       columns: [
         {text: '配件名称', name: 'partsName'},
         {text: '配件编码', name: 'partsCode'},
@@ -207,6 +272,7 @@ export default {
         repairOpinion: null,
         engineerName: null,
         workMoney: 1,
+
       },
       checkData: null,
       checkPartData: null,
@@ -224,15 +290,88 @@ export default {
     };
   },
   mounted() {
-    this.fetchFormatT();
-    this.fetchFormat();
+    this.fileUrl = `${window.location.origin}/yingbao/file/imgUpload`
+    this.fetchFormatT()
+    this.fetchFormat()
+    this.fetchData()
     if (this.listInfo) {
       this.form = this.listInfo
       this.form.repairDetail = this.listInfo.repairDetailList
       delete this.form.repairDetailList
+      this.form.repairDetail.forEach((item) => {
+        if (item.faultPhotoByE != null) {
+          var array = item.faultPhotoByE.split(',')
+          array.forEach((items) => {
+            if(typeof(item.fileList) == 'undefined'){
+              item.fileList = []
+            }
+            item.fileList.push({
+              url: items
+            })
+          })
+          if (array.length >= 3) {
+            item.hideUpload = true
+          }
+        }
+      })
     }
   },
   methods: {
+    fetchData(val = {}, data = {
+      pageNum: 1,
+      pageSize: 50
+    }) {
+      getFaultList(data, val).then(res => {
+        this.options2 = res.data.records
+      })
+    },
+    // 上传失败事件
+    uploadError(res) {
+      console.log(res)
+      this.$message({
+        message: res.msg,
+        type: "warning"
+      });
+      this.$emit('uploadList')
+    },
+    //上传成功事件
+    uploadSuccess(res, file, fileList, item) {
+      console.log(item)
+      file.name = res.data;
+      if (item.faultPhotoByEs == null) {
+        item.faultPhotoByEs = []
+      }
+      item.faultPhotoByEs.push(this.$store.state.user.url + '/uploadFiles/image/' + res.data)
+      this.$message({
+        message: res.msg,
+        type: "success"
+      });
+      this.$emit('uploadList')
+    },
+    //删除图片
+    handleRemove(file, fileList, item) {
+      console.log(item)
+      let array = item.faultPhotoByEs;
+      /*let img =file.url.split(this.$store.state.user.url+'/uploadFiles/image/')[1]
+      array.forEach((item,index)=>{
+        if (item.url.split(this.$store.state.user.url+'/uploadFiles/image/')[1] == img) {
+          array.splice(index, 1);
+        }
+      })*/
+      for (let i in array) {
+        if (file.name == array[i]) {
+          array.splice(i, 1);
+          item.fileList.splice(i, 1);
+        }
+      }
+    },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
+    },
+    handleChange(file, fileList,item) {
+      item.hideUpload = fileList.length >= this.limitCount;
+    },
     remoteMethod(query) {
       if (query !== '') {
         console.log(query)
@@ -258,7 +397,7 @@ export default {
         this.sArray = [];
       }
     },
-    fetchFormatT(val ={}) {
+    fetchFormatT(val = {}) {
       const data = {
         pageNum: 1,
         pageSize: 200
