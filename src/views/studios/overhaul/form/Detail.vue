@@ -97,13 +97,13 @@
                 accept="image/jpeg,image/jpg,image/png,image/gif"
                 :headers="headers"
                 :data="imgData"
-                :limit="1"
+                :limit="3"
                 name="imgS"
                 :on-success="(res, file, fileList)=>{uploadSuccess(res,file, fileList, item)}"
                 :on-error="uploadError"
                 :class="{hide:item.hideUpload}"
                 :on-preview="handlePictureCardPreview"
-                :on-change="(file, fileList)=>{handleRemove(file,fileList, item)}"
+                :on-change="(file, fileList)=>{handleChange(file,fileList, item)}"
                 :file-list="item.fileList"
                 ref="upload"
                 :on-remove="(file, fileList)=>{handleRemove(file,fileList, item)}">
@@ -112,6 +112,20 @@
               <el-dialog :visible.sync="dialogVisible" append-to-body size="tiny">
                 <img width="100%" :src="dialogImageUrl" alt="">
               </el-dialog>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-form-item :label="'处理方法'">
+              <el-select style="width: 100%" @change="statistics" v-model="item.remedy" placeholder="请选择">
+                <el-option
+                  v-for="(item,index) in options3"
+                  :key="index"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
@@ -189,6 +203,13 @@
         </el-row>-->
         <el-row :span="20">
           <el-col :span="24">
+            <el-form-item :label="'数量'">
+              <el-input-number v-model="postform.number" :min="1"></el-input-number>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :span="20">
+          <el-col :span="24">
             <el-form-item :label="'是否保修期内'">
               <el-switch
                 v-model="postform.isWarranty"
@@ -252,18 +273,31 @@ export default {
         value: '月结',
         label: '月结'
       }],
+      options3: [{
+        value: '维修',
+        label: '维修'
+      }, {
+        value: '客修',
+        label: '客修'
+      }, {
+        value: '不修',
+        label: '不修'
+      }],
       options2: [],
       limitCount: 3,
       columns: [
         {text: '配件名称', name: 'partsName'},
         {text: '配件编码', name: 'partsCode'},
-        {text: '费用', name: 'partsPrice'},
+        {text: '销售价格', name: 'salePrice'},
+        {text: '配件价格', name: 'partPrice'},
+        {text: '数量', name: 'number'},
         {text: '是否保修期内', name: 'isWarranty', formatt: 'checkWarranty'}
       ],
       partsColumns: [
         {text: '配件编码', name: 'partsCode'},
         {text: '配件名称', name: 'partsName'},
-        {text: '销售价格', name: 'salePrice'}
+        {text: '销售价格', name: 'salePrice'},
+        {text: '配件价格', name: 'partPrice'},
       ],
       userList: [],
       sArray: [],
@@ -272,13 +306,13 @@ export default {
         repairOpinion: null,
         engineerName: null,
         workMoney: 1,
-
       },
       checkData: null,
       checkPartData: null,
       partData: null,
       postform: {
         isWarranty: 'true',
+        number: 1,
         partsCode: null
       },
       pArray: [],
@@ -299,24 +333,46 @@ export default {
       this.form.repairDetail = this.listInfo.repairDetailList
       delete this.form.repairDetailList
       this.form.repairDetail.forEach((item) => {
+        this.$set(item, 'remedy', null)
         if (item.faultPhotoByE != null) {
           var array = item.faultPhotoByE.split(',')
           array.forEach((items) => {
-            if(typeof(item.fileList) == 'undefined'){
+            if (typeof (item.fileList) == 'undefined') {
               item.fileList = []
             }
             item.fileList.push({
               url: items
             })
+            if (item.faultPhotoByEs == null) {
+              item.faultPhotoByEs = []
+            }
+            item.faultPhotoByEs.push(items)
           })
           if (array.length >= 3) {
             item.hideUpload = true
           }
         }
       })
+      console.log(this.form.repairDetail)
     }
   },
   methods: {
+    statistics() {
+      this.form.repairDetail.forEach((item) => {
+        var array = item.repairDetailParts
+        let number = 0
+        array.forEach((items) => {
+          if(item.remedy == '维修'){
+            number += items.partPrice * items.number
+          }else if(item.remedy == '客修'){
+            number += items.salePrice * items.number
+          }else if(item.remedy == '不修'){
+            number = 0
+          }
+        })
+        this.$set(item,'partsMoney',number)
+      })
+    },
     fetchData(val = {}, data = {
       pageNum: 1,
       pageSize: 50
@@ -334,7 +390,7 @@ export default {
       });
       this.$emit('uploadList')
     },
-    //上传成功事件
+    // 上传成功事件
     uploadSuccess(res, file, fileList, item) {
       console.log(item)
       file.name = res.data;
@@ -369,8 +425,10 @@ export default {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
-    handleChange(file, fileList,item) {
+    handleChange(file, fileList, item) {
       item.hideUpload = fileList.length >= this.limitCount;
+      console.log(item.hideUpload)
+      this.$forceUpdate()
     },
     remoteMethod(query) {
       if (query !== '') {
@@ -471,8 +529,10 @@ export default {
               id: selectVal.id,
               partsName: selectVal.partsName,
               k3Code: selectVal.k3Code,
+              number: me.postform.number,
               isWarranty: me.postform.isWarranty,
-              partsPrice: selectVal.salePrice,
+              salePrice: selectVal.salePrice,
+              partsPrice: selectVal.partsPrice,
               productCode: me.partData.productCode,
               partsEdition: selectVal.partsEdition,
             })
@@ -514,6 +574,7 @@ export default {
         } else {
           return false
         }
+        this.statistics()
       })
     },
     // 物料选择

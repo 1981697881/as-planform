@@ -29,7 +29,7 @@
           :fixed="t.fixed"
           :sortable="t.sort"
           :formatter="t.formatt!=undefined?(row, column) => methods[t.formatt](row,column) : null"
-          v-if="t.default!=undefined ?(t.default =='img' || t.default =='image'?false:t.default):true"
+          v-if="t.default!=undefined ?(t.default =='img' || t.default =='image'?false:t.default|| t.default =='handler'?false:t.default):true"
           :label="t.text"
           :width="t.width?t.width:(selfAdaption?'':'120px')"
           show-overflow-tooltip
@@ -62,6 +62,27 @@
               :preview-src-list="[scope.row.picUrl]">
             </el-image>
             <!--<img style="width:80px;height:80px;border:none;" :src="scope.row.picUrl">-->
+          </template>
+        </el-table-column>
+        <el-table-column
+          :key="i"
+          v-else-if="t.default == 'handler'?true:false"
+          :label="t.text"
+          :width="t.width?t.width:(selfAdaption?'':'120px')"
+          show-overflow-tooltip
+          align="center"
+        >
+          <template width="90" slot-scope="scope">
+            <el-popover
+              placement="right"
+              width="400"
+              trigger="click">
+              <el-table :data="scope.row.datedescribes">
+                <el-table-column width="150" property="dateDescribe" label="日期"></el-table-column>
+                <el-table-column width="100" property="orderNumber" label="单据"></el-table-column>
+              </el-table>
+              <el-button slot="reference" size="mini" round>查看</el-button>
+            </el-popover>
           </template>
         </el-table-column>
       </template>

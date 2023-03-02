@@ -40,7 +40,12 @@
         </el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col :span="24">
+        <el-col :span="12">
+          <el-form-item :label="'配件价格'" retrievalPrice="partPrice">
+            <el-input-number v-model="form.partPrice" :min="0"></el-input-number>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
           <el-form-item :label="'备注说明'" prop="remark">
             <el-input type="textarea" v-model="form.remark"></el-input>
           </el-form-item>
@@ -171,6 +176,7 @@ export default {
         remark: null,
         retrievalPrice: null,
         salePrice: null,
+        partPrice: null,
         value: false
       },
       checkData: null,

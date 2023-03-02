@@ -52,7 +52,9 @@ export default {
         { text: '发货物流', name: 'logistics.expressName' },
         { text: '发货单号', name: 'logistics.expressOrder' },
         { text: '创建时间', name: 'createDate' },
-        { text: '修改时间', name: 'editDate' }
+        { text: '修改时间', name: 'editDate' },
+        { text: '完成时间', name: 'completeTime' },
+        {text: '操作时间', name: 'datedescribes', default: 'handler'}
       ]
     };
   },

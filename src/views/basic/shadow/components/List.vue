@@ -40,6 +40,7 @@ export default {
         {text: '版本号', name: 'partsEdition'},
         {text: '销售价格', name: 'salePrice'},
         {text: '出库价格', name: 'retrievalPrice'},
+        {text: '配件价格', name: 'partPrice'},
         {text: '适用产品', name: 'applyProduct'},
         {text: '备注说明', name: 'remark'}
       ]
