@@ -228,7 +228,6 @@
       return stau
     },checkWarranty(row, column) {
       let stau = ''
-      console.log(row)
       if (row.isWarranty == "true") {
         stau = '是'
       } else if (row.isWarranty == "false") {

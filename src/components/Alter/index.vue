@@ -1,22 +1,22 @@
 <template>
   <div >
-    <el-form  label-width="100px" ref="form" :rules="loginRules" :model="form" :size="'mini'">
+    <el-form ref="form" :rules="loginRules" :model="form" :size="'mini'">
       <el-row :gutter="20" type="flex"  justify="center">
-        <el-col :span="12">
+        <el-col :span="24">
           <el-form-item :label="'原密码'" prop="oldPassword">
             <el-input type="password" v-model="form.oldPassword"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20"  type="flex"  justify="center">
-        <el-col :span="12">
+        <el-col :span="24">
           <el-form-item :label="'新密码'" prop="newPassword">
             <el-input  type="password" v-model="form.newPassword"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20" type="flex"  justify="center">
-        <el-col :span="12">
+        <el-col :span="24">
           <el-form-item :label="'确认密码'" prop="conPassword">
             <el-input type="password" v-model="form.conPassword"></el-input>
           </el-form-item>
@@ -30,8 +30,9 @@
   </div>
 </template>
 <script>
-    import Cookies from 'js-cookie'
-    export default {
+  import Cookies from 'js-cookie'
+
+  export default {
         data() {
             const validateOld = (rule, value, callback) => {
                 var cineps=Cookies.get('cineps');

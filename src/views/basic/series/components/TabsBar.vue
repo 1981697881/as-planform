@@ -1,6 +1,6 @@
 <template>
   <div class="list-header">
-    <el-form v-model="search" :size="'mini'" :label-width="'80px'">
+    <el-form v-model="search" :size="'mini'">
       <el-row :gutter="10">
         <el-button-group style="float:right;padding-bottom: 10px">
           <!-- <el-button v-for="(t,i) in btnList" :key="i" v-if="t.category == 'default'" :size="'mini'" type="primary" :icon="t.cuicon" @click="onFun(t.path)">{{t.menuName}}</el-button>-->

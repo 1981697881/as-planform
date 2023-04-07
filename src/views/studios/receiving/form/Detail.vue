@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model="form" :rules="rules" ref="form" label-width="100px" :size="'mini'">
+    <el-form :model="form" :rules="rules" ref="form" :size="'mini'">
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'维修单号'">
@@ -37,6 +37,32 @@
                   :value="item.letters">
                 </el-option>
               </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="24">
+            <el-form-item :label="'客户反馈故障'">
+              <el-image
+                v-for="(items,index) in JSON.parse(item.faultPhoto)"
+                :key="index"
+                style="width: 100px; height: 100px"
+                :src="items.path"
+                :preview-src-list="[items.path]">
+              </el-image>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="24">
+            <el-form-item :label="'购买凭证'">
+              <el-image
+                v-for="(items,index) in JSON.parse(item.voucher)"
+                :key="index"
+                style="width: 100px; height: 100px"
+                :src="items.path"
+                :preview-src-list="[items.path]">
+              </el-image>
             </el-form-item>
           </el-col>
         </el-row>

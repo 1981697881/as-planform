@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model="form" ref="form" label-width="100px" :size="'mini'">
+    <el-form :model="form" ref="form"  :size="'mini'">
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'维修单号'">
@@ -89,6 +89,19 @@
           </el-col>
         </el-row>
         <el-row :gutter="20">
+          <el-col :span="24">
+            <el-form-item :label="'客户反馈故障'">
+              <el-image
+                v-for="(items,index) in JSON.parse(item.faultPhoto)"
+                :key="index"
+                style="width: 100px; height: 100px"
+                :src="items.path"
+                :preview-src-list="[items.path]">
+              </el-image>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
           <el-col :span="24" style="text-align: center">
             <el-form-item :label="'故障图片'">
               <el-upload
@@ -157,7 +170,7 @@
       destroy-on-close
       append-to-body
     >
-      <el-form :model="postform" :rules="rules" ref="postform" label-width="120px" :size="'mini'">
+      <el-form :model="postform" :rules="rules" ref="postform" :size="'mini'">
         <el-row :gutter="20">
           <el-col :span="24">
             <el-form-item :label="'配件'" prop="partsCode">
@@ -288,7 +301,7 @@ export default {
       columns: [
         {text: '配件名称', name: 'partsName'},
         {text: '配件编码', name: 'partsCode'},
-        {text: '销售价格', name: 'salePrice'},
+        {text: '销售价格', name: 'partsPrice'},
         {text: '配件价格', name: 'partPrice'},
         {text: '数量', name: 'number'},
         {text: '是否保修期内', name: 'isWarranty', formatt: 'checkWarranty'}
@@ -297,7 +310,7 @@ export default {
         {text: '配件编码', name: 'partsCode'},
         {text: '配件名称', name: 'partsName'},
         {text: '销售价格', name: 'salePrice'},
-        {text: '配件价格', name: 'partPrice'},
+        {text: '配件价格', name: 'partPrice'}
       ],
       userList: [],
       sArray: [],
@@ -333,7 +346,9 @@ export default {
       this.form.repairDetail = this.listInfo.repairDetailList
       delete this.form.repairDetailList
       this.form.repairDetail.forEach((item) => {
-        this.$set(item, 'remedy', null)
+        if(typeof item.remedy === 'undefined'){
+          this.$set(item, 'remedy', null)
+        }
         if (item.faultPhotoByE != null) {
           var array = item.faultPhotoByE.split(',')
           array.forEach((items) => {
@@ -353,7 +368,6 @@ export default {
           }
         }
       })
-      console.log(this.form.repairDetail)
     }
   },
   methods: {
@@ -363,9 +377,9 @@ export default {
         let number = 0
         array.forEach((items) => {
           if(item.remedy == '维修'){
-            number += items.partPrice * items.number
+            number += items.partsPrice * items.number
           }else if(item.remedy == '客修'){
-            number += items.salePrice * items.number
+            number += items.partPrice * items.number
           }else if(item.remedy == '不修'){
             number = 0
           }
@@ -531,8 +545,8 @@ export default {
               k3Code: selectVal.k3Code,
               number: me.postform.number,
               isWarranty: me.postform.isWarranty,
-              salePrice: selectVal.salePrice,
-              partsPrice: selectVal.partsPrice,
+              partPrice: selectVal.partPrice,
+              partsPrice: selectVal.salePrice,
               productCode: me.partData.productCode,
               partsEdition: selectVal.partsEdition,
             })

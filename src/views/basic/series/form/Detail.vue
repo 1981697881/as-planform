@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model="form" :rules="rules" ref="form" label-width="100px" :size="'mini'">
+    <el-form :model="form" :rules="rules" ref="form" :size="'mini'">
       <el-row :gutter="20">
         <el-col :span="24">
           <el-form-item :label="'系列名称'" prop="seriesName">

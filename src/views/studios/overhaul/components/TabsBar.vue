@@ -1,14 +1,14 @@
 <template>
   <div class="list-header">
-    <el-form v-model="search" :size="'mini'" :label-width="'80px'">
+    <el-form v-model="search" :size="'mini'" >
       <el-row :gutter="10">
         <el-col :span="4">
-          <el-form-item :label="'关键字'">
-            <el-input v-model="search.name" placeholder="名称"/>
+          <el-form-item :label="''">
+            <el-input v-model="search.name" placeholder="关键字"/>
           </el-form-item>
         </el-col>
         <el-col :span="4">
-          <el-form-item :label="'工程师'" prop="eid">
+          <el-form-item :label="''" prop="eid">
             <el-select v-model="search.engineerId" filterable class="width-full" placeholder="请选择工程师">
               <el-option :label="t.name" :value="t.eid" v-for="(t,i) in levelFormat" :key="i"></el-option>
             </el-select>
@@ -113,4 +113,5 @@ export default {
 </script>
 
 <style>
+
 </style>

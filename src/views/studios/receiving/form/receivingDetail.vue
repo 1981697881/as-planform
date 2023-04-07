@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <el-form :model="form" :rules="rules" ref="form" label-width="90px" :size="'mini'">
+    <el-form :model="form" :rules="rules" ref="form" :size="'mini'">
       <el-row :gutter="20">
         <el-col :span="24">
           <el-form-item :label="'维修单号'">
@@ -16,7 +16,7 @@
               <el-date-picker
                 v-model="form.receivingDate"
                 type="date"
-                style="width: auto"
+                style="width: 100%"
                 value-format="yyyy-MM-dd"
                 :picker-options="pickerOptionsStart"
                 placeholder="选择日期">

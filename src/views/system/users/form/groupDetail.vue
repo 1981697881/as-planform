@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model="form" :rules="rules" ref="form" label-width="100px" :size="'mini'">
+    <el-form :model="form" :rules="rules" ref="form" :size="'mini'">
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item :label="'gpId'" style="display: none">
@@ -24,6 +24,7 @@
 
 <script>
   import {groupAdd, groupAlter} from "@/api/system/index";
+
   export default {
     props: {
       gpInfo: {

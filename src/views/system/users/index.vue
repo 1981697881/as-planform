@@ -12,7 +12,7 @@
       title="用户信息"
       v-if="visible"
       v-dialogDrag
-      :width="'40%'"
+      :width="dialogWidth"
       destroy-on-close
     >
       <info @hideDialog="hideWindow" @uploadList="upload" :listInfo="listInfo"></info>
@@ -23,7 +23,7 @@
       title="用户组信息"
       v-if="visible2"
       v-dialogDrag
-      :width="'40%'"
+      :width="dialogWidth"
       destroy-on-close
     >
       <group @hideGroupDialog="hideGroupWindow" @uploadGroup="uploadGroup" :gpInfo="gpInfo"></group>
@@ -46,6 +46,7 @@
   },
   data() {
     return {
+      dialogWidth: '50%',
       visible: null,
       gpInfo: null,
       listInfo: null,
@@ -56,8 +57,17 @@
   mounted() {
     this.$refs.list.fetchData()
     this.$refs.tree.fetchData()
+    if (this._isMobile()) {
+      this.dialogWidth = '90%'
+    } else {
+      this.dialogWidth = '50%'
+    }
   },
-  methods: {
+    methods: {
+      _isMobile() {
+        let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+        return flag;
+      },
     hideWindow(val) {
       this.visible = val
     },

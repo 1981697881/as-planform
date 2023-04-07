@@ -1,16 +1,16 @@
 <template>
   <div class="list-header">
-    <el-form v-model="search" :size="'mini'" :label-width="'80px'">
+    <el-form v-model="search" :size="'mini'">
       <el-row :gutter="10">
         <el-col :span="6">
-          <el-form-item :label="'所属系列'" prop="filmSortid">
-            <el-select v-model="search.parentId" class="width-full" placeholder="请选择">
+          <el-form-item :label="''" prop="filmSortid">
+            <el-select v-model="search.parentId" class="width-full" placeholder="所属系列">
               <el-option :label="t.seriesName" :value="t.id" v-for="(t,i) in sArray" :key="i"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="4">
-          <el-form-item :label="'关键字'">
+          <el-form-item :label="''">
             <el-input v-model="search.partsName" placeholder="名称/编码"/>
           </el-form-item>
         </el-col>

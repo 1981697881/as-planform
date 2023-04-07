@@ -12,7 +12,7 @@
       title="维修费用"
       v-if="visible"
       v-dialogDrag
-      :width="'50%'"
+      :width="dialogWidth"
       destroy-on-close
     >
       <info @hideDialog="hideWindow" @uploadList="upload" :listInfo="listInfo"></info>
@@ -22,7 +22,7 @@
       title="分配工程师"
       v-if="visible1"
       v-dialogDrag
-      :width="'30%'"
+      :width="dialogWidth"
       destroy-on-close
     >
       <choice @hideDialog="hideWindow" @uploadList="upload" :listInfo="listInfo"></choice>
@@ -32,7 +32,7 @@
       title="发货"
       v-if="visible2"
       v-dialogDrag
-      :width="'30%'"
+      :width="dialogWidth"
       destroy-on-close
     >
       <deliver @hideDialog="hideWindow" @uploadList="upload" :listInfo="listInfo"></deliver>
@@ -42,7 +42,7 @@
       title="确认收货"
       v-if="visible3"
       v-dialogDrag
-      :width="'30%'"
+      :width="dialogWidth"
       destroy-on-close
     >
       <receiving @hideDialog="hideWindow" @uploadList="upload" :listInfo="listInfo"></receiving>
@@ -64,6 +64,7 @@ export default {
   },
   data() {
     return {
+      dialogWidth: '50%',
       visible: null,
       visible1: null,
       visible2: null,
@@ -75,8 +76,17 @@ export default {
   },
   mounted() {
     this.$refs.list.fetchData(this.$refs.tabs.qFilter())
+    if (this._isMobile()) {
+      this.dialogWidth = '90%'
+    } else {
+      this.dialogWidth = '50%'
+    }
   },
   methods: {
+    _isMobile() {
+      let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+      return flag;
+    },
     hideWindow(val) {
       this.visible = val
       this.visible1 = val

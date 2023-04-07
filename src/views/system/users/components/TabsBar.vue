@@ -1,6 +1,6 @@
 <template>
   <div class="list-header">
-    <el-form v-model="search" :size="'mini'" :label-width="'80px'">
+    <el-form v-model="search" :size="'mini'">
       <el-button-group style="float:right">
        <!-- <el-dropdown v-for="(t,i) in btnList" :key="i" v-if="t.category == 'multi'" @command="onFun(t.path, $event)" trigger="click">
           <el-button :size="'mini'" type="primary">

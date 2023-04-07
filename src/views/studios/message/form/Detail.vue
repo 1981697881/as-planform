@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form label-width="100px" :size="'mini'">
+    <el-form :size="'mini'">
       <el-row :gutter="20">
         <list
           class="list-main box-shadow"

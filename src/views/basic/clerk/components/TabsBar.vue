@@ -1,9 +1,9 @@
 <template>
   <div class="list-header">
-    <el-form v-model="search" :size="'mini'" :label-width="'80px'">
+    <el-form v-model="search" :size="'mini'">
       <el-row :gutter="10">
         <el-col :span="4">
-          <el-form-item :label="'关键字'">
+          <el-form-item :label="''">
             <el-input v-model="search.name" placeholder="名称"/>
           </el-form-item>
         </el-col>
@@ -22,10 +22,10 @@
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
-import { alterClerk } from '@/api/basic/index'
-import { getByUserAndPrId } from '@/api/system/index'
-export default {
+  import {mapGetters} from 'vuex'
+  import {alterClerk} from '@/api/basic/index'
+
+  export default {
   components: {},
   computed: {
     ...mapGetters(['node','clickData','selections'])

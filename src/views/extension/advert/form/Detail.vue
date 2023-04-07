@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model="form" :rules="rules" ref="form" label-width="100px" :size="'mini'">
+    <el-form :model="form" :rules="rules" ref="form" :size="'mini'">
       <el-row :gutter="20">
        <!-- <el-col :span="12">
           <el-form-item :label="'广告位置'" prop="type">
@@ -9,7 +9,7 @@
             </el-select>
           </el-form-item>
         </el-col>-->
-        <el-col :span="12">
+        <el-col :span="24">
           <el-form-item :label="'广告名称'" prop="posterName">
             <el-input v-model="form.posterName"></el-input>
           </el-form-item>
@@ -64,7 +64,7 @@
               type="datetimerange"
               align="right"
               @change="dateChange"
-              style="width: auto"
+              style="width: 100%"
               class="input-class"
               unlink-panels
               range-separator="至"
