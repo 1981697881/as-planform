@@ -21,6 +21,7 @@ const map = {
   'overhaul': () => import('@/views/studios/overhaul'),
   'message': () => import('@/views/studios/message'),
   'report': () => import('@/views/studios/report'),
+  'summary': () => import('@/views/reportform/summary'),
 
   'users': () => import('@/views/system/users'),
 }

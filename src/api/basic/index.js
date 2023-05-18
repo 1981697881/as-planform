@@ -405,3 +405,15 @@ export function deleteFault(params) {
     data: params
   })
 }
+// 汇总表-汇总
+export function mainTSumSummary(params) {
+  return request({
+    url: '/maintsum/summary',
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: params
+  })
+}

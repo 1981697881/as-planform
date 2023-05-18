@@ -20,6 +20,14 @@
           </el-form-item>
         </el-col>
       </el-row>
+      <el-row :gutter="20">
+        <el-col :span="24">
+          <el-form-item :label="'客户信息'">
+            <el-input style="float: left" :value="'名称：'+form.contactPerson+',联系电话：'+form.contactNumber+',地址：'+form.contactAddress" readOnly id="copy" ></el-input>
+            <el-button size="mini" type="primary" @click.stop="_copy()">复制</el-button>
+          </el-form-item>
+        </el-col>
+      </el-row>
       <div v-for="(item, index) in form.repairDetail" :key="index">
         <el-row :gutter="20">
           <el-col :span="12">
@@ -371,6 +379,12 @@ export default {
     }
   },
   methods: {
+    _copy() {
+      var input = document.getElementById('copy')
+      input.select()
+      document.execCommand('copy')
+      this.$message.success('复制成功!')
+    },
     statistics() {
       this.form.repairDetail.forEach((item) => {
         var array = item.repairDetailParts

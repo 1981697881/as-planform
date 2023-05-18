@@ -47,7 +47,7 @@
     // 查询条件过滤
     qFilter() {
       let obj = {}
-      this.search.cinemaName != null && this.search.cinemaName != '' ? obj.cinemaName = this.search.cinemaName : null
+      this.search.name != null && this.search.name != '' ? obj.weChatName = this.search.name : null
       return obj
     },
     onFun(method){

@@ -3,7 +3,7 @@
     <el-form v-model="search" :size="'mini'">
       <el-row :gutter="10">
         <el-col :span="4">
-          <el-form-item :label="'关键字'">
+          <el-form-item :label="''">
             <el-input v-model="search.name" placeholder="名称"/>
           </el-form-item>
         </el-col>
@@ -108,7 +108,7 @@ export default {
     // 查询条件过滤
     qFilter() {
       let obj = {}
-      this.search.name != null && this.search.name != '' ? obj.name = this.search.name : null
+      this.search.name != null && this.search.name != '' ? obj.fault = this.search.name : null
       return obj
     },
     handleAdd() {

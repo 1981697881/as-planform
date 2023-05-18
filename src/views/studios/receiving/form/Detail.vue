@@ -9,7 +9,7 @@
         </el-col>
         <el-col :span="12">
           <el-form-item :label="'费用类型'">
-            <el-select  style="width: 100%" v-model="form.repairPaymentType" placeholder="请选择">
+            <el-select style="width: 100%" v-model="form.repairPaymentType" placeholder="请选择">
               <el-option
                 v-for="(item,index) in options1"
                 :key="index"
@@ -17,6 +17,14 @@
                 :value="item.value">
               </el-option>
             </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="24">
+          <el-form-item :label="'客户信息'" >
+            <el-input style="float: left" :value="'名称：'+form.contactPerson+',联系电话：'+form.contactNumber+',地址：'+form.contactAddress" readOnly id="copy" ></el-input>
+            <el-button size="mini" type="primary" @click.stop="_copy()">复制</el-button>
           </el-form-item>
         </el-col>
       </el-row>
@@ -196,7 +204,14 @@ export default {
     }
   },
   methods: {
-    fetchData(val={}, data = {
+    _copy() {
+      console.log(123)
+      var input = document.getElementById('copy')
+      input.select()
+      document.execCommand('copy')
+      this.$message.success('复制成功!')
+    },
+    fetchData(val = {}, data = {
       pageNum: 1,
       pageSize: 50
     }) {

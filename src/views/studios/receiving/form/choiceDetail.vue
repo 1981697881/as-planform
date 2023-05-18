@@ -37,17 +37,46 @@
         </el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="'客户'">
-            <el-input v-model="form.contactPerson" disabled></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item :label="'客户手机号'">
-            <el-input v-model="form.contactNumber" disabled></el-input>
+        <el-col :span="24">
+          <el-form-item :label="'客户信息'">
+            <el-input style="float: left" :value="'名称：'+form.contactPerson+',联系电话：'+form.contactNumber+',地址：'+form.contactAddress" readOnly id="copy" ></el-input>
+            <el-button size="mini" type="primary" @click.stop="_copy()">复制</el-button>
           </el-form-item>
         </el-col>
       </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-form-item :label="'明细'">
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <block v-for="(item, index) in form.repairDetailList" :key="index">
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-form-item :label="'产品条码'">
+              <el-input v-model="item.productCode" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item :label="'产品名称'">
+              <el-input v-model="item.productName" disabled></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="24">
+            <el-form-item :label="'客户反馈故障'">
+              <el-image
+                v-for="(items,index) in JSON.parse(item.faultPhoto)"
+                :key="index"
+                style="width: 100px; height: 100px"
+                :src="items.path"
+                :preview-src-list="[items.path]">
+              </el-image>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </block>
     </el-form>
     <div slot="footer" style="text-align:center;padding-top: 15px">
       <el-button type="primary" @click="saveData('form')">保存</el-button>
@@ -110,6 +139,12 @@ export default {
     }
   },
   methods: {
+    _copy() {
+      var input = document.getElementById('copy')
+      input.select()
+      document.execCommand('copy')
+      this.$message.success('复制成功!')
+    },
     // 切换类别
     selectChange(val) {
       this.form.plId = null
