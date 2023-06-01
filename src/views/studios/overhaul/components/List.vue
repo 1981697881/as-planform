@@ -35,7 +35,7 @@ export default {
       type: null,
       checkDate: null,
       columns: [
-        { text: '维修单号', name: 'repairOrder' },
+        { text: '维修单号', name: 'repairOrder',width: '200' },
         { text: '产品条码', name: 'productCode' },
         { text: '产品名称', name: 'productName' },
         { text: '型号', name: 'productModel' },
@@ -89,6 +89,7 @@ export default {
     },
     // 监听单击某一行
     rowClick(obj) {
+      console.log(obj)
       this.$store.dispatch('list/setClickData', obj.row)
     },
     fetchData(val, data = {

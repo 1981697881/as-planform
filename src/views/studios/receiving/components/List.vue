@@ -35,7 +35,7 @@ export default {
       type: null,
       checkDate: null,
       columns: [
-        {text: '维修单号', name: 'repairOrder'},
+        {text: '维修单号', name: 'repairOrder',width: '200' },
         {text: '产品条码', name: 'productCode'},
         {text: '产品名称', name: 'productName'},
         {text: '型号', name: 'productModel'},

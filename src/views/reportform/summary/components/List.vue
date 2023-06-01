@@ -37,7 +37,7 @@
       checkDate: null,
       columns: [
         { text: '产品名称', name: 'prodName' },
-        { text: '产品型号', name: 'prodModel' },
+        { text: '产品型号', name: 'prodSpce' },
         { text: '产品条码', name: 'prodNumber' },
         { text: '机身码', name: 'prodBarcode' },
         { text: '保修日期', name: 'maintDate' },

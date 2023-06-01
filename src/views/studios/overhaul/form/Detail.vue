@@ -9,7 +9,7 @@
         </el-col>
         <el-col :span="12">
           <el-form-item :label="'维修费用'">
-            <el-select style="width: 100%" disabled v-model="form.repairPaymentType" placeholder="请选择">
+            <el-select style="width: 100%"  v-model="form.repairPaymentType" placeholder="请选择">
               <el-option
                 v-for="(item,index) in options1"
                 :key="index"
@@ -247,7 +247,7 @@
         <el-button type="success" @click="confirm">确认</el-button>
       </div>
     </el-dialog>
-    <div slot="footer" style="text-align:center">
+    <div v-if="form.status !=null" slot="footer" style="text-align:center">
       <el-button type="primary" @click="saveData('form')">保存</el-button>
     </div>
   </div>

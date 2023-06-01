@@ -42,6 +42,7 @@
         { text: '维修项目', name: 'faultDescription' },
         { text: '检修意见', name: 'repairOpinion' },
         { text: '收取费用（元）', name: 'payPrice' },
+        { text: '费用类型', name: 'repairPaymentType' },
         { text: '修好快递寄出日期', name: 'createDate' },
         { text: '寄出快递单号', name: 'expressOrder' },
         { text: '收费日期', name: 'dateDescribe' },

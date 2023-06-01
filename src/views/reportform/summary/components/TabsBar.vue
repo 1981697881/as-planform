@@ -14,6 +14,11 @@
         </el-col>
         <el-col :span="3">
           <el-form-item :label="''">
+            <el-input v-model="search.prodModel" placeholder="产品型号"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="3">
+          <el-form-item :label="''">
             <el-input v-model="search.faultDesc" placeholder="报修原因"/>
           </el-form-item>
         </el-col>
@@ -83,6 +88,7 @@ export default {
         prodName: '',
         prodCode: '',
         faultDesc: '',
+        prodModel: '',
       }
     };
   },
@@ -103,6 +109,7 @@ export default {
       this.search.prodName != null && this.search.prodName != '' ? obj.prodName = this.search.prodName : null
       this.search.prodCode != null && this.search.prodCode != '' ? obj.prodCode = this.search.prodCode : null
       this.search.faultDesc != null && this.search.faultDesc != '' ? obj.faultDesc = this.search.faultDesc : null
+      this.search.prodModel != null && this.search.prodModel != '' ? obj.prodModel = this.search.prodModel : null
       this.value != null && this.value != undefined ? obj.endDate = this.value[1] : null
       this.value != null && this.value != undefined ? obj.startDate = this.value[0] : null
       return obj
@@ -114,7 +121,10 @@ export default {
       this.$emit('showDialog')
     },
     upload() {
-      this.search.name = ''
+      this.search.prodName = ''
+      this.search.prodCode = ''
+      this.search.faultDesc = ''
+      this.search.prodModel = ''
       this.value = []
       this.$emit('uploadList')
     },
