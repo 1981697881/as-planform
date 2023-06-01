@@ -17,7 +17,7 @@
 
 <script>
   import {mapGetters} from 'vuex'
-  import {deleteMovie, mainTSumSummary} from '@/api/basic/index'
+  import {deleteMovie, mainTSumCostSummary} from '@/api/basic/index'
   import List from '@/components/List'
 
   export default {
@@ -36,19 +36,15 @@
       type: null,
       checkDate: null,
       columns: [
-        { text: '产品名称', name: 'prodName' },
-        { text: '产品型号', name: 'prodModel' },
-        { text: '产品条码', name: 'prodNumber' },
-        { text: '机身码', name: 'prodBarcode' },
-        { text: '保修日期', name: 'maintDate' },
-        { text: '该产品报修总数量', name: 'allQty' },
-        { text: '本原因数量', name: 'qty' },
-        { text: '占比', name: 'percent' },
-        { text: '保修期内数量', name: 'umQty' },
-        { text: '保修期内百分比', name: 'umPercent' },
-        { text: '原因', name: 'faultDesc' },
-        { text: '故障信息', name: 'lettersMessage' },
-        { text: '维修意见', name: 'repairOpinion' },
+        { text: '维修单号', name: 'repairOrder' },
+        { text: '客户名称', name: 'contactPerson' },
+        { text: '产品型号', name: 'productModel' },
+        { text: '维修项目', name: 'faultDescription' },
+        { text: '检修意见', name: 'repairOpinion' },
+        { text: '收取费用（元）', name: 'payPrice' },
+        { text: '修好快递寄出日期', name: 'createDate' },
+        { text: '寄出快递单号', name: 'expressOrder' },
+        { text: '收费日期', name: 'dateDescribe' },
       ]
     };
   },
@@ -114,7 +110,7 @@
       pageSize: this.list.size || 50
     }) {
       this.loading = true
-      mainTSumSummary(val).then(res => {
+      mainTSumCostSummary(val).then(res => {
         this.loading = false
         this.list = {records: res.data}
       })

@@ -417,3 +417,15 @@ export function mainTSumSummary(params) {
     data: params
   })
 }
+// 汇总表-汇总
+export function mainTSumCostSummary(params) {
+  return request({
+    url: '/maintsum/costSummary',
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: params
+  })
+}
