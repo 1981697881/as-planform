@@ -23,7 +23,7 @@
       <el-row :gutter="20">
         <el-col :span="24">
           <el-form-item :label="'客户信息'" >
-            <el-input style="float: left" :value="'名称：'+form.contactPerson+',联系电话：'+form.contactNumber+',地址：'+form.contactAddress" readOnly id="copy" ></el-input>
+            <el-input style="float: left" :value="'联系人：'+form.contactPerson+',联系电话：'+form.contactNumber+',地址：'+form.contactAddress" readOnly id="copy" ></el-input>
             <el-button size="mini" type="primary" @click.stop="_copy()">复制</el-button>
           </el-form-item>
         </el-col>
@@ -170,7 +170,8 @@ export default {
       list: [],
       columns: [
         {text: '配件名称', name: 'partsCode'},
-        {text: '费用', name: 'partsPrice'},
+        {text: '数量', name: 'number'},
+        {text: '配件价格', name: 'partsPrice'},
         {text: '是否保修期内', name: 'isWarranty'}
       ],
       options1: [{

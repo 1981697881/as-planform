@@ -105,6 +105,19 @@ export function deliver(params) {
     data: params
   })
 }
+// 客服接单-发货2
+export function deliver2(params) {
+  const url = '/applet/repairDetail/add'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: params
+  })
+}
 // 客服接单-收货
 export function receiving(params) {
   const url = '/logistics/receiving'
