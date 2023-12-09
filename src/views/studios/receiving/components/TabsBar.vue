@@ -7,6 +7,13 @@
             <el-input v-model="search.name" placeholder="单号"/>
           </el-form-item>
         </el-col>
+        <el-col :span="4">
+          <el-form-item :label="''">
+            <el-select v-model="search.status" filterable class="width-full" placeholder="状态" @change="changeStatus">
+              <el-option :label="t.name" :value="t.value" v-for="(t,i) in options" :key="i"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
         <el-col :span="2">
           <el-button :size="'mini'" type="primary" icon="el-icon-search" @click="query">查询</el-button>
         </el-col>
@@ -32,8 +39,31 @@ export default {
     return {
       btnList: [],
       search: {
-        name: ""
-      }
+        name: "",
+        status: null,
+      },
+      options: [{
+        name: '待寄回',
+        value: 0
+      },{
+        name: '待检修',
+        value: 1
+      },{
+        name: '待确认',
+        value: 2
+      },{
+        name: '待维修',
+        value: 3
+      },{
+        name: '待发货',
+        value: 4
+      },{
+        name: '待收货',
+        value: 5
+      },{
+        name: '完成',
+        value: 6
+      }]
     };
   },
   computed: {
@@ -50,17 +80,24 @@ export default {
     // 查询条件过滤
     qFilter() {
       let obj = {}
-      this.search.name != null && this.search.name != '' ? obj.repairOrder = this.search.name : null
+      this.search.name == null || this.search.name == '' ? null : obj.repairOrder = this.search.name
+      this.search.status == null || this.search.status == '' ? null : obj.status = this.search.status
       return obj
+    },
+    changeStatus(e) {
+      this.search.status = e
+      this.query();
     },
     onFun(method) {
       this[method]()
     },
     upload() {
       this.search.name = ''
+      this.search.status = null
       this.$emit('uploadList')
     },
     query() {
+      console.log(this.qFilter())
       this.$emit('queryBtn', this.qFilter())
     },
     del() {

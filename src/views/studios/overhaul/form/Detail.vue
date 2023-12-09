@@ -28,7 +28,7 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <div v-for="(item, index) in form.repairDetail" :key="index">
+      <div v-for="(item, index) in form.repairDetailList" :key="index">
         <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item :label="'工程师'">
@@ -37,7 +37,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item :label="'故障分类'">
-              <el-select style="width: 100%" v-model="item.letters" placeholder="请选择">
+              <el-select style="width: 100%" multiple v-model="item.letters" placeholder="请选择">
                 <el-option
                   v-for="(item,index) in options2"
                   :key="index"
@@ -67,7 +67,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item :label="'维修项目'" :prop="'repairDetail.'+index+'.repairOpinionArrays'"
+            <el-form-item :label="'维修项目'" :prop="'repairDetailList.'+index+'.repairOpinionArrays'"
                           :rules="{required: true, message: '请选中', trigger: 'change'}">
               <el-select
                 v-model="item.repairOpinionArrays"
@@ -149,6 +149,11 @@
               </el-select>
             </el-form-item>
           </el-col>
+          <el-col :span="12">
+            <el-form-item :label="'备注'">
+              <el-input v-model="item.remark"></el-input>
+            </el-form-item>
+          </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="24">
@@ -161,7 +166,7 @@
                 class="list-main box-shadow"
                 :columns="columns"
                 :loading="loading"
-                :list="{records:item.repairDetailParts}"
+                :list="{records: item.repairDetailParts}"
                 index
                 @row-click="pjClick"
               />
@@ -351,9 +356,10 @@ export default {
     this.fetchData()
     if (this.listInfo) {
       this.form = this.listInfo
-      this.form.repairDetail = this.listInfo.repairDetailList
-      delete this.form.repairDetailList
-      this.form.repairDetail.forEach((item) => {
+      /*this.form.repairDetail = this.listInfo.repairDetailList
+      delete this.form.repairDetailList*/
+      this.form.repairDetailList.forEach((item) => {
+        this.$set(item, 'letters', item.letters.split(','))
         if(typeof item.remedy === 'undefined'){
           this.$set(item, 'remedy', null)
         }
@@ -386,7 +392,7 @@ export default {
       this.$message.success('复制成功!')
     },
     statistics() {
-      this.form.repairDetail.forEach((item) => {
+      this.form.repairDetailList.forEach((item) => {
         var array = item.repairDetailParts
         let number = 0
         array.forEach((items) => {
@@ -514,6 +520,7 @@ export default {
               return true
             }
           })
+          this.statistics();
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -617,8 +624,13 @@ export default {
         //判断必填项
         if (valid) {
           //修改
-          let param = this.form
+          let param = {...this.form}
           console.log(this.form)
+          for(let item in param.repairDetailList){
+            if(param.repairDetailList[item].letters instanceof Array && param.repairDetailList[item].letters.length>0){
+              param.repairDetailList[item].letters = param.repairDetailList[item].letters.toString()
+            }
+          }
           repairDetailUpdate(param).then(res => {
             if (res.flag) {
               this.$emit('hideDialog', false)

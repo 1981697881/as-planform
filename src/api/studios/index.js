@@ -209,3 +209,16 @@ export function getCustomerMessageList(params, data) {
     data: data
   })
 }
+// 检修管理-发货修改地址，物流
+export function updateRepairDetailExp(params) {
+  const url = '/repairDetail/updateRepairDetailExp'
+  return request({
+    url: url,
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'post',
+    data: params
+  })
+}

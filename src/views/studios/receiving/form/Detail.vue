@@ -22,13 +22,13 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="24">
-          <el-form-item :label="'客户信息'" >
+          <el-form-item :label="'客户信息'">
             <el-input style="float: left" :value="'联系人：'+form.contactPerson+',联系电话：'+form.contactNumber+',地址：'+form.contactAddress" readOnly id="copy" ></el-input>
             <el-button size="mini" type="primary" @click.stop="_copy()">复制</el-button>
           </el-form-item>
         </el-col>
       </el-row>
-      <block v-for="(item, index) in form.repairDetail" :key="index">
+      <block v-for="(item, index) in form.repairDetailList" :key="index">
         <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item :label="'工程师'">
@@ -123,6 +123,13 @@
           </el-col>
         </el-row>
         <el-row :gutter="20">
+          <el-col :span="12">
+            <el-form-item :label="'备注'">
+              <el-input v-model="item.remark"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
           <el-col :span="24">
             <el-form-item :label="'配件清单'">
               <el-table class="list-main" :data="item.repairDetailParts" border size="mini"
@@ -200,8 +207,8 @@ export default {
     this.fetchData()
     if (this.listInfo) {
       this.form = this.listInfo
-      this.form.repairDetail = this.listInfo.repairDetailList
-      delete this.form.repairDetailList
+     /* this.form.repairDetail = this.listInfo.repairDetailList
+      delete this.form.repairDetailList*/
     }
   },
   methods: {

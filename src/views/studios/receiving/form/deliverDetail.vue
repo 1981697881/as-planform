@@ -21,8 +21,14 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'物流单号'" prop="expressOrder">
-            <el-input v-model="form.expressOrder"></el-input>
+          <el-form-item :label="'物流单号'" prop="courierNumber">
+            <el-input v-model="form.courierNumber"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row><el-row :gutter="20" v-if="radio==0">
+        <el-col :span="24">
+          <el-form-item :label="'地址'">
+            <el-input v-model="form.contactAddress"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -54,6 +60,13 @@
               </el-form-item>
             </el-col>
           </el-row>
+          <el-row :gutter="20">
+            <el-col :span="24">
+              <el-form-item :label="'地址'">
+                <el-input v-model="item.contactAddress"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
         </block>
       </block>
     </el-form>
@@ -62,7 +75,7 @@
     </div>
   </div>
 </template>
-<script>import {deliver, deliver2} from '@/api/studios/index'
+<script>import {deliver} from '@/api/studios/index'
 import {getLogisricsCompanyList} from '@/api/basic/index'
 
 export default {
@@ -87,7 +100,7 @@ export default {
         expressName: [
           {required: true, message: '请选择', trigger: 'change'}
         ],
-        expressOrder: [
+        courierNumber: [
           {required: true, message: '请输入', trigger: 'blur'}
         ],
       },
@@ -101,7 +114,7 @@ export default {
       this.form = this.listInfo
       if(this.listInfo.logistics != null){
         this.form.expressName= this.listInfo.logistics.expressName
-        this.form.expressOrder = this.listInfo.logistics.expressOrder
+        this.form.courierNumber = this.listInfo.logistics.expressOrder
       }
       delete this.form.id
     }
@@ -122,7 +135,13 @@ export default {
       this.$refs[form].validate((valid) => {
         //判断必填项
         if (valid) {
-          if(this.radio == 0){
+          deliver(this.form).then(res => {
+            if (res.flag) {
+              me.$emit('hideDialog', false)
+              me.$emit('uploadList')
+            }
+          })
+          /*if(this.radio == 0){
             deliver(this.form).then(res => {
               if (res.flag) {
                 me.$emit('hideDialog', false)
@@ -130,13 +149,13 @@ export default {
               }
             })
           } else {
-            deliver2(this.form).then(res => {
+            updateRepairDetailExp(this.form).then(res => {
               if (res.flag) {
                 me.$emit('hideDialog', false)
                 me.$emit('uploadList')
               }
             })
-          }
+          }*/
         } else {
           return false;
         }

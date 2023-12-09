@@ -65,6 +65,13 @@
         </el-row>
         <el-row :gutter="20">
           <el-col :span="24">
+            <el-form-item :label="'备注'">
+              <el-input v-model="item.remark"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="24">
             <el-form-item :label="'客户反馈故障'">
               <el-image
                 v-for="(items,index) in JSON.parse(item.faultPhoto)"
