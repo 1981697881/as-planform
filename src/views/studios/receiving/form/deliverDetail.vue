@@ -21,8 +21,8 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item :label="'物流单号'" prop="courierNumber">
-            <el-input v-model="form.courierNumber"></el-input>
+          <el-form-item :label="'物流单号'" prop="expressOrder">
+            <el-input v-model="form.expressOrder"></el-input>
           </el-form-item>
         </el-col>
       </el-row><el-row :gutter="20" v-if="radio==0">
@@ -100,7 +100,7 @@ export default {
         expressName: [
           {required: true, message: '请选择', trigger: 'change'}
         ],
-        courierNumber: [
+        expressOrder: [
           {required: true, message: '请输入', trigger: 'blur'}
         ],
       },
@@ -114,7 +114,7 @@ export default {
       this.form = this.listInfo
       if(this.listInfo.logistics != null){
         this.form.expressName= this.listInfo.logistics.expressName
-        this.form.courierNumber = this.listInfo.logistics.expressOrder
+        this.form.expressOrder = this.listInfo.logistics.expressOrder
       }
       delete this.form.id
     }

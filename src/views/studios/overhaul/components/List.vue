@@ -54,6 +54,7 @@ export default {
         { text: '创建时间', name: 'createDate' },
         { text: '修改时间', name: 'editDate' },
         { text: '完成时间', name: 'completeTime' },
+        { text: '备注', name: 'remark' },
         {text: '操作时间', name: 'datedescribes', default: 'handler'}
       ]
     };
