@@ -23,6 +23,7 @@ const map = {
   'report': () => import('@/views/studios/report'),
   'summary': () => import('@/views/reportform/summary'),
   'costAggregation': () => import('@/views/reportform/costAggregation'),
+  'custBarcodeList': () => import('@/views/reportform/custBarcodeList'),
 
   'users': () => import('@/views/system/users'),
 }

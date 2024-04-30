@@ -114,9 +114,9 @@
       pageSize: this.list.size || 50
     }) {
       this.loading = true
-      mainTSumSummary(val).then(res => {
+      mainTSumSummary(data, val).then(res => {
         this.loading = false
-        this.list = {records: res.data}
+        this.list = res.data
       })
     }
   }

@@ -406,26 +406,38 @@ export function deleteFault(params) {
   })
 }
 // 汇总表-汇总
-export function mainTSumSummary(params) {
+export function mainTSumSummary(params, query) {
   return request({
-    url: '/maintsum/summary',
+    url: '/maintsum/summary/' + params.pageNum + '/' + params.pageSize,
     headers: {
       'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
-    data: params
+    data: query
   })
 }
 // 汇总表-汇总
-export function mainTSumCostSummary(params) {
+export function mainTSumCostSummary(params, query) {
   return request({
-    url: '/maintsum/costSummary',
+    url: '/maintsum/costSummary/' + params.pageNum + '/' + params.pageSize,
     headers: {
       'authorization': getToken('aspanrx'),
       'Content-Type': 'application/json'
     },
     method: 'POST',
-    data: params
+    data: query
+  })
+}
+// 客户条码清单
+export function getCustBarcodeList(params, query) {
+  return request({
+    url: '/maintsum/custBarcodeList/' + params.pageNum + '/' + params.pageSize,
+    headers: {
+      'authorization': getToken('aspanrx'),
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    data: query
   })
 }

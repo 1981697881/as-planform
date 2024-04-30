@@ -15,12 +15,11 @@
   </div>
 </template>
 
-<script>
-  import {mapGetters} from 'vuex'
-  import {deleteMovie, mainTSumCostSummary} from '@/api/basic/index'
-  import List from '@/components/List'
+<script>import {mapGetters} from 'vuex'
+import {deleteMovie, getCustBarcodeList} from '@/api/basic/index'
+import List from '@/components/List'
 
-  export default {
+export default {
   components: {
     List
   },
@@ -36,16 +35,12 @@
       type: null,
       checkDate: null,
       columns: [
-        { text: '维修单号', name: 'repairOrder' },
-        { text: '客户名称', name: 'contactPerson' },
-        { text: '产品型号', name: 'productModel' },
-        { text: '维修项目', name: 'faultDescription' },
-        { text: '检修意见', name: 'repairOpinion' },
-        { text: '收取费用（元）', name: 'payPrice' },
-        { text: '费用类型', name: 'repairPaymentType' },
-        { text: '修好快递寄出日期', name: 'createDate' },
-        { text: '寄出快递单号', name: 'expressOrder' },
-        { text: '收费日期', name: 'dateDescribe' },
+        { text: '客户编码', name: 'custNumber' },
+        { text: '客户名称', name: 'custName' },
+        { text: '出库单号', name: 'outBillNo' },
+        { text: '出库日期', name: 'outDate' },
+        { text: '装箱条码', name: 'packCode' },
+        { text: '产品条码', name: 'barCode' }
       ]
     };
   },
@@ -65,7 +60,7 @@
         const list = this.list.records
         const data = this.formatJson(filterVal, list);
         // 这里还是使用export_json_to_excel方法比较好，方便操作数据
-        excel.export_json_to_excel([tHeader],data,'汇总表')
+        excel.export_json_to_excel([tHeader],data,'客户条码清单')
       })
     },
     formatJson(filter, jsonDate){
@@ -111,7 +106,7 @@
       pageSize: this.list.size || 50
     }) {
       this.loading = true
-      mainTSumCostSummary(data,val).then(res => {
+      getCustBarcodeList(data, val).then(res => {
         this.loading = false
         this.list = res.data
       })

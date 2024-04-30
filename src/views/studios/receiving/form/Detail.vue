@@ -176,7 +176,8 @@ export default {
       visible: null,
       list: [],
       columns: [
-        {text: '配件名称', name: 'partsCode'},
+        {text: '配件名称', name: 'partsName'},
+        {text: '配件编码', name: 'partsCode'},
         {text: '数量', name: 'number'},
         {text: '配件价格', name: 'partsPrice'},
         {text: '是否保修期内', name: 'isWarranty'}
