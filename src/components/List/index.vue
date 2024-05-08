@@ -93,7 +93,7 @@
         @size-change="handleSize"
         @current-change="handleCurrent"
         :current-page="list.current"
-        :page-sizes="[50, 100, 250, 500, 1000, 2500]"
+        :page-sizes="list.total > 2500 ?[50, 100, 250, 500, 1000, 2500, list.total]: [50, 100, 250, 500, 1000, 2500]"
         :page-size="list.size"
         :page-count="list.pages?list.pages:0"
         layout="total, sizes, prev, pager, next, jumper"
@@ -323,7 +323,7 @@
     },
     // 监听每页显示数量
     handleSize(size) {
-      return this.$emit('handle-size', size);
+        return this.$emit('handle-size', size);
     },
     // 监听当前页码数
     handleCurrent(current) {

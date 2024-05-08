@@ -49,6 +49,7 @@ export default {
   methods: {
     // 监听每页显示几条
     handleSize(val) {
+      console.log(val)
       this.list.size = val
       this.$emit('uploadList')
     },

@@ -45,6 +45,7 @@
   </div>
 </template>
 <script>import {mapGetters} from 'vuex'
+import moment from 'moment'
 
 export default {
   data() {
@@ -77,8 +78,7 @@ export default {
           }
         }]
       },
-      value: '',
-
+      value: [moment(new Date()).format('YYYY-MM-DD'), moment(this.getNextDay(new Date())).format('YYYY-MM-DD')],
       search: {
         prodName: '',
         prodCode: '',
@@ -97,6 +97,11 @@ export default {
     });*/
   },
   methods: {
+    getNextDay(date) {
+      const nextDay = new Date(date)
+      nextDay.setDate(nextDay.getDate() + 1)
+      return nextDay
+    },
     // 查询条件过滤
     qFilter() {
       let obj = {}
@@ -115,7 +120,7 @@ export default {
     },
     upload() {
       this.search.name = ''
-      this.value = []
+      this.value = [moment(new Date()).format('YYYY-MM-DD'), moment(this.getNextDay(new Date())).format('YYYY-MM-DD')]
       this.$emit('uploadList')
     },
     query() {
