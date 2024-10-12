@@ -27,6 +27,11 @@
             <el-input v-model="search.custName" placeholder="客户名称"/>
           </el-form-item>
         </el-col>
+        <el-col :span="3">
+          <el-form-item :label="''">
+            <el-input v-model="search.barcode" placeholder="产品条码"/>
+          </el-form-item>
+        </el-col>
         <el-col :span="5" style="display: inline-block">
           <el-form-item :label="''">
             <el-date-picker
@@ -95,6 +100,7 @@ export default {
         faultDesc: '',
         prodModel: '',
         custName: '',
+        barcode: ''
       }
     };
   },
@@ -122,6 +128,7 @@ export default {
       this.search.faultDesc != null && this.search.faultDesc != '' ? obj.faultDesc = this.search.faultDesc : null
       this.search.prodModel != null && this.search.prodModel != '' ? obj.prodModel = this.search.prodModel : null
       this.search.custName != null && this.search.custName != '' ? obj.custName = this.search.custName : null
+      this.search.barcode != null && this.search.barcode != '' ? obj.barcode = this.search.barcode : null
       this.value != null && this.value != undefined ? obj.endDate = this.value[1] : null
       this.value != null && this.value != undefined ? obj.startDate = this.value[0] : null
       return obj
@@ -138,6 +145,7 @@ export default {
       this.search.faultDesc = ''
       this.search.prodModel = ''
       this.search.custName = ''
+      this.search.barcode = ''
       this.value = [moment(new Date()).format('YYYY-MM-DD'), moment(this.getNextDay(new Date())).format('YYYY-MM-DD')]
       this.$emit('uploadList')
     },

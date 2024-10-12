@@ -9,7 +9,6 @@
       index
       @handle-size="handleSize"
       @handle-current="handleCurrent"
-      @dblclick="dblclick"
       @row-click="rowClick"
     />
   </div>

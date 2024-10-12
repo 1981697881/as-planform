@@ -2,7 +2,7 @@
   <div class="app-list">
     <div class="list-containerOther">
       <div>
-        <tabs-bar ref="tabs" @showDialog="handlerDialog" @showChoice="showChoice" @showReceiving="showReceiving"
+        <tabs-bar ref="tabs" @showDialog="handlerDialog" @exportData="exportData"  @showChoice="showChoice" @showReceiving="showReceiving"
                   @showDeliver="showDeliver" @queryBtn="query" @uploadList="upload"/>
       </div>
       <list ref="list" @uploadList="uploadPage" @showDialog="handlerDialog"/>
@@ -83,6 +83,9 @@ export default {
     }
   },
   methods: {
+    exportData() {
+      this.$refs.list.ExportData()
+    },
     _isMobile() {
       let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
       return flag;

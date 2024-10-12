@@ -24,6 +24,7 @@
           <el-button :size="'mini'" type="primary" icon="el-icon-delete" @click="handlerDeliver">发货</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-finished" @click="handlerPay">确认支付</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="handlerReceiving">确认收货</el-button>
+          <el-button :size="'mini'" type="primary" icon="el-icon-download" @click="exportData">导出</el-button>
           <el-button :size="'mini'" type="primary" icon="el-icon-refresh" @click="upload">刷新</el-button>
         </el-button-group>
       </el-row>
@@ -83,6 +84,10 @@ export default {
       this.search.name == null || this.search.name == '' ? null : obj.repairOrder = this.search.name
       this.search.status == null || this.search.status == '' ? null : obj.status = this.search.status
       return obj
+    },
+    // 导出
+    exportData() {
+      this.$emit('exportData')
     },
     changeStatus(e) {
       this.search.status = e
