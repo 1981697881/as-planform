@@ -3,7 +3,7 @@
     <!--<Tree class="list-tree" @handler-node="handlerNode" />-->
     <div class="list-containerOther">
       <div>
-        <tabs-bar ref="tabs" @showDialog="handlerDialog" @delList="delivery"  @queryBtn="query" @uploadList="upload"/>
+        <tabs-bar ref="tabs" @showDialog="handlerDialog"  @exportData="exportData" @delList="delivery"  @queryBtn="query" @uploadList="upload"/>
       </div>
       <list ref="list"  @showDialog="handlerDialog" @uploadList="uploadPage"/>
     </div>
@@ -28,6 +28,9 @@
     this.$refs.list.fetchData(this.$refs.tabs.qFilter())
   },
   methods: {
+    exportData() {
+      this.$refs.list.ExportData()
+    },
     // 查询
     query() {
       this.$refs.list.fetchData(this.$refs.tabs.qFilter())

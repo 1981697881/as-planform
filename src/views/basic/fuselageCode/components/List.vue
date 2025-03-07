@@ -33,6 +33,8 @@ export default {
       list: {},
       columns: [
         {text: '生产日期', name: 'outputDate'},
+        {text: '客户名称', name: 'custName'},
+        {text: '单号', name: 'outPutOrderNumber'},
         {text: '机身码', name: 'productBarcode'},
         {text: '规格型号', name: 'productModel'},
         {text: '产品名称', name: 'productName'},
@@ -40,6 +42,30 @@ export default {
     };
   },
   methods: {
+    ExportData() {
+      import('@/vendor/Export2Excel').then(excel => {
+        // 表格的表头列表
+        const columns = this.columns
+        const tHeader = []
+        // 与表头相对应的数据里边的字段
+        const filterVal = []
+        columns.forEach((item, index) => {
+          tHeader.push(item.text)
+          filterVal.push(item.name)
+        })
+        const list = this.list.records
+        const data = this.formatJson(filterVal, list);
+        // 这里还是使用export_json_to_excel方法比较好，方便操作数据
+        excel.export_json_to_excel([tHeader],data,'机身码')
+      })
+    },
+    formatJson(filter, jsonDate){
+      return jsonDate.map(v =>
+        filter.map(j => {
+          return v[j]
+        })
+      )
+    },
     // 监听每页显示几条
     handleSize(val) {
       this.list.size = val
