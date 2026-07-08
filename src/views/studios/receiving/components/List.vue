@@ -54,8 +54,9 @@ export default {
         {text: '工程师', name: 'engineerName'},
         {text: '计划完成时间', name: 'planDate'},
         {text: '维修状态', name: 'status', formatt: 'checkType'},
-        {text: '统一发货物流', name: 'logistics.expressName'},
-        {text: '统一发货单号', name: 'logistics.expressOrder'},
+        {text: '统一发货物流', name: 'expressName'},
+        {text: '地址', name: 'contactAddress'},
+        {text: '统一发货单号', name: 'expressNo'},
         {text: '多个发货物流', name: 'companyName'},
         {text: '多个发货单号', name: 'courierNumber'},
         {text: '创建时间', name: 'createDate'},
@@ -69,32 +70,44 @@ export default {
   methods: {
     ExportData() {
       import('@/vendor/Export2Excel').then(excel => {
-        // 表格的表头列表
-        const columns = this.columns
-        const tHeader = []
-        // 与表头相对应的数据里边的字段
-        const filterVal = []
-        columns.forEach((item, index) => {
-          tHeader.push(item.text)
-          filterVal.push(item.name)
-        })
-        const list = this.list.records
-        let inportData = []
-        list.forEach((item) => {
-          inportData = [...inportData,...item.repairDetailList]
-        })
-        console.log(inportData)
+        const columns = this.columns;
+        const tHeader = [];
+        const filterVal = [];
+
+        columns.forEach(item => {
+          tHeader.push(item.text);
+          filterVal.push(item.name);
+        });
+
+        const list = this.list.records;
+        let inportData = [];
+
+        list.forEach(item => {
+          inportData = [...inportData, ...item.repairDetailList];
+        });
+
         const data = this.formatJson(filterVal, inportData);
-        // 这里还是使用export_json_to_excel方法比较好，方便操作数据
-        excel.export_json_to_excel([tHeader],data,'维修单')
-      })
+        excel.export_json_to_excel([tHeader], data, '维修单');
+      });
     },
-    formatJson(filter, jsonDate){
-      return jsonDate.map(v =>
-        filter.map(j => {
-          return v[j]
-        })
-      )
+
+    formatJson(filter, jsonDate) {
+      return jsonDate.map(v => {
+        return filter.map(j => {
+          // 处理嵌套属性
+          if (j.includes('.')) {
+            const keys = j.split('.');
+            let value = v;
+            for (let key of keys) {
+              if (value == null) break;
+              value = value[key];
+            }
+            return value != null ? value : '';
+          } else {
+            return v[j] != null ? v[j] : '';
+          }
+        });
+      });
     },
     // 监听每页显示几条
     handleSize(val) {
