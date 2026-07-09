@@ -58,7 +58,7 @@ export default {
         {text: '地址', name: 'contactAddress'},
         {text: '统一发货单号', name: 'expressNo'},
         {text: '多个发货物流', name: 'companyName'},
-        {text: '多个发货单号', name: 'courierNumber'},
+        {text: '多个发货单号', name: 'logistics.expressOrder'},
         {text: '创建时间', name: 'createDate'},
         {text: '修改时间', name: 'editDate'},
         {text: '完成时间', name: 'completeTime'},
@@ -79,13 +79,20 @@ export default {
           filterVal.push(item.name);
         });
 
-        const list = this.list.records;
+        const records = this.list.records;
         let inportData = [];
 
-        list.forEach(item => {
-          inportData = [...inportData, ...item.repairDetailList];
+        records.forEach(parent => {
+          // 先添加父行
+          inportData.push(parent);
+          // 再添加每个子行，并把父行信息带入
+          if (parent.repairDetailList) {
+            parent.repairDetailList.forEach(detail => {
+              inportData.push({ ...parent, ...detail });
+            });
+          }
         });
-
+        console.log(inportData)
         const data = this.formatJson(filterVal, inportData);
         excel.export_json_to_excel([tHeader], data, '维修单');
       });
